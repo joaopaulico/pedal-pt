@@ -1,0 +1,98 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  updated?: Date;
+  category: string;
+  tags?: string[];
+  image?: string;
+  readingTime?: number;
+}
+
+const { title, description, date, updated, category, tags = [], image, readingTime } = Astro.props;
+
+const categoryMap: Record<string, { label: string; class: string; href: string }> = {
+  'rotas': { label: 'Rotas', class: 'category-badge-routes', href: '/categoria/rotas' },
+  'gear': { label: 'Gear', class: 'category-badge-gear', href: '/categoria/gear' },
+  'guias': { label: 'Guias', class: 'category-badge-guides', href: '/categoria/guias' },
+  'bikepacking': { label: 'Bikepacking', class: 'category-badge-bikepacking', href: '/categoria/bikepacking' },
+};
+
+const cat = categoryMap[category] || { label: category, class: 'category-badge-guides', href: '#' };
+
+const formattedDate = date.toLocaleDateString('pt-PT', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={description} image={image} type="article">
+  <article>
+    <!-- Hero -->
+    {image && (
+      <div class="w-full max-w-5xl mx-auto px-5 mt-8">
+        <div class="aspect-[21/9] rounded-xl overflow-hidden">
+          <img src={image} alt={title} class="w-full h-full object-cover" />
+        </div>
+      </div>
+    )}
+
+    <!-- Article header -->
+    <header class="max-w-2xl mx-auto px-5 mt-10 mb-10">
+      <div class="flex items-center gap-3 mb-5">
+        <a href={cat.href} class={`category-badge ${cat.class} hover:opacity-80 transition-opacity`}>
+          {cat.label}
+        </a>
+        <time datetime={date.toISOString()} class="text-sm text-stone-400">{formattedDate}</time>
+        {readingTime && (
+          <span class="text-sm text-stone-400">{readingTime} min de leitura</span>
+        )}
+      </div>
+
+      <h1 class="font-display text-4xl sm:text-5xl text-stone-950 leading-tight mb-5">
+        {title}
+      </h1>
+
+      <p class="text-lg text-stone-500 leading-relaxed">
+        {description}
+      </p>
+    </header>
+
+    <!-- Article body -->
+    <div class="max-w-2xl mx-auto px-5 prose">
+      <slot />
+    </div>
+
+    <!-- Tags -->
+    {tags.length > 0 && (
+      <div class="max-w-2xl mx-auto px-5 mt-14 pt-8 border-t border-stone-200">
+        <div class="flex flex-wrap gap-2">
+          {tags.map(tag => (
+            <span class="text-xs text-stone-400 bg-stone-100 px-2.5 py-1 rounded-full">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Author -->
+    <div class="max-w-2xl mx-auto px-5 mt-10 mb-16">
+      <div class="bg-stone-100/60 rounded-xl p-6 flex items-start gap-4">
+        <div class="w-12 h-12 rounded-full bg-pedal-200 flex items-center justify-center flex-shrink-0">
+          <span class="font-display text-pedal-700 text-lg">J</span>
+        </div>
+        <div>
+          <p class="font-medium text-stone-900 text-sm mb-1">Escrito por João</p>
+          <p class="text-sm text-stone-500 leading-relaxed">
+            Baseado em Sintra-Cascais. Pedala por estas estradas durante o ano todo e escreve sobre o que encontra.
+          </p>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,45 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-stone-200 mt-24">
+  <div class="max-w-6xl mx-auto px-5 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+      <div>
+        <a href="/" class="font-display text-xl text-stone-950 inline-block mb-3">
+          pedal<span class="text-pedal-600">.pt</span>
+        </a>
+        <p class="text-sm text-stone-500 leading-relaxed max-w-xs">
+          Ciclismo em Portugal, visto de dentro. Rotas reais, opiniões honestas, e zero bullshit.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-semibold tracking-wider uppercase text-stone-400 mb-4">Explorar</h4>
+        <div class="flex flex-col gap-2">
+          <a href="/categoria/rotas" class="text-sm text-stone-600 hover:text-pedal-700 transition-colors">Rotas</a>
+          <a href="/categoria/gear" class="text-sm text-stone-600 hover:text-pedal-700 transition-colors">Reviews de Gear</a>
+          <a href="/categoria/guias" class="text-sm text-stone-600 hover:text-pedal-700 transition-colors">Guias</a>
+          <a href="/categoria/bikepacking" class="text-sm text-stone-600 hover:text-pedal-700 transition-colors">Bikepacking</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-semibold tracking-wider uppercase text-stone-400 mb-4">Ligações</h4>
+        <div class="flex flex-col gap-2">
+          <a href="/sobre" class="text-sm text-stone-600 hover:text-pedal-700 transition-colors">Sobre</a>
+          <a href="/contacto" class="text-sm text-stone-600 hover:text-pedal-700 transition-colors">Contacto</a>
+          <a href="/privacidade" class="text-sm text-stone-600 hover:text-pedal-700 transition-colors">Privacidade</a>
+          <a href="/rss.xml" class="text-sm text-stone-600 hover:text-pedal-700 transition-colors">RSS</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-stone-200 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <p class="text-xs text-stone-400">&copy; {year} pedal.pt</p>
+      <p class="text-xs text-stone-400">
+        Feito com pernas cansadas e cafés longos em Sintra-Cascais.
+      </p>
+    </div>
+  </div>
+</footer>

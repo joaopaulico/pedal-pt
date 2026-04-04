@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply font-body text-stone-950 bg-stone-50;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  ::selection {
+    @apply bg-pedal-200 text-pedal-950;
+  }
+}
+
+@layer components {
+  .prose {
+    @apply text-stone-800 leading-relaxed;
+    font-size: 1.0625rem;
+  }
+
+  .prose p {
+    @apply mb-6;
+  }
+
+  .prose h2 {
+    @apply font-display text-3xl text-stone-950 mt-14 mb-5;
+    font-weight: 400;
+  }
+
+  .prose h3 {
+    @apply font-display text-2xl text-stone-900 mt-10 mb-4;
+    font-weight: 400;
+  }
+
+  .prose a {
+    @apply text-pedal-600 underline underline-offset-2 decoration-pedal-300 hover:decoration-pedal-600 transition-colors;
+  }
+
+  .prose strong {
+    @apply text-stone-950 font-semibold;
+  }
+
+  .prose em {
+    @apply text-stone-600;
+  }
+
+  .prose ul {
+    @apply mb-6 pl-5;
+  }
+
+  .prose ul li {
+    @apply mb-2 relative;
+  }
+
+  .prose ul li::marker {
+    @apply text-pedal-400;
+  }
+
+  .prose blockquote {
+    @apply border-l-2 border-pedal-300 pl-5 italic text-stone-600 my-8;
+  }
+
+  .prose img {
+    @apply rounded-lg my-8;
+  }
+
+  .post-card {
+    @apply group cursor-pointer;
+  }
+
+  .post-card:hover .post-card-title {
+    @apply text-pedal-700;
+  }
+
+  .category-badge {
+    @apply inline-block text-xs font-medium tracking-wider uppercase px-2.5 py-1 rounded-full;
+  }
+
+  .category-badge-routes {
+    @apply bg-pedal-100 text-pedal-700;
+  }
+
+  .category-badge-gear {
+    @apply bg-terra-100 text-terra-700;
+  }
+
+  .category-badge-guides {
+    @apply bg-stone-200 text-stone-700;
+  }
+
+  .category-badge-bikepacking {
+    @apply bg-pedal-50 text-pedal-800 border border-pedal-200;
+  }
+}
+
+/* Smooth image loading */
+img {
+  transition: opacity 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-stone-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-stone-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-stone-400;
+}

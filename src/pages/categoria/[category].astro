@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+export function getStaticPaths() {
+  return [
+    { params: { category: 'rotas' } },
+    { params: { category: 'gear' } },
+    { params: { category: 'guias' } },
+    { params: { category: 'bikepacking' } },
+  ];
+}
+
+const { category } = Astro.params;
+
+const categoryInfo: Record<string, { title: string; description: string }> = {
+  'rotas': {
+    title: 'Rotas',
+    description: 'Percursos detalhados para road cycling, gravel e MTB em Portugal. Cada rota foi pedalada, cada climb verificado.',
+  },
+  'gear': {
+    title: 'Reviews de Gear',
+    description: 'Opiniões honestas sobre equipamento de ciclismo. Testado nas estradas, trilhos e condições reais de Portugal.',
+  },
+  'guias': {
+    title: 'Guias',
+    description: 'Informação prática para quem quer pedalar em Portugal. Segurança, clima, logística, aluguer, transportes.',
+  },
+  'bikepacking': {
+    title: 'Bikepacking',
+    description: 'Rotas de vários dias, gear de touring, e tudo o que precisas para uma aventura de bikepacking em Portugal.',
+  },
+};
+
+const info = categoryInfo[category!] || { title: category, description: '' };
+
+const posts = await getCollection('blog', ({ data }) => !data.draft && data.category === category);
+const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title={info.title} description={info.description}>
+  <section class="max-w-6xl mx-auto px-5 pt-16 pb-20">
+    <header class="mb-12">
+      <h1 class="font-display text-4xl sm:text-5xl text-stone-950 mb-3">{info.title}</h1>
+      <p class="text-stone-500 max-w-lg">{info.description}</p>
+    </header>
+
+    {sortedPosts.length === 0 ? (
+      <p class="text-stone-400 text-center py-20">Ainda não há artigos nesta categoria. Em breve.</p>
+    ) : (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {sortedPosts.map(post => (
+          <PostCard
+            title={post.data.title}
+            excerpt={post.data.description}
+            slug={post.slug}
+            date={post.data.date}
+            category={post.data.category}
+            image={post.data.image}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+</BaseLayout>

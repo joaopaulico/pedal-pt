@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const featuredPost = sortedPosts.find(p => p.data.featured) || sortedPosts[0];
+const recentPosts = sortedPosts.filter(p => p !== featuredPost).slice(0, 6);
+---
+
+<BaseLayout title="pedal.pt" description="Ciclismo em Portugal, visto de dentro. Rotas reais, reviews honestas, guias práticos.">
+
+  <!-- Hero -->
+  <section class="max-w-6xl mx-auto px-5 pt-16 pb-20">
+    <div class="max-w-3xl">
+      <h1 class="font-display text-5xl sm:text-7xl text-stone-950 leading-[1.1] mb-6">
+        Ciclismo em Portugal,<br/>
+        <span class="text-pedal-600">visto de dentro.</span>
+      </h1>
+      <p class="text-lg text-stone-500 leading-relaxed max-w-xl mb-8">
+        Rotas que já pedalei, gear que uso a sério, e guias escritos por quem vive e pedala cá o ano todo. Sem fluff, sem stock photos, sem artigos escritos por quem nunca esteve em Portugal.
+      </p>
+      <div class="flex items-center gap-4">
+        <a href="/blog" class="inline-flex items-center gap-2 bg-pedal-600 text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-pedal-700 transition-colors">
+          Ler artigos
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="/sobre" class="text-sm text-stone-500 hover:text-stone-800 transition-colors">
+          Quem sou eu?
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div class="max-w-6xl mx-auto px-5">
+    <div class="border-t border-stone-200"></div>
+  </div>
+
+  <!-- Featured post -->
+  {featuredPost && (
+    <section class="max-w-6xl mx-auto px-5 py-16">
+      <p class="text-xs font-semibold tracking-wider uppercase text-stone-400 mb-6">Destaque</p>
+      <PostCard
+        title={featuredPost.data.title}
+        excerpt={featuredPost.data.description}
+        slug={featuredPost.slug}
+        date={featuredPost.data.date}
+        category={featuredPost.data.category}
+        image={featuredPost.data.image}
+        featured={true}
+      />
+    </section>
+  )}
+
+  <!-- Recent posts -->
+  {recentPosts.length > 0 && (
+    <section class="max-w-6xl mx-auto px-5 pb-16">
+      <div class="flex items-center justify-between mb-8">
+        <p class="text-xs font-semibold tracking-wider uppercase text-stone-400">Artigos recentes</p>
+        <a href="/blog" class="text-sm text-pedal-600 hover:text-pedal-700 transition-colors">
+          Ver todos
+        </a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {recentPosts.map(post => (
+          <PostCard
+            title={post.data.title}
+            excerpt={post.data.description}
+            slug={post.slug}
+            date={post.data.date}
+            category={post.data.category}
+            image={post.data.image}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Categories overview -->
+  <section class="max-w-6xl mx-auto px-5 pb-20">
+    <div class="bg-stone-100/50 rounded-2xl p-8 sm:p-12">
+      <h2 class="font-display text-3xl text-stone-950 mb-3">O que vais encontrar aqui</h2>
+      <p class="text-stone-500 mb-8 max-w-lg">Quatro tipos de conteúdo, todos baseados em experiência real.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <a href="/categoria/rotas" class="bg-white rounded-xl p-5 hover:shadow-sm transition-shadow">
+          <div class="w-10 h-10 rounded-lg bg-pedal-100 flex items-center justify-center mb-3">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#2a7155" stroke-width="1.5">
+              <path d="M3 17l4-6 3 3 4-5 3 4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="font-medium text-stone-900 mb-1">Rotas</h3>
+          <p class="text-sm text-stone-500">Percursos detalhados com GPS, fotos reais e dicas de quem os pedalou.</p>
+        </a>
+
+        <a href="/categoria/gear" class="bg-white rounded-xl p-5 hover:shadow-sm transition-shadow">
+          <div class="w-10 h-10 rounded-lg bg-terra-100 flex items-center justify-center mb-3">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#aa4623" stroke-width="1.5">
+              <circle cx="10" cy="10" r="7"/>
+              <circle cx="10" cy="10" r="2.5"/>
+            </svg>
+          </div>
+          <h3 class="font-medium text-stone-900 mb-1">Reviews de Gear</h3>
+          <p class="text-sm text-stone-500">Opiniões honestas sobre equipamento testado nas estradas portuguesas.</p>
+        </a>
+
+        <a href="/categoria/guias" class="bg-white rounded-xl p-5 hover:shadow-sm transition-shadow">
+          <div class="w-10 h-10 rounded-lg bg-stone-200 flex items-center justify-center mb-3">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#665850" stroke-width="1.5">
+              <path d="M4 3h12v14H4z"/>
+              <path d="M7 7h6M7 10h4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="font-medium text-stone-900 mb-1">Guias</h3>
+          <p class="text-sm text-stone-500">Informação prática: segurança, clima, logística, aluguer de bicicletas.</p>
+        </a>
+
+        <a href="/categoria/bikepacking" class="bg-white rounded-xl p-5 hover:shadow-sm transition-shadow">
+          <div class="w-10 h-10 rounded-lg bg-pedal-50 border border-pedal-200 flex items-center justify-center mb-3">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1f4939" stroke-width="1.5">
+              <path d="M5 16l3-12h4l3 12" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7 10h6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="font-medium text-stone-900 mb-1">Bikepacking</h3>
+          <p class="text-sm text-stone-500">Rotas de vários dias, gear de touring, e aventuras de bicicleta em Portugal.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
