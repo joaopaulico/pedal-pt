@@ -74,7 +74,7 @@
   }
 
   .post-card {
-    @apply group cursor-pointer;
+    @apply cursor-pointer;
   }
 
   .post-card:hover .post-card-title {
