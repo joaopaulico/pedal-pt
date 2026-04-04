@@ -27,13 +27,13 @@ const formattedDate = date.toLocaleDateString('pt-PT', {
 });
 ---
 
-<a href={`/blog/${slug}`} class="post-card block">
+<a href={`/blog/${slug}`} class="post-card group block">
   {image && (
-    <div class={`overflow-hidden rounded-lg mb-4 ${featured ? 'aspect-[16/9]' : 'aspect-[3/2]'}`}>
+    <div class={`img-zoom mb-5 ${featured ? 'aspect-[2/1]' : 'aspect-[3/2]'}`}>
       <img
         src={image}
         alt={title}
-        class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+        class="w-full h-full object-cover"
         loading="lazy"
       />
     </div>
@@ -41,14 +41,23 @@ const formattedDate = date.toLocaleDateString('pt-PT', {
 
   <div class="flex items-center gap-3 mb-3">
     <span class={`category-badge ${cat.class}`}>{cat.label}</span>
-    <time datetime={date.toISOString()} class="text-xs text-stone-400">{formattedDate}</time>
+    <time datetime={date.toISOString()} class="text-xs text-stone-300">{formattedDate}</time>
   </div>
 
-  <h3 class={`post-card-title font-display text-stone-950 transition-colors leading-tight mb-2 ${featured ? 'text-3xl' : 'text-xl'}`}>
+  <h3 class={`post-card-title font-display text-stone-950 transition-colors duration-300 leading-tight mb-3 ${featured ? 'text-3xl sm:text-4xl' : 'text-xl'}`}>
     {title}
   </h3>
 
-  <p class={`text-stone-500 leading-relaxed ${featured ? 'text-base' : 'text-sm'}`}>
+  <p class={`text-stone-400 leading-relaxed ${featured ? 'text-base max-w-2xl' : 'text-sm'}`}>
     {excerpt}
   </p>
+
+  {featured && (
+    <div class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-pedal-600 group-hover:gap-3 transition-all duration-300">
+      Ler artigo
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  )}
 </a>
