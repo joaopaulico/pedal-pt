@@ -2,10 +2,9 @@
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
-  { href: '/blog', label: 'Artigos' },
+  { href: '/blog', label: 'Journal' },
   { href: '/categoria/rotas', label: 'Rotas' },
   { href: '/categoria/gear', label: 'Gear' },
-  { href: '/categoria/guias', label: 'Guias' },
   { href: '/sobre', label: 'Sobre' },
 ];
 
@@ -15,29 +14,21 @@ function isActive(href: string) {
 }
 ---
 
-<header id="site-header" class="fixed top-0 left-0 right-0 z-40 transition-all duration-500">
-  <div class="max-w-6xl mx-auto px-5 flex items-center justify-between" style="height: 72px;">
+<header id="site-header" class="fixed top-0 left-0 right-0 z-40 transition-all duration-700" style="border-bottom: 1px solid transparent;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between" style="height: 80px;">
 
-    <a href="/" class="flex items-center gap-2.5 group relative z-10">
-      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" class="text-pedal-600 transition-transform duration-500 group-hover:rotate-[60deg]">
-        <circle cx="15" cy="15" r="12.5" stroke="currentColor" stroke-width="2"/>
-        <circle cx="15" cy="15" r="4.5" fill="currentColor"/>
-        <line x1="15" y1="2" x2="15" y2="6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <line x1="15" y1="23.5" x2="15" y2="28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <line x1="2" y1="15" x2="6.5" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <line x1="23.5" y1="15" x2="28" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <span class="font-display text-xl tracking-tight text-stone-950">pedal<span class="text-gradient">.pt</span></span>
+    <a href="/" class="font-display font-semibold text-lg tracking-tight text-neutral-900 transition-opacity hover:opacity-60">
+      pedal.pt
     </a>
 
-    <nav class="hidden md:flex items-center gap-8">
+    <nav class="hidden md:flex items-center gap-10">
       {navLinks.map(link => (
         <a
           href={link.href}
-          class={`nav-link text-sm tracking-wide transition-colors py-1 ${
+          class={`nav-link text-xs tracking-widest uppercase transition-colors ${
             isActive(link.href)
-              ? 'text-pedal-700 font-medium active'
-              : 'text-stone-400 hover:text-stone-800'
+              ? 'text-neutral-900 font-medium active'
+              : 'text-neutral-400 hover:text-neutral-900'
           }`}
         >
           {link.label}
@@ -45,24 +36,21 @@ function isActive(href: string) {
       ))}
     </nav>
 
-    <button id="mobile-menu-btn" class="md:hidden relative z-10 w-10 h-10 flex items-center justify-center" aria-label="Menu">
-      <div id="hamburger-lines">
-        <span class="block w-5 h-px bg-stone-600 transition-all duration-300 origin-center"></span>
-        <span class="block w-5 h-px bg-stone-600 transition-all duration-300 mt-1.5"></span>
-        <span class="block w-3.5 h-px bg-stone-600 transition-all duration-300 mt-1.5"></span>
+    <button id="mobile-btn" class="md:hidden w-10 h-10 flex items-center justify-center" aria-label="Menu">
+      <div id="burger">
+        <span class="block w-5 h-px bg-neutral-800 transition-all duration-300"></span>
+        <span class="block w-5 h-px bg-neutral-800 mt-1.5 transition-all duration-300"></span>
       </div>
     </button>
   </div>
 
-  <div id="mobile-menu" class="md:hidden overflow-hidden transition-all duration-500 ease-out" style="max-height: 0; opacity: 0;">
-    <nav class="max-w-6xl mx-auto px-5 py-6 flex flex-col gap-1">
-      {navLinks.map((link, i) => (
+  <div id="mobile-nav" class="md:hidden overflow-hidden transition-all duration-500" style="max-height:0;opacity:0;">
+    <nav class="max-w-7xl mx-auto px-6 pb-8 pt-2 flex flex-col gap-6">
+      {navLinks.map(link => (
         <a
           href={link.href}
-          class={`text-lg py-2.5 transition-all duration-300 ${
-            isActive(link.href)
-              ? 'text-pedal-700 font-medium'
-              : 'text-stone-500 hover:text-stone-900 hover:pl-2'
+          class={`text-2xl font-display font-light tracking-tight transition-colors ${
+            isActive(link.href) ? 'text-neutral-900' : 'text-neutral-300 hover:text-neutral-900'
           }`}
         >
           {link.label}
@@ -73,51 +61,35 @@ function isActive(href: string) {
 </header>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
-  const lines = document.getElementById('hamburger-lines');
-  let menuOpen = false;
+  const btn = document.getElementById('mobile-btn');
+  const nav = document.getElementById('mobile-nav');
+  const burger = document.getElementById('burger');
+  let open = false;
 
   btn?.addEventListener('click', () => {
-    menuOpen = !menuOpen;
-    if (menu) {
-      menu.style.maxHeight = menuOpen ? '320px' : '0';
-      menu.style.opacity = menuOpen ? '1' : '0';
-    }
-    if (lines) {
-      if (menuOpen) {
-        lines.children[0].style.transform = 'translateY(5px) rotate(45deg)';
-        lines.children[1].style.opacity = '0';
-        lines.children[1].style.transform = 'scaleX(0)';
-        lines.children[2].style.width = '20px';
-        lines.children[2].style.transform = 'translateY(-7px) rotate(-45deg)';
-      } else {
-        lines.children[0].style.transform = '';
-        lines.children[1].style.opacity = '1';
-        lines.children[1].style.transform = '';
-        lines.children[2].style.width = '';
-        lines.children[2].style.transform = '';
-      }
+    open = !open;
+    if (nav) { nav.style.maxHeight = open ? '300px' : '0'; nav.style.opacity = open ? '1' : '0'; }
+    if (burger) {
+      const spans = burger.querySelectorAll('span');
+      spans[0].style.transform = open ? 'translateY(3px) rotate(45deg)' : '';
+      spans[1].style.transform = open ? 'translateY(-3px) rotate(-45deg)' : '';
     }
   });
 
   const header = document.getElementById('site-header');
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
+    if (window.scrollY > 60) {
       header?.classList.add('glass');
-      header!.style.borderBottom = '1px solid rgba(0,0,0,0.06)';
+      header!.style.borderBottomColor = 'rgba(0,0,0,0.05)';
     } else {
       header?.classList.remove('glass');
-      header!.style.borderBottom = 'none';
+      header!.style.borderBottomColor = 'transparent';
     }
   }, { passive: true });
 
-  // Scroll reveal observer
-  const reveals = document.querySelectorAll('.reveal, .stagger-children');
+  // Intersection observer for fade animations
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  reveals.forEach(el => observer.observe(el));
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.fade-up, .stagger').forEach(el => observer.observe(el));
 </script>

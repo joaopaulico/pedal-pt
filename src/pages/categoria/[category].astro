@@ -14,43 +14,34 @@ export function getStaticPaths() {
 
 const { category } = Astro.params;
 
-const categoryInfo: Record<string, { title: string; description: string }> = {
-  'rotas': {
-    title: 'Rotas',
-    description: 'Percursos detalhados para road cycling, gravel e MTB em Portugal. Cada rota foi pedalada, cada climb verificado.',
-  },
-  'gear': {
-    title: 'Reviews de Gear',
-    description: 'Opiniões honestas sobre equipamento de ciclismo. Testado nas estradas, trilhos e condições reais de Portugal.',
-  },
-  'guias': {
-    title: 'Guias',
-    description: 'Informação prática para quem quer pedalar em Portugal. Segurança, clima, logística, aluguer, transportes.',
-  },
-  'bikepacking': {
-    title: 'Bikepacking',
-    description: 'Rotas de vários dias, gear de touring, e tudo o que precisas para uma aventura de bikepacking em Portugal.',
-  },
+const info: Record<string, { title: string; desc: string }> = {
+  'rotas': { title: 'Rotas', desc: 'Percursos detalhados para road, gravel e MTB em Portugal.' },
+  'gear': { title: 'Gear', desc: 'Reviews honestas de equipamento testado nas condições portuguesas.' },
+  'guias': { title: 'Guias', desc: 'Informação prática para pedalar em Portugal.' },
+  'bikepacking': { title: 'Bikepacking', desc: 'Rotas de vários dias e gear de touring.' },
 };
 
-const info = categoryInfo[category!] || { title: category, description: '' };
+const { title, desc } = info[category!] || { title: category, desc: '' };
 
 const posts = await getCollection('blog', ({ data }) => !data.draft && data.category === category);
-const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const sorted = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<BaseLayout title={info.title} description={info.description}>
-  <section class="max-w-6xl mx-auto px-5 pt-16 pb-20">
-    <header class="mb-12">
-      <h1 class="font-display text-4xl sm:text-5xl text-stone-950 mb-3">{info.title}</h1>
-      <p class="text-stone-500 max-w-lg">{info.description}</p>
-    </header>
+<BaseLayout title={title} description={desc}>
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 pt-20 pb-32">
+    <div class="fade-up mb-16">
+      <p class="font-mono text-[10px] tracking-widest uppercase text-accent-500 mb-4">{title}</p>
+      <h1 class="font-display font-bold text-neutral-900 leading-none mb-3" style="font-size: clamp(2rem, 4vw, 2.75rem); letter-spacing: -0.035em;">
+        {title}
+      </h1>
+      <p class="text-neutral-400 max-w-md">{desc}</p>
+    </div>
 
-    {sortedPosts.length === 0 ? (
-      <p class="text-stone-400 text-center py-20">Ainda não há artigos nesta categoria. Em breve.</p>
+    {sorted.length === 0 ? (
+      <p class="text-neutral-400 text-center py-24">Em breve.</p>
     ) : (
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {sortedPosts.map(post => (
+      <div class="stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+        {sorted.map(post => (
           <PostCard
             title={post.data.title}
             excerpt={post.data.description}

@@ -2,69 +2,44 @@
 const year = new Date().getFullYear();
 ---
 
-<footer class="mt-24 border-t border-stone-200/60">
-  <div class="max-w-6xl mx-auto px-5">
+<footer class="border-t border-neutral-100 mt-0">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
 
-    <!-- Main footer -->
-    <div class="py-16 grid grid-cols-1 md:grid-cols-12 gap-10">
+    <div class="py-20 grid grid-cols-1 md:grid-cols-12 gap-12">
       <!-- Brand -->
-      <div class="md:col-span-5">
-        <a href="/" class="font-display text-xl text-stone-950 inline-block mb-4">
-          pedal<span class="text-gradient">.pt</span>
-        </a>
-        <p class="text-sm text-stone-400 leading-relaxed max-w-xs mb-6">
-          Ciclismo em Portugal, visto de dentro. Rotas reais, opiniões honestas, e zero bullshit.
+      <div class="md:col-span-4">
+        <p class="font-display font-semibold text-lg tracking-tight text-neutral-900 mb-3">pedal.pt</p>
+        <p class="text-sm text-neutral-400 leading-relaxed max-w-xs">
+          Ciclismo em Portugal, visto de dentro.
         </p>
-        <div class="flex gap-3">
-          <a href="#" class="w-9 h-9 rounded-xl bg-stone-100 flex items-center justify-center text-stone-400 hover:text-pedal-600 hover:bg-pedal-50 transition-all duration-300" aria-label="Strava">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M6.8 12.5L4.5 8h3l1.3 2.5L10 8h3l-4.2 8-2-3.5zM8 0L3 10h3.2L8 6l1.8 4H13L8 0z"/>
-            </svg>
-          </a>
-          <a href="#" class="w-9 h-9 rounded-xl bg-stone-100 flex items-center justify-center text-stone-400 hover:text-pedal-600 hover:bg-pedal-50 transition-all duration-300" aria-label="Instagram">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3">
-              <rect x="1.5" y="1.5" width="13" height="13" rx="4"/>
-              <circle cx="8" cy="8" r="3.2"/>
-              <circle cx="12" cy="4" r="0.9" fill="currentColor" stroke="none"/>
-            </svg>
-          </a>
-          <a href="/rss.xml" class="w-9 h-9 rounded-xl bg-stone-100 flex items-center justify-center text-stone-400 hover:text-terra-500 hover:bg-terra-50 transition-all duration-300" aria-label="RSS">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="3" cy="11" r="1.5" fill="currentColor" stroke="none"/>
-              <path d="M1 7a6 6 0 016 6" stroke-linecap="round"/>
-              <path d="M1 3a10 10 0 0110 10" stroke-linecap="round"/>
-            </svg>
-          </a>
-        </div>
       </div>
 
-      <!-- Links -->
-      <div class="md:col-span-3 md:col-start-7">
-        <h4 class="text-xs font-semibold tracking-widest uppercase text-stone-300 mb-5">Explorar</h4>
+      <!-- Nav -->
+      <div class="md:col-span-2 md:col-start-7">
+        <p class="font-mono text-[10px] tracking-widest uppercase text-neutral-300 mb-5">Explorar</p>
         <div class="flex flex-col gap-3">
-          <a href="/categoria/rotas" class="text-sm text-stone-500 hover:text-pedal-600 transition-colors">Rotas</a>
-          <a href="/categoria/gear" class="text-sm text-stone-500 hover:text-pedal-600 transition-colors">Reviews de Gear</a>
-          <a href="/categoria/guias" class="text-sm text-stone-500 hover:text-pedal-600 transition-colors">Guias</a>
-          <a href="/categoria/bikepacking" class="text-sm text-stone-500 hover:text-pedal-600 transition-colors">Bikepacking</a>
+          <a href="/categoria/rotas" class="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">Rotas</a>
+          <a href="/categoria/gear" class="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">Gear</a>
+          <a href="/categoria/guias" class="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">Guias</a>
+          <a href="/categoria/bikepacking" class="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">Bikepacking</a>
         </div>
       </div>
 
       <div class="md:col-span-2">
-        <h4 class="text-xs font-semibold tracking-widest uppercase text-stone-300 mb-5">Site</h4>
+        <p class="font-mono text-[10px] tracking-widest uppercase text-neutral-300 mb-5">Info</p>
         <div class="flex flex-col gap-3">
-          <a href="/sobre" class="text-sm text-stone-500 hover:text-pedal-600 transition-colors">Sobre</a>
-          <a href="/contacto" class="text-sm text-stone-500 hover:text-pedal-600 transition-colors">Contacto</a>
-          <a href="/privacidade" class="text-sm text-stone-500 hover:text-pedal-600 transition-colors">Privacidade</a>
+          <a href="/sobre" class="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">Sobre</a>
+          <a href="/contacto" class="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">Contacto</a>
+          <a href="/privacidade" class="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">Privacidade</a>
+          <a href="/rss.xml" class="text-sm text-neutral-500 hover:text-neutral-900 transition-colors">RSS</a>
         </div>
       </div>
     </div>
 
-    <!-- Bottom bar -->
-    <div class="py-6 border-t border-stone-200/40 flex flex-col sm:flex-row justify-between items-center gap-3">
-      <p class="text-xs text-stone-300">&copy; {year} pedal.pt</p>
-      <p class="text-xs text-stone-300">
-        Feito com pernas cansadas e cafés longos em Sintra-Cascais.
-      </p>
+    <!-- Bottom -->
+    <div class="py-6 border-t border-neutral-100 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <p class="text-[11px] text-neutral-300">&copy; {year} pedal.pt</p>
+      <p class="text-[11px] text-neutral-300">Sintra-Cascais, Portugal.</p>
     </div>
   </div>
 </footer>

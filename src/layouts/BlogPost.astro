@@ -14,110 +14,91 @@ interface Props {
 
 const { title, description, date, updated, category, tags = [], image, readingTime } = Astro.props;
 
-const categoryMap: Record<string, { label: string; class: string; href: string }> = {
-  'rotas': { label: 'Rotas', class: 'category-badge-routes', href: '/categoria/rotas' },
-  'gear': { label: 'Gear', class: 'category-badge-gear', href: '/categoria/gear' },
-  'guias': { label: 'Guias', class: 'category-badge-guides', href: '/categoria/guias' },
-  'bikepacking': { label: 'Bikepacking', class: 'category-badge-bikepacking', href: '/categoria/bikepacking' },
+const catLabels: Record<string, string> = {
+  'rotas': 'Rotas', 'gear': 'Gear', 'guias': 'Guias', 'bikepacking': 'Bikepacking',
 };
 
-const cat = categoryMap[category] || { label: category, class: 'category-badge-guides', href: '#' };
-
-const formattedDate = date.toLocaleDateString('pt-PT', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-});
+const formattedDate = date.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
 
 <BaseLayout title={title} description={description} image={image} type="article">
 
-  <!-- Reading progress bar -->
-  <div id="reading-progress" class="reading-progress" style="width: 0%"></div>
+  <div id="progress-bar" class="reading-bar" style="width:0%"></div>
 
-  <article>
-    <!-- Hero image -->
-    {image && (
-      <div class="w-full max-w-5xl mx-auto px-5 mt-8">
-        <div class="aspect-[21/9] rounded-2xl overflow-hidden shadow-xl">
-          <img src={image} alt={title} class="w-full h-full object-cover" />
-        </div>
-      </div>
-    )}
+  <article class="pt-12">
 
-    <!-- Header -->
-    <header class="max-w-2xl mx-auto px-5 mt-12 mb-12">
-      <div class="reveal flex items-center gap-3 mb-6">
-        <a href={cat.href} class={`category-badge ${cat.class} hover:opacity-80 transition-opacity`}>
-          {cat.label}
+    <!-- Meta -->
+    <header class="max-w-2xl mx-auto px-6 mb-12">
+      <div class="fade-up flex items-center gap-3 mb-6 text-xs">
+        <a href={`/categoria/${category}`} class="font-mono tracking-widest uppercase text-accent-500 hover:text-accent-700 transition-colors">
+          {catLabels[category] || category}
         </a>
-        <span class="text-stone-200">|</span>
-        <time datetime={date.toISOString()} class="text-sm text-stone-400">{formattedDate}</time>
+        <span class="text-neutral-200">/</span>
+        <time datetime={date.toISOString()} class="text-neutral-400">{formattedDate}</time>
         {readingTime && (
           <>
-            <span class="text-stone-200">|</span>
-            <span class="text-sm text-stone-400">{readingTime} min</span>
+            <span class="text-neutral-200">/</span>
+            <span class="text-neutral-400">{readingTime} min</span>
           </>
         )}
       </div>
 
-      <h1 class="reveal reveal-delay-1 font-display text-stone-950 leading-[1.1] mb-6" style="font-size: clamp(2rem, 4.5vw, 3.25rem);">
+      <h1 class="fade-up delay-1 font-display font-bold text-neutral-900 leading-none mb-6" style="font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.035em;">
         {title}
       </h1>
 
-      <p class="reveal reveal-delay-2 text-lg text-stone-400 leading-relaxed" style="font-size: 1.15rem;">
+      <p class="fade-up delay-2 text-neutral-400 leading-relaxed" style="font-size: 1.125rem;">
         {description}
       </p>
     </header>
 
-    <!-- Body -->
-    <div class="max-w-2xl mx-auto px-5 prose">
+    <!-- Hero image -->
+    {image && (
+      <div class="fade-up delay-3 max-w-5xl mx-auto px-6 mb-16">
+        <div class="rounded-2xl overflow-hidden">
+          <img src={image} alt={title} class="w-full object-cover" style="max-height: 500px;" />
+        </div>
+      </div>
+    )}
+
+    <!-- Content -->
+    <div class="max-w-2xl mx-auto px-6 prose">
       <slot />
     </div>
 
     <!-- Tags -->
     {tags.length > 0 && (
-      <div class="max-w-2xl mx-auto px-5 mt-16 pt-8 border-t border-stone-200/60">
+      <div class="max-w-2xl mx-auto px-6 mt-20 pt-8 border-t border-neutral-100">
         <div class="flex flex-wrap gap-2">
           {tags.map(tag => (
-            <span class="text-xs text-stone-400 bg-stone-100 px-3 py-1.5 rounded-full hover:bg-stone-200 transition-colors cursor-default">
-              #{tag}
+            <span class="font-mono text-[10px] tracking-widest uppercase text-neutral-400 border border-neutral-150 px-3 py-1.5 rounded-full">
+              {tag}
             </span>
           ))}
         </div>
       </div>
     )}
 
-    <!-- Author card -->
-    <div class="max-w-2xl mx-auto px-5 mt-12 mb-20">
-      <div class="relative overflow-hidden bg-gradient-to-br from-stone-100/80 to-stone-50 rounded-2xl p-7 border border-stone-200/50">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-pedal-200/20 rounded-full blur-2xl"></div>
-        <div class="relative flex items-start gap-5">
-          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-pedal-500 to-pedal-700 flex items-center justify-center flex-shrink-0 shadow-lg shadow-pedal-600/20">
-            <span class="font-display text-white text-xl">J</span>
-          </div>
-          <div>
-            <p class="font-medium text-stone-900 mb-1">Escrito por João</p>
-            <p class="text-sm text-stone-500 leading-relaxed mb-3">
-              Baseado em Sintra-Cascais. Pedala por estas estradas durante o ano todo e escreve sobre o que encontra.
-            </p>
-            <a href="/sobre" class="text-sm text-pedal-600 hover:text-pedal-700 transition-colors nav-link inline-block">
-              Saber mais
-            </a>
-          </div>
+    <!-- Author -->
+    <div class="max-w-2xl mx-auto px-6 mt-12 mb-24">
+      <div class="flex items-center gap-4 py-6 border-t border-neutral-100">
+        <div class="w-11 h-11 rounded-full bg-neutral-900 flex items-center justify-center flex-shrink-0">
+          <span class="font-display font-semibold text-white text-sm">J</span>
+        </div>
+        <div>
+          <p class="font-display font-medium text-neutral-900 text-sm">João</p>
+          <p class="text-xs text-neutral-400">Sintra-Cascais, Portugal</p>
         </div>
       </div>
     </div>
   </article>
 
   <script>
-    // Reading progress
-    const bar = document.getElementById('reading-progress');
+    const bar = document.getElementById('progress-bar');
     if (bar) {
       window.addEventListener('scroll', () => {
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = (window.scrollY / docHeight) * 100;
-        bar.style.width = Math.min(progress, 100) + '%';
+        const h = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = Math.min((window.scrollY / h) * 100, 100) + '%';
       }, { passive: true });
     }
   </script>

@@ -2,34 +2,39 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Contacto" description="Entra em contacto. Questões sobre rotas, planeamento de viagens de ciclismo, ou colaborações.">
-  <section class="max-w-2xl mx-auto px-5 pt-16 pb-20">
-    <h1 class="font-display text-4xl sm:text-5xl text-stone-950 leading-tight mb-8">Contacto</h1>
+<BaseLayout title="Contacto" description="Entra em contacto.">
+  <section class="max-w-2xl mx-auto px-6 pt-20 pb-32">
+    <div class="fade-up mb-12">
+      <p class="font-mono text-[10px] tracking-widest uppercase text-accent-500 mb-4">Contacto</p>
+      <h1 class="font-display font-bold text-neutral-900 leading-none" style="font-size: clamp(2rem, 4vw, 2.75rem); letter-spacing: -0.035em;">
+        Vamos falar.
+      </h1>
+    </div>
 
     <div class="prose">
       <p>
         Se estás a planear uma viagem de bicicleta a Portugal, tens uma dúvida sobre alguma das rotas do site, ou queres discutir uma colaboração, escreve-me.
       </p>
+    </div>
 
-      <div class="bg-stone-100/60 rounded-xl p-6 my-8 not-prose">
-        <div class="space-y-4">
-          <div>
-            <p class="text-xs font-semibold tracking-wider uppercase text-stone-400 mb-1">Email</p>
-            <p class="text-stone-900 font-medium">[O TEU EMAIL]</p>
-          </div>
-          <div>
-            <p class="text-xs font-semibold tracking-wider uppercase text-stone-400 mb-1">Strava</p>
-            <p class="text-stone-900 font-medium">[O TEU PERFIL STRAVA]</p>
-          </div>
-          <div>
-            <p class="text-xs font-semibold tracking-wider uppercase text-stone-400 mb-1">Instagram</p>
-            <p class="text-stone-900 font-medium">[O TEU INSTAGRAM]</p>
-          </div>
-        </div>
+    <div class="mt-10 space-y-6">
+      <div class="border-b border-neutral-100 pb-5">
+        <p class="font-mono text-[10px] tracking-widest uppercase text-neutral-300 mb-2">Email</p>
+        <p class="text-neutral-900 font-medium">[O TEU EMAIL]</p>
       </div>
+      <div class="border-b border-neutral-100 pb-5">
+        <p class="font-mono text-[10px] tracking-widest uppercase text-neutral-300 mb-2">Strava</p>
+        <p class="text-neutral-900 font-medium">[O TEU PERFIL STRAVA]</p>
+      </div>
+      <div class="border-b border-neutral-100 pb-5">
+        <p class="font-mono text-[10px] tracking-widest uppercase text-neutral-300 mb-2">Instagram</p>
+        <p class="text-neutral-900 font-medium">[O TEU INSTAGRAM]</p>
+      </div>
+    </div>
 
+    <div class="prose mt-10">
       <p>
-        Respondo normalmente em 48 horas. Se a pergunta é sobre uma rota específica, menciona qual para eu te poder dar a informação mais útil possível.
+        Respondo normalmente em 48 horas. Se a pergunta é sobre uma rota específica, menciona qual.
       </p>
     </div>
   </section>
