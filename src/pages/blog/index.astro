@@ -7,30 +7,34 @@ const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const sorted = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<BaseLayout title="Journal" description="Todos os artigos sobre ciclismo em Portugal.">
-  <section class="max-w-7xl mx-auto px-6 lg:px-10 pt-20 pb-32">
-    <div class="fade-up mb-16">
-      <p class="font-mono text-[10px] tracking-widest uppercase text-accent-500 mb-4">Journal</p>
-      <h1 class="font-display font-bold text-neutral-900 leading-none" style="font-size: clamp(2rem, 4vw, 2.75rem); letter-spacing: -0.035em;">
-        Todos os artigos.
-      </h1>
-    </div>
+<BaseLayout title="Artigos" description="Todos os artigos sobre ciclismo em Portugal.">
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-neutral-100 via-white to-white" style="height: 300px;"></div>
 
-    {sorted.length === 0 ? (
-      <p class="text-neutral-400 text-center py-24">Em breve.</p>
-    ) : (
-      <div class="stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
-        {sorted.map(post => (
-          <PostCard
-            title={post.data.title}
-            excerpt={post.data.description}
-            slug={post.slug}
-            date={post.data.date}
-            category={post.data.category}
-            image={post.data.image}
-          />
-        ))}
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-10 pt-32 pb-32">
+      <div class="fade-up mb-16">
+        <p class="font-mono text-[10px] tracking-widest uppercase text-accent-500 mb-4">Artigos</p>
+        <h1 class="font-display font-bold text-neutral-900 leading-none" style="font-size: clamp(2rem, 4vw, 2.75rem); letter-spacing: -0.035em;">
+          Todos os artigos.
+        </h1>
       </div>
-    )}
+
+      {sorted.length === 0 ? (
+        <p class="text-neutral-400 text-center py-24">Em breve.</p>
+      ) : (
+        <div class="stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+          {sorted.map(post => (
+            <PostCard
+              title={post.data.title}
+              excerpt={post.data.description}
+              slug={post.slug}
+              date={post.data.date}
+              category={post.data.category}
+              image={post.data.image}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   </section>
 </BaseLayout>

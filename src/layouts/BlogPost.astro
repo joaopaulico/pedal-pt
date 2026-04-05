@@ -25,10 +25,11 @@ const formattedDate = date.toLocaleDateString('pt-PT', { day: 'numeric', month: 
 
   <div id="progress-bar" class="reading-bar" style="width:0%"></div>
 
-  <article class="pt-12">
+  <article class="pt-12 relative">
+    <div class="absolute inset-0 bg-gradient-to-b from-neutral-100 via-white to-white" style="height: 400px;"></div>
 
     <!-- Meta -->
-    <header class="max-w-2xl mx-auto px-6 mb-12">
+    <header class="relative max-w-2xl mx-auto px-6 mb-12">
       <div class="fade-up flex items-center gap-3 mb-6 text-xs">
         <a href={`/categoria/${category}`} class="font-mono tracking-widest uppercase text-accent-500 hover:text-accent-700 transition-colors">
           {catLabels[category] || category}

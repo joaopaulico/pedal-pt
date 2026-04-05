@@ -155,26 +155,6 @@
   transition: transform 0.1s linear;
 }
 
-/* Cyclist float animation */
-.cyclist-float {
-  animation: cyclist-bob 5s ease-in-out infinite;
-}
-
-@keyframes cyclist-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Spinning wheels on bike SVG */
-.wheel-spin {
-  animation: wheel-rotate 4s linear infinite;
-}
-
-@keyframes wheel-rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 /* Smooth scale on hover */
 .hover-lift {
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
