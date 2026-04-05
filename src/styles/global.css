@@ -194,6 +194,25 @@
 }
 
 /* ═══════════════════════════════════════════════ */
+/*  HEADER DARK MODE (homepage)                   */
+/* ═══════════════════════════════════════════════ */
+
+.header-dark a,
+.header-dark span,
+.header-dark button span {
+  color: #e5e5e5 !important;
+}
+
+.header-dark .nav-link {
+  color: #a3a3a3 !important;
+}
+
+.header-dark .nav-link.active,
+.header-dark .nav-link:hover {
+  color: #ffffff !important;
+}
+
+/* ═══════════════════════════════════════════════ */
 /*  NAV LINK UNDERLINE                            */
 /* ═══════════════════════════════════════════════ */
 

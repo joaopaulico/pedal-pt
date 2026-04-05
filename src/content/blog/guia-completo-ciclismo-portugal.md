@@ -4,7 +4,7 @@ description: "Tudo o que precisas de saber para pedalar em Portugal: as melhores
 date: 2026-04-05
 category: "guias"
 tags: ["portugal", "road-cycling", "gravel", "lisboa", "algarve", "douro"]
-featured: true
+featured: false
 readingTime: 12
 draft: false
 ---

@@ -78,15 +78,22 @@ function isActive(href: string) {
   });
 
   const header = document.getElementById('site-header');
-  window.addEventListener('scroll', () => {
+  const isHomepage = window.location.pathname === '/';
+
+  function updateHeader() {
     if (window.scrollY > 60) {
       header?.classList.add('glass');
+      header?.classList.remove('header-dark');
       header!.style.borderBottomColor = 'rgba(0,0,0,0.05)';
     } else {
       header?.classList.remove('glass');
+      if (isHomepage) header?.classList.add('header-dark');
       header!.style.borderBottomColor = 'transparent';
     }
-  }, { passive: true });
+  }
+
+  if (isHomepage) header?.classList.add('header-dark');
+  window.addEventListener('scroll', updateHeader, { passive: true });
 
   // Intersection observer for fade animations
   const observer = new IntersectionObserver((entries) => {

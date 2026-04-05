@@ -11,141 +11,131 @@ const recent = sorted.slice(0, 6);
 <BaseLayout title="pedal.pt" description="Ciclismo em Portugal, visto de dentro.">
 
   <!-- ════════ HERO ════════ -->
-  <section class="relative min-h-screen flex items-center overflow-hidden">
-    <!-- Soft background -->
-    <div class="absolute inset-0 bg-gradient-to-b from-neutral-100 via-white to-white"></div>
+  <section class="relative flex flex-col items-center justify-center overflow-hidden bg-[#1c1c1c]" style="min-height: 100vh;">
 
-    <div class="relative max-w-7xl mx-auto px-6 lg:px-10 pt-32 pb-20 w-full">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-
-        <!-- Left: text (5 cols) -->
-        <div class="lg:col-span-5">
-          <h1 class="fade-up font-display font-bold text-neutral-900 leading-none mb-6" style="font-size: clamp(2.8rem, 5.5vw, 4.5rem); letter-spacing: -0.04em;">
-            Pedalar e<br/>descobrir<br/>Portugal.
-          </h1>
-
-          <p class="fade-up delay-1 text-neutral-500 max-w-sm mb-10" style="font-size: 1.05rem; line-height: 1.75;">
-            Rotas reais, equipamento testado, guias escritos por quem pedala cá o ano inteiro. Sem conversa a mais.
-          </p>
-
-          <div class="fade-up delay-2 flex items-center gap-5">
-            <a href="/blog" class="group inline-flex items-center gap-3 bg-neutral-900 text-white text-sm font-medium px-7 py-3.5 rounded-full transition-all duration-300 hover:bg-accent-600">
-              Explorar
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" class="transition-transform duration-300 group-hover:translate-x-1">
-                <path d="M1 7h12M8 2l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-            <a href="/sobre" class="text-sm text-neutral-400 hover:text-neutral-900 transition-colors duration-300 nav-link">
-              Sobre o projecto
-            </a>
-          </div>
-        </div>
-
-        <!-- Right: video in rounded container (7 cols) -->
-        <div class="fade-up delay-1 lg:col-span-7">
-          <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-neutral-200/60" style="aspect-ratio: 16/9;">
-            <video
-              autoplay
-              muted
-              loop
-              playsinline
-              class="absolute inset-0 w-full h-full object-cover"
-            >
-              <source src="/video.mp4" type="video/mp4" />
-            </video>
-            <!-- Subtle overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-          </div>
-        </div>
+    <!-- Video container: centered, wide, cinematic crop -->
+    <div class="fade-up relative w-full max-w-6xl mx-auto px-6 lg:px-10 pt-28">
+      <div class="relative rounded-xl overflow-hidden" style="aspect-ratio: 2.8/1;">
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          class="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/video.mp4" type="video/mp4" />
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#1c1c1c]/40 via-transparent to-[#1c1c1c]/20"></div>
       </div>
+    </div>
 
-      <!-- Scroll indicator -->
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-neutral-300">
-        <span class="text-[10px] tracking-widest uppercase">Scroll</span>
-        <div class="w-px h-8 bg-gradient-to-b from-neutral-300 to-transparent animate-pulse"></div>
+    <!-- Text below video -->
+    <div class="relative max-w-6xl mx-auto px-6 lg:px-10 pt-12 pb-6 text-center">
+      <h1 class="fade-up delay-1 font-display font-bold text-white leading-tight mb-5" style="font-size: clamp(2.2rem, 4.5vw, 3.5rem); letter-spacing: -0.04em;">
+        Pedalar e descobrir Portugal.
+      </h1>
+
+      <p class="fade-up delay-2 text-neutral-400 max-w-lg mx-auto mb-10" style="font-size: 1rem; line-height: 1.75;">
+        Rotas reais, equipamento testado, guias escritos por quem pedala cá o ano inteiro. Sem conversa a mais.
+      </p>
+
+      <div class="fade-up delay-3 flex items-center justify-center gap-5">
+        <a href="/blog" class="group inline-flex items-center gap-3 bg-white text-neutral-900 text-sm font-medium px-7 py-3.5 rounded-full transition-all duration-300 hover:bg-accent-400 hover:text-white">
+          Explorar
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" class="transition-transform duration-300 group-hover:translate-x-1">
+            <path d="M1 7h12M8 2l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="/sobre" class="text-sm text-neutral-500 hover:text-white transition-colors duration-300">
+          Sobre o projecto
+        </a>
       </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="relative pb-10 pt-8 flex flex-col items-center gap-2 text-neutral-600">
+      <span class="text-[10px] tracking-widest uppercase">Scroll</span>
+      <div class="w-px h-8 bg-gradient-to-b from-neutral-600 to-transparent animate-pulse"></div>
     </div>
   </section>
 
-  <!-- ════════ DIVIDER ════════ -->
-  <div class="max-w-7xl mx-auto px-6 lg:px-10">
-    <div class="h-px bg-neutral-100"></div>
-  </div>
-
   <!-- ════════ ARTICLES GRID ════════ -->
   {recent.length > 0 && (
-    <section class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
-      <div class="flex items-end justify-between mb-14">
-        <div>
-          <p class="font-mono text-[10px] tracking-widest uppercase text-neutral-300 mb-2">Artigos</p>
-          <h2 class="font-display font-semibold text-neutral-900" style="font-size: 1.75rem; letter-spacing: -0.03em;">Artigos recentes</h2>
+    <section class="bg-[#1c1c1c]">
+      <div class="max-w-6xl mx-auto px-6 lg:px-10 py-24">
+        <div class="flex items-end justify-between mb-14">
+          <div>
+            <p class="font-mono text-[10px] tracking-widest uppercase text-accent-500 mb-2">Artigos</p>
+            <h2 class="font-display font-semibold text-white" style="font-size: 1.75rem; letter-spacing: -0.03em;">Artigos recentes</h2>
+          </div>
+          <a href="/blog" class="hidden sm:inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-white transition-colors nav-link">
+            Ver todos
+          </a>
         </div>
-        <a href="/blog" class="hidden sm:inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-neutral-900 transition-colors nav-link">
-          Ver todos
-        </a>
-      </div>
-      <div class="stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
-        {recent.map(post => (
-          <PostCard
-            title={post.data.title}
-            excerpt={post.data.description}
-            slug={post.slug}
-            date={post.data.date}
-            category={post.data.category}
-            image={post.data.image}
-          />
-        ))}
+        <div class="stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14 text-white">
+          {recent.map(post => (
+            <PostCard
+              title={post.data.title}
+              excerpt={post.data.description}
+              slug={post.slug}
+              date={post.data.date}
+              category={post.data.category}
+              image={post.data.image}
+            />
+          ))}
+        </div>
       </div>
     </section>
   )}
 
-  <!-- ════════ DIVIDER ════════ -->
-  <div class="max-w-7xl mx-auto px-6 lg:px-10">
-    <div class="h-px bg-neutral-100"></div>
-  </div>
-
   <!-- ════════ CATEGORIES ════════ -->
-  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
-    <div class="fade-up mb-14">
-      <p class="font-mono text-[10px] tracking-widest uppercase text-neutral-300 mb-2">Categorias</p>
-      <h2 class="font-display font-semibold text-neutral-900" style="font-size: 1.75rem; letter-spacing: -0.03em;">Explora por tema</h2>
-    </div>
-    <div class="stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      <a href="/categoria/rotas" class="group relative overflow-hidden rounded-2xl border border-neutral-100 bg-white p-8 flex flex-col justify-end min-h-[180px] hover-lift transition-colors hover:border-accent-200">
-        <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10 transition-opacity group-hover:opacity-20" style="background: radial-gradient(circle, #269b6c, transparent 70%);"></div>
-        <div class="relative">
-          <p class="font-mono text-[10px] tracking-widest uppercase text-accent-500 mb-2">01</p>
-          <h3 class="font-display font-semibold text-neutral-900 text-lg tracking-tight">Rotas</h3>
-          <p class="text-neutral-400 text-sm mt-1">Percursos detalhados com GPS e fotos reais.</p>
-        </div>
-      </a>
+  <section class="bg-[#1c1c1c]">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 pb-32">
+      <!-- Divider -->
+      <div class="h-px bg-neutral-800 mb-24"></div>
 
-      <a href="/categoria/gear" class="group relative overflow-hidden rounded-2xl border border-neutral-100 bg-white p-8 flex flex-col justify-end min-h-[180px] hover-lift transition-colors hover:border-accent-200">
-        <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10 transition-opacity group-hover:opacity-20" style="background: radial-gradient(circle, #e8c698, transparent 70%);"></div>
-        <div class="relative">
-          <p class="font-mono text-[10px] tracking-widest uppercase text-yellow-600 mb-2">02</p>
-          <h3 class="font-display font-semibold text-neutral-900 text-lg tracking-tight">Gear</h3>
-          <p class="text-neutral-400 text-sm mt-1">Reviews honestas de equipamento.</p>
-        </div>
-      </a>
+      <div class="fade-up mb-14">
+        <p class="font-mono text-[10px] tracking-widest uppercase text-accent-500 mb-2">Categorias</p>
+        <h2 class="font-display font-semibold text-white" style="font-size: 1.75rem; letter-spacing: -0.03em;">Explora por tema</h2>
+      </div>
 
-      <a href="/categoria/guias" class="group relative overflow-hidden rounded-2xl border border-neutral-100 bg-white p-8 flex flex-col justify-end min-h-[180px] hover-lift transition-colors hover:border-accent-200">
-        <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10 transition-opacity group-hover:opacity-20" style="background: radial-gradient(circle, #a3a3a3, transparent 70%);"></div>
-        <div class="relative">
-          <p class="font-mono text-[10px] tracking-widest uppercase text-neutral-400 mb-2">03</p>
-          <h3 class="font-display font-semibold text-neutral-900 text-lg tracking-tight">Guias</h3>
-          <p class="text-neutral-400 text-sm mt-1">Seguranca, clima, logistica, planeamento.</p>
-        </div>
-      </a>
+      <div class="stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <a href="/categoria/rotas" class="group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/50 p-8 flex flex-col justify-end min-h-[180px] hover-lift transition-all hover:border-accent-700 hover:bg-neutral-900">
+          <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10 transition-opacity group-hover:opacity-25" style="background: radial-gradient(circle, #269b6c, transparent 70%);"></div>
+          <div class="relative">
+            <p class="font-mono text-[10px] tracking-widest uppercase text-accent-500 mb-2">01</p>
+            <h3 class="font-display font-semibold text-white text-lg tracking-tight">Rotas</h3>
+            <p class="text-neutral-500 text-sm mt-1">Percursos detalhados com GPS e fotos reais.</p>
+          </div>
+        </a>
 
-      <a href="/categoria/bikepacking" class="group relative overflow-hidden rounded-2xl border border-neutral-100 bg-white p-8 flex flex-col justify-end min-h-[180px] hover-lift transition-colors hover:border-accent-200">
-        <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10 transition-opacity group-hover:opacity-20" style="background: radial-gradient(circle, #78d1ab, transparent 70%);"></div>
-        <div class="relative">
-          <p class="font-mono text-[10px] tracking-widest uppercase text-accent-400 mb-2">04</p>
-          <h3 class="font-display font-semibold text-neutral-900 text-lg tracking-tight">Bikepacking</h3>
-          <p class="text-neutral-400 text-sm mt-1">Aventuras de varios dias em Portugal.</p>
-        </div>
-      </a>
+        <a href="/categoria/gear" class="group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/50 p-8 flex flex-col justify-end min-h-[180px] hover-lift transition-all hover:border-yellow-800 hover:bg-neutral-900">
+          <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10 transition-opacity group-hover:opacity-25" style="background: radial-gradient(circle, #e8c698, transparent 70%);"></div>
+          <div class="relative">
+            <p class="font-mono text-[10px] tracking-widest uppercase text-yellow-600 mb-2">02</p>
+            <h3 class="font-display font-semibold text-white text-lg tracking-tight">Gear</h3>
+            <p class="text-neutral-500 text-sm mt-1">Reviews honestas de equipamento.</p>
+          </div>
+        </a>
+
+        <a href="/categoria/guias" class="group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/50 p-8 flex flex-col justify-end min-h-[180px] hover-lift transition-all hover:border-neutral-700 hover:bg-neutral-900">
+          <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10 transition-opacity group-hover:opacity-25" style="background: radial-gradient(circle, #a3a3a3, transparent 70%);"></div>
+          <div class="relative">
+            <p class="font-mono text-[10px] tracking-widest uppercase text-neutral-500 mb-2">03</p>
+            <h3 class="font-display font-semibold text-white text-lg tracking-tight">Guias</h3>
+            <p class="text-neutral-500 text-sm mt-1">Seguranca, clima, logistica, planeamento.</p>
+          </div>
+        </a>
+
+        <a href="/categoria/bikepacking" class="group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/50 p-8 flex flex-col justify-end min-h-[180px] hover-lift transition-all hover:border-accent-800 hover:bg-neutral-900">
+          <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10 transition-opacity group-hover:opacity-25" style="background: radial-gradient(circle, #78d1ab, transparent 70%);"></div>
+          <div class="relative">
+            <p class="font-mono text-[10px] tracking-widest uppercase text-accent-400 mb-2">04</p>
+            <h3 class="font-display font-semibold text-white text-lg tracking-tight">Bikepacking</h3>
+            <p class="text-neutral-500 text-sm mt-1">Aventuras de varios dias em Portugal.</p>
+          </div>
+        </a>
+      </div>
     </div>
   </section>
 
