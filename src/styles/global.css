@@ -157,28 +157,17 @@
 
 /* Cyclist float animation */
 .cyclist-float {
-  animation: cyclist-bob 4s ease-in-out infinite;
+  animation: cyclist-bob 5s ease-in-out infinite;
 }
 
 @keyframes cyclist-bob {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  50% { transform: translateY(-10px); }
 }
 
-/* Mini bike ride across screen */
-.bike-ride {
-  animation: ride-across 12s linear infinite;
-  white-space: nowrap;
-}
-
-@keyframes ride-across {
-  0% { transform: translateX(-80px); }
-  100% { transform: translateX(calc(100vw + 80px)); }
-}
-
-/* Spinning wheel */
-.bike-wheel-spin {
-  animation: wheel-rotate 3s linear infinite;
+/* Spinning wheels on bike SVG */
+.wheel-spin {
+  animation: wheel-rotate 4s linear infinite;
 }
 
 @keyframes wheel-rotate {

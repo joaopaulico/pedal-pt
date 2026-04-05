@@ -17,23 +17,19 @@ const recent = sorted.slice(0, 6);
     <div class="absolute bottom-1/4 right-0 w-[400px] h-[400px] rounded-full opacity-10" style="background: radial-gradient(circle, #44b687 0%, transparent 70%);"></div>
 
     <div class="relative max-w-7xl mx-auto px-6 lg:px-10 py-32 w-full">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
         <!-- Left: text -->
         <div>
-          <p class="fade-up font-mono text-xs tracking-widest uppercase text-accent-400 mb-8">
-            Sintra-Cascais / Portugal
-          </p>
-
-          <h1 class="fade-up delay-1 font-display font-bold text-white leading-none mb-8" style="font-size: clamp(2.8rem, 6vw, 5rem); letter-spacing: -0.04em;">
+          <h1 class="fade-up font-display font-bold text-white leading-none mb-8" style="font-size: clamp(2.8rem, 6vw, 5rem); letter-spacing: -0.04em;">
             Pedalar e descobrir<br/>Portugal.
           </h1>
 
-          <p class="fade-up delay-2 text-neutral-400 max-w-md mb-12" style="font-size: 1.1rem; line-height: 1.7;">
-            Rotas reais, gear testado, guias sem fluff. Escrito por quem pedala cá o ano inteiro.
+          <p class="fade-up delay-1 text-neutral-400 max-w-md mb-12" style="font-size: 1.1rem; line-height: 1.7;">
+            Rotas reais, equipamento testado, guias escritos por quem pedala cá o ano inteiro. Sem conversa a mais.
           </p>
 
-          <div class="fade-up delay-3 flex items-center gap-5">
+          <div class="fade-up delay-2 flex items-center gap-5">
             <a href="/blog" class="group inline-flex items-center gap-3 bg-white text-neutral-900 text-sm font-medium px-7 py-3.5 rounded-full transition-all duration-300 hover:bg-accent-400 hover:text-white">
               Explorar
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" class="transition-transform duration-300 group-hover:translate-x-1">
@@ -46,20 +42,79 @@ const recent = sorted.slice(0, 6);
           </div>
         </div>
 
-        <!-- Right: cartoon cyclist -->
-        <div class="fade-up delay-2 relative flex justify-center lg:justify-end">
+        <!-- Right: animated minimal bike -->
+        <div class="fade-up delay-2 flex justify-center lg:justify-end">
           <div class="cyclist-float">
-            <img src="/cyclist.svg" alt="Ciclista cartoon numa Canyon gravel" class="w-full max-w-md lg:max-w-lg drop-shadow-2xl" />
-          </div>
-          <!-- Animated small wheel orbiting -->
-          <div class="absolute -bottom-4 left-10 lg:left-0 bike-wheel-spin">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-              <circle cx="20" cy="20" r="16" stroke="#269b6c" stroke-width="2" opacity="0.3"/>
-              <circle cx="20" cy="20" r="3" fill="#269b6c" opacity="0.3"/>
-              <line x1="20" y1="4" x2="20" y2="10" stroke="#269b6c" stroke-width="1" opacity="0.2"/>
-              <line x1="20" y1="30" x2="20" y2="36" stroke="#269b6c" stroke-width="1" opacity="0.2"/>
-              <line x1="4" y1="20" x2="10" y2="20" stroke="#269b6c" stroke-width="1" opacity="0.2"/>
-              <line x1="30" y1="20" x2="36" y2="20" stroke="#269b6c" stroke-width="1" opacity="0.2"/>
+            <svg viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full max-w-xs lg:max-w-sm" aria-label="Bicicleta animada">
+
+              <!-- Back wheel -->
+              <g class="wheel-spin" style="transform-origin: 80px 140px;">
+                <circle cx="80" cy="140" r="52" stroke="#269b6c" stroke-width="3" opacity="0.7"/>
+                <circle cx="80" cy="140" r="48" stroke="#c4a06a" stroke-width="5" opacity="0.4"/>
+                <circle cx="80" cy="140" r="6" fill="#269b6c" opacity="0.8"/>
+                <!-- Spokes -->
+                <line x1="80" y1="92" x2="80" y2="118" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+                <line x1="80" y1="162" x2="80" y2="188" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+                <line x1="32" y1="140" x2="58" y2="140" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+                <line x1="102" y1="140" x2="128" y2="140" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+                <line x1="46" y1="106" x2="63" y2="123" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+                <line x1="114" y1="174" x2="97" y2="157" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+                <line x1="114" y1="106" x2="97" y2="123" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+                <line x1="46" y1="174" x2="63" y2="157" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+              </g>
+
+              <!-- Front wheel -->
+              <g class="wheel-spin" style="transform-origin: 240px 140px;">
+                <circle cx="240" cy="140" r="52" stroke="#269b6c" stroke-width="3" opacity="0.7"/>
+                <circle cx="240" cy="140" r="48" stroke="#c4a06a" stroke-width="5" opacity="0.4"/>
+                <circle cx="240" cy="140" r="6" fill="#269b6c" opacity="0.8"/>
+                <!-- Spokes -->
+                <line x1="240" y1="92" x2="240" y2="118" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+                <line x1="240" y1="162" x2="240" y2="188" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+                <line x1="192" y1="140" x2="218" y2="140" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+                <line x1="262" y1="140" x2="288" y2="140" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+                <line x1="206" y1="106" x2="223" y2="123" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+                <line x1="274" y1="174" x2="257" y2="157" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+                <line x1="274" y1="106" x2="257" y2="123" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+                <line x1="206" y1="174" x2="223" y2="157" stroke="#269b6c" stroke-width="0.8" opacity="0.4"/>
+              </g>
+
+              <!-- Frame -->
+              <!-- Seat tube -->
+              <line x1="130" y1="80" x2="140" y2="140" stroke="#8fb5a1" stroke-width="4" stroke-linecap="round"/>
+              <!-- Top tube -->
+              <line x1="130" y1="80" x2="215" y2="78" stroke="#8fb5a1" stroke-width="3.5" stroke-linecap="round"/>
+              <!-- Down tube -->
+              <line x1="145" y1="95" x2="220" y2="138" stroke="#8fb5a1" stroke-width="4" stroke-linecap="round"/>
+              <!-- Chainstay -->
+              <line x1="140" y1="140" x2="80" y2="140" stroke="#8fb5a1" stroke-width="3" stroke-linecap="round"/>
+              <!-- Seatstay -->
+              <line x1="130" y1="85" x2="80" y2="140" stroke="#8fb5a1" stroke-width="2.5" stroke-linecap="round"/>
+              <!-- Head tube -->
+              <line x1="215" y1="78" x2="222" y2="100" stroke="#8fb5a1" stroke-width="4" stroke-linecap="round"/>
+              <!-- Fork -->
+              <path d="M222 100 Q232 122 240 140" stroke="#8fb5a1" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+              <!-- Bottom bracket -->
+              <circle cx="140" cy="140" r="6" fill="#555" stroke="#444" stroke-width="1.5"/>
+              <!-- Crank -->
+              <line x1="140" y1="140" x2="128" y2="158" stroke="#555" stroke-width="3" stroke-linecap="round"/>
+              <line x1="140" y1="140" x2="152" y2="124" stroke="#555" stroke-width="3" stroke-linecap="round"/>
+
+              <!-- Seat post + saddle -->
+              <line x1="129" y1="80" x2="126" y2="62" stroke="#555" stroke-width="3" stroke-linecap="round"/>
+              <path d="M112 60 Q126 56 140 60" stroke="#333" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+              <!-- Handlebar -->
+              <line x1="215" y1="78" x2="228" y2="72" stroke="#555" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M228 72 Q238 70 240 78 L240 90" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+              <!-- Motion lines -->
+              <line x1="8" y1="100" x2="28" y2="100" stroke="#269b6c" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+              <line x1="2" y1="120" x2="18" y2="120" stroke="#269b6c" stroke-width="1.5" stroke-linecap="round" opacity="0.2"/>
+              <line x1="10" y1="140" x2="22" y2="140" stroke="#269b6c" stroke-width="1.5" stroke-linecap="round" opacity="0.15"/>
+              <line x1="5" y1="160" x2="16" y2="160" stroke="#269b6c" stroke-width="1.5" stroke-linecap="round" opacity="0.1"/>
+
             </svg>
           </div>
         </div>
@@ -73,27 +128,12 @@ const recent = sorted.slice(0, 6);
     </div>
   </section>
 
-  <!-- ════════ ANIMATED BIKE DIVIDER ════════ -->
-  <div class="relative overflow-hidden py-6 bg-neutral-50">
-    <div class="bike-ride">
-      <svg width="60" height="32" viewBox="0 0 60 32" fill="none" class="inline-block">
-        <!-- Mini bike silhouette -->
-        <circle cx="10" cy="22" r="9" stroke="#269b6c" stroke-width="1.5" fill="none"/>
-        <circle cx="50" cy="22" r="9" stroke="#269b6c" stroke-width="1.5" fill="none"/>
-        <circle cx="10" cy="22" r="2" fill="#269b6c"/>
-        <circle cx="50" cy="22" r="2" fill="#269b6c"/>
-        <path d="M10 22 L24 8 L50 22 M24 8 L30 8 L46 16" stroke="#269b6c" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <line x1="30" y1="8" x2="28" y2="4" stroke="#269b6c" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-    </div>
-  </div>
-
   <!-- ════════ ARTICLES GRID ════════ -->
   {recent.length > 0 && (
     <section class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
       <div class="flex items-end justify-between mb-14">
         <div>
-          <p class="font-mono text-[10px] tracking-widest uppercase text-neutral-300 mb-2">Journal</p>
+          <p class="font-mono text-[10px] tracking-widest uppercase text-neutral-300 mb-2">Artigos</p>
           <h2 class="font-display font-semibold text-neutral-900" style="font-size: 1.75rem; letter-spacing: -0.03em;">Artigos recentes</h2>
         </div>
         <a href="/blog" class="hidden sm:inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-neutral-900 transition-colors nav-link">
@@ -133,8 +173,8 @@ const recent = sorted.slice(0, 6);
         <div class="absolute top-0 right-0 w-32 h-32 rounded-full opacity-15" style="background: radial-gradient(circle, #e8c698, transparent 70%);"></div>
         <div class="relative">
           <p class="font-mono text-[10px] tracking-widest uppercase text-yellow-600 mb-2">02</p>
-          <h3 class="font-display font-semibold text-white text-lg tracking-tight">Gear</h3>
-          <p class="text-neutral-500 text-sm mt-1">Reviews honestas de equipamento.</p>
+          <h3 class="font-display font-semibold text-white text-lg tracking-tight">Equipamento</h3>
+          <p class="text-neutral-500 text-sm mt-1">Opinioes honestas sobre o que usamos.</p>
         </div>
       </a>
 
