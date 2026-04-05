@@ -1,8 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Minimal cycling mark: stylized wheel + crank arm -->
   <circle cx="50" cy="50" r="36" stroke="#269b6c" stroke-width="4"/>
   <circle cx="50" cy="50" r="8" fill="#269b6c"/>
+  <!-- Crank arm + pedal -->
   <line x1="50" y1="50" x2="50" y2="26" stroke="#269b6c" stroke-width="4" stroke-linecap="round"/>
   <circle cx="50" cy="22" r="4" fill="#1a7d57"/>
+  <!-- Speed arc -->
   <path d="M18 30 A40 40 0 0 1 30 18" stroke="#269b6c" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
   <path d="M12 42 A48 48 0 0 1 18 34" stroke="#269b6c" stroke-width="2.5" stroke-linecap="round" opacity="0.3"/>
 </svg>

@@ -5,8 +5,7 @@ import { getCollection } from 'astro:content';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const sorted = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const featured = sorted[0];
-const rest = sorted.slice(1, 7);
+const recent = sorted.slice(0, 6);
 ---
 
 <BaseLayout title="pedal.pt" description="Ciclismo em Portugal, visto de dentro.">
@@ -15,32 +14,54 @@ const rest = sorted.slice(1, 7);
   <section class="relative min-h-screen flex items-center overflow-hidden bg-neutral-950">
     <!-- Gradient orbs -->
     <div class="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full opacity-20" style="background: radial-gradient(circle, #269b6c 0%, transparent 70%);"></div>
-    <div class="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full opacity-10" style="background: radial-gradient(circle, #44b687 0%, transparent 70%);"></div>
+    <div class="absolute bottom-1/4 right-0 w-[400px] h-[400px] rounded-full opacity-10" style="background: radial-gradient(circle, #44b687 0%, transparent 70%);"></div>
 
     <div class="relative max-w-7xl mx-auto px-6 lg:px-10 py-32 w-full">
-      <div class="max-w-3xl">
-        <p class="fade-up font-mono text-xs tracking-widest uppercase text-accent-400 mb-8">
-          Sintra-Cascais / Portugal
-        </p>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-        <h1 class="fade-up delay-1 font-display font-bold text-white leading-none mb-8" style="font-size: clamp(3rem, 7vw, 5.5rem); letter-spacing: -0.04em;">
-          Ciclismo em<br/>Portugal.
-        </h1>
+        <!-- Left: text -->
+        <div>
+          <p class="fade-up font-mono text-xs tracking-widest uppercase text-accent-400 mb-8">
+            Sintra-Cascais / Portugal
+          </p>
 
-        <p class="fade-up delay-2 text-neutral-400 max-w-md mb-12" style="font-size: 1.1rem; line-height: 1.7;">
-          Rotas reais, gear testado, guias escritos por quem pedala cá o ano todo. Sem fluff.
-        </p>
+          <h1 class="fade-up delay-1 font-display font-bold text-white leading-none mb-8" style="font-size: clamp(2.8rem, 6vw, 5rem); letter-spacing: -0.04em;">
+            Pedalar e descobrir<br/>Portugal.
+          </h1>
 
-        <div class="fade-up delay-3 flex items-center gap-5">
-          <a href="/blog" class="group inline-flex items-center gap-3 bg-white text-neutral-900 text-sm font-medium px-7 py-3.5 rounded-full transition-all duration-300 hover:bg-accent-400 hover:text-white">
-            Explorar
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" class="transition-transform duration-300 group-hover:translate-x-1">
-              <path d="M1 7h12M8 2l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"/>
+          <p class="fade-up delay-2 text-neutral-400 max-w-md mb-12" style="font-size: 1.1rem; line-height: 1.7;">
+            Rotas reais, gear testado, guias sem fluff. Escrito por quem pedala cá o ano inteiro.
+          </p>
+
+          <div class="fade-up delay-3 flex items-center gap-5">
+            <a href="/blog" class="group inline-flex items-center gap-3 bg-white text-neutral-900 text-sm font-medium px-7 py-3.5 rounded-full transition-all duration-300 hover:bg-accent-400 hover:text-white">
+              Explorar
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" class="transition-transform duration-300 group-hover:translate-x-1">
+                <path d="M1 7h12M8 2l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a href="/sobre" class="text-sm text-neutral-500 hover:text-white transition-colors duration-300">
+              Sobre o projecto
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: cartoon cyclist -->
+        <div class="fade-up delay-2 relative flex justify-center lg:justify-end">
+          <div class="cyclist-float">
+            <img src="/cyclist.svg" alt="Ciclista cartoon numa Canyon gravel" class="w-full max-w-md lg:max-w-lg drop-shadow-2xl" />
+          </div>
+          <!-- Animated small wheel orbiting -->
+          <div class="absolute -bottom-4 left-10 lg:left-0 bike-wheel-spin">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <circle cx="20" cy="20" r="16" stroke="#269b6c" stroke-width="2" opacity="0.3"/>
+              <circle cx="20" cy="20" r="3" fill="#269b6c" opacity="0.3"/>
+              <line x1="20" y1="4" x2="20" y2="10" stroke="#269b6c" stroke-width="1" opacity="0.2"/>
+              <line x1="20" y1="30" x2="20" y2="36" stroke="#269b6c" stroke-width="1" opacity="0.2"/>
+              <line x1="4" y1="20" x2="10" y2="20" stroke="#269b6c" stroke-width="1" opacity="0.2"/>
+              <line x1="30" y1="20" x2="36" y2="20" stroke="#269b6c" stroke-width="1" opacity="0.2"/>
             </svg>
-          </a>
-          <a href="/sobre" class="text-sm text-neutral-500 hover:text-white transition-colors duration-300">
-            Sobre o projecto
-          </a>
+          </div>
         </div>
       </div>
 
@@ -52,43 +73,23 @@ const rest = sorted.slice(1, 7);
     </div>
   </section>
 
-  <!-- ════════ FEATURED ════════ -->
-  {featured && (
-    <section class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
-      <div class="fade-up grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-        <div>
-          {featured.data.image && (
-            <div class="img-reveal aspect-[4/3]">
-              <img src={featured.data.image} alt={featured.data.title} class="w-full h-full object-cover" />
-            </div>
-          )}
-        </div>
-        <div>
-          <p class="font-mono text-[10px] tracking-widest uppercase text-accent-500 mb-4">Destaque</p>
-          <a href={`/blog/${featured.slug}`} class="group block">
-            <h2 class="font-display font-semibold text-neutral-900 leading-tight mb-4 transition-colors duration-300 group-hover:text-accent-600" style="font-size: clamp(1.5rem, 3vw, 2.25rem); letter-spacing: -0.03em;">
-              {featured.data.title}
-            </h2>
-            <p class="text-neutral-500 leading-relaxed mb-6 max-w-md">{featured.data.description}</p>
-            <span class="inline-flex items-center gap-2 text-sm font-medium text-accent-600 group-hover:gap-3 transition-all duration-300">
-              Ler artigo
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M1 7h12M8 2l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </a>
-        </div>
-      </div>
-    </section>
-  )}
-
-  <!-- ════════ DIVIDER ════════ -->
-  <div class="max-w-7xl mx-auto px-6 lg:px-10">
-    <div class="h-px bg-neutral-100"></div>
+  <!-- ════════ ANIMATED BIKE DIVIDER ════════ -->
+  <div class="relative overflow-hidden py-6 bg-neutral-50">
+    <div class="bike-ride">
+      <svg width="60" height="32" viewBox="0 0 60 32" fill="none" class="inline-block">
+        <!-- Mini bike silhouette -->
+        <circle cx="10" cy="22" r="9" stroke="#269b6c" stroke-width="1.5" fill="none"/>
+        <circle cx="50" cy="22" r="9" stroke="#269b6c" stroke-width="1.5" fill="none"/>
+        <circle cx="10" cy="22" r="2" fill="#269b6c"/>
+        <circle cx="50" cy="22" r="2" fill="#269b6c"/>
+        <path d="M10 22 L24 8 L50 22 M24 8 L30 8 L46 16" stroke="#269b6c" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="30" y1="8" x2="28" y2="4" stroke="#269b6c" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
   </div>
 
   <!-- ════════ ARTICLES GRID ════════ -->
-  {rest.length > 0 && (
+  {recent.length > 0 && (
     <section class="max-w-7xl mx-auto px-6 lg:px-10 py-24">
       <div class="flex items-end justify-between mb-14">
         <div>
@@ -100,7 +101,7 @@ const rest = sorted.slice(1, 7);
         </a>
       </div>
       <div class="stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
-        {rest.map(post => (
+        {recent.map(post => (
           <PostCard
             title={post.data.title}
             excerpt={post.data.description}
