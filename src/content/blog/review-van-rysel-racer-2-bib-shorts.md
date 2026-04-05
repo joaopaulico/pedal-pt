@@ -6,7 +6,7 @@ category: "gear"
 tags: ["van-rysel", "decathlon", "bib-shorts", "review", "equipamento"]
 featured: false
 readingTime: 8
-draft: false
+draft: true
 ---
 
 Vou ser directo: os Van Rysel Racer 2 são, provavelmente, os melhores calções de ciclismo que se compram por menos de 100€. Não são perfeitos. Mas são tão bons que obrigam a perguntar para onde vai o dinheiro quando se gastam 200€ ou 300€ num Assos ou Rapha.

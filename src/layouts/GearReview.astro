@@ -1,0 +1,681 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  productCategory: string;
+  score: number;
+  testPeriod: string;
+  readingTime: number;
+  scoreLabel: string;
+  scoreSummary: string;
+}
+
+const {
+  title,
+  description,
+  productCategory,
+  score,
+  testPeriod,
+  readingTime,
+  scoreLabel,
+  scoreSummary,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description} type="article">
+
+  <div id="progress-bar" class="reading-bar" style="width:0%"></div>
+
+  <!-- HERO -->
+  <header class="review-hero">
+    <div class="review-hero-inner">
+      <div class="review-hero-cat animate rd-1">{productCategory}</div>
+      <h1 class="animate rd-2" set:html={title} />
+      <p class="review-hero-sub animate rd-3">{description}</p>
+      <div class="review-hero-meta animate rd-4">
+        <span class="review-hero-score">{score.toFixed(1)} / 10</span>
+        <span>Testado: {testPeriod}</span>
+        <span>Por Pedal.pt</span>
+        <span>{readingTime} min</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <article class="review-content">
+    <slot />
+  </article>
+
+  <!-- FINAL SCORE -->
+  <div class="review-final-score-wrap">
+    <div class="review-final-score">
+      <div class="rfs-number">{score.toFixed(1)}</div>
+      <div class="rfs-sub">EM 10</div>
+      <div class="rfs-label">{scoreLabel}</div>
+      <div class="rfs-text">{scoreSummary}</div>
+    </div>
+  </div>
+
+  <!-- AUTHOR / DISCLOSURE -->
+  <div class="review-footer-wrap">
+    <div class="review-author">
+      <div class="review-author-avatar">J</div>
+      <div>
+        <p class="review-author-name">João</p>
+        <p class="review-author-loc">Sintra-Cascais, Portugal</p>
+      </div>
+    </div>
+    <div class="review-disclosure">
+      <strong>Nota:</strong> Este produto foi comprado pelo reviewer a preço de retalho. O pedal.pt pode receber comissão de compras feitas através de links neste artigo. Isto não afecta a independência editorial nem a honestidade desta review. Só fazemos review de produtos que usamos.
+    </div>
+  </div>
+
+  <script>
+    const bar = document.getElementById('progress-bar');
+    if (bar) {
+      window.addEventListener('scroll', () => {
+        const h = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = Math.min((window.scrollY / h) * 100, 100) + '%';
+      }, { passive: true });
+    }
+
+    // Animate score bars on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.rscore-fill').forEach((bar: Element) => {
+            const el = bar as HTMLElement;
+            el.style.width = el.dataset.width || '0%';
+          });
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.rscore-grid').forEach(el => observer.observe(el));
+
+    // Fade-in animations
+    const animObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate').forEach(el => animObs.observe(el));
+  </script>
+</BaseLayout>
+
+<style is:global>
+  /* ═══════════════════════════════════════════════ */
+  /*  GEAR REVIEW LAYOUT                            */
+  /* ═══════════════════════════════════════════════ */
+
+  :root {
+    --rv-pro: #2d7d46;
+    --rv-con: #c8553d;
+    --rv-warn: #d4a843;
+  }
+
+  /* HERO */
+  .review-hero {
+    margin-top: 60px;
+    background: linear-gradient(165deg, #2b2b2b 0%, #1a1a1a 60%, #0d3d2a 200%);
+    color: white;
+    padding: 80px 24px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .review-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(38,155,108,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .review-hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .review-hero-cat {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #44b687;
+    margin-bottom: 20px;
+    display: inline-block;
+    border: 1px solid rgba(38,155,108,0.4);
+    padding: 6px 16px;
+    border-radius: 4px;
+  }
+  .review-hero h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(32px, 5.5vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -0.03em;
+  }
+  .review-hero h1 em {
+    font-style: italic;
+    color: #44b687;
+    font-weight: 600;
+  }
+  .review-hero-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    color: rgba(255,255,255,0.6);
+    max-width: 620px;
+    line-height: 1.65;
+    margin-bottom: 32px;
+  }
+  .review-hero-meta {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    flex-wrap: wrap;
+  }
+  .review-hero-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .review-hero-score {
+    font-family: 'Sora', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    background: #269b6c;
+    color: white !important;
+    padding: 7px 16px;
+    border-radius: 6px;
+    letter-spacing: -0.02em;
+  }
+
+  /* CONTENT AREA */
+  .review-content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 60px 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    line-height: 1.75;
+    color: #3a3a3a;
+  }
+  .review-content p {
+    margin-bottom: 20px;
+  }
+
+  /* SECTION HEADINGS */
+  .review-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    margin-top: 56px;
+    margin-bottom: 20px;
+    letter-spacing: -0.03em;
+    color: #1a1a1a;
+    position: relative;
+    padding-left: 20px;
+    line-height: 1.2;
+  }
+  .review-content h2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    bottom: 6px;
+    width: 4px;
+    background: #269b6c;
+    border-radius: 2px;
+  }
+  .review-content h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 32px;
+    margin-bottom: 12px;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
+  }
+
+  /* VERDICT CARD */
+  .rverdict {
+    background: #ffffff;
+    border: 1px solid #e0ddd8;
+    border-radius: 12px;
+    padding: 36px;
+    margin-bottom: 48px;
+    position: relative;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+  }
+  .rverdict::before {
+    content: 'VEREDICTO';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: #269b6c;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    border-radius: 4px;
+  }
+  .rverdict-text {
+    font-family: 'Sora', sans-serif;
+    font-size: 20px;
+    line-height: 1.55;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+  .rverdict-text em {
+    color: #269b6c;
+    font-style: italic;
+  }
+
+  /* SCORE GRID */
+  .rscore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .rscore-item {
+    background: #faf9f7;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  .rscore-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #8a8a8a;
+    margin-bottom: 6px;
+  }
+  .rscore-value {
+    font-family: 'Sora', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
+  }
+  .rscore-bar {
+    height: 4px;
+    background: #e0ddd8;
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+  }
+  .rscore-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: #269b6c;
+    width: 0%;
+    transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* SPECS TABLE */
+  .rspecs {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+  }
+  .rspecs tr {
+    border-bottom: 1px solid #e0ddd8;
+  }
+  .rspecs tr:last-child {
+    border-bottom: none;
+  }
+  .rspecs td {
+    padding: 14px 0;
+    vertical-align: top;
+  }
+  .rspecs td:first-child {
+    font-weight: 600;
+    color: #8a8a8a;
+    width: 40%;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .rspecs td:last-child {
+    color: #1a1a1a;
+  }
+
+  /* CALLOUT */
+  .rcallout {
+    background: linear-gradient(135deg, #fef9f0 0%, #fdf3e9 100%);
+    border-left: 4px solid var(--rv-warn);
+    padding: 22px 26px;
+    margin: 32px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .rcallout strong {
+    color: #1a1a1a;
+  }
+  .rcallout.tip {
+    border-left-color: var(--rv-pro);
+    background: linear-gradient(135deg, #f0f9f2 0%, #e8f5ec 100%);
+  }
+
+  /* PROS & CONS */
+  .rpros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 32px 0;
+  }
+  @media (max-width: 600px) {
+    .rpros-cons { grid-template-columns: 1fr; }
+  }
+  .rpros, .rcons {
+    border-radius: 10px;
+    padding: 24px;
+    list-style: none;
+  }
+  .rpros {
+    background: #f0f9f2;
+    border: 1px solid #c8e6c9;
+  }
+  .rcons {
+    background: #fef0ee;
+    border: 1px solid #f5c6c0;
+  }
+  .rpros-title, .rcons-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .rpros-title { color: var(--rv-pro); }
+  .rcons-title { color: var(--rv-con); }
+  .rpros li, .rcons li {
+    list-style: none;
+    padding: 6px 0 6px 22px;
+    position: relative;
+    font-size: 15px;
+    line-height: 1.55;
+    font-family: 'Inter', sans-serif;
+  }
+  .rpros li::before {
+    content: '+';
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+    color: var(--rv-pro);
+    font-family: 'Sora', monospace;
+  }
+  .rcons li::before {
+    content: '\2014';
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+    color: var(--rv-con);
+    font-family: 'Sora', monospace;
+  }
+
+  /* PHOTO PLACEHOLDER */
+  .rphoto {
+    background: linear-gradient(145deg, #e8e6e1, #d8d5cf);
+    border-radius: 10px;
+    padding: 44px 24px;
+    text-align: center;
+    margin: 32px 0;
+    border: 2px dashed #d4d4d4;
+  }
+  .rphoto-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+    opacity: 0.35;
+  }
+  .rphoto-text {
+    font-size: 13px;
+    color: #8a8a8a;
+    font-weight: 500;
+  }
+  .rphoto-note {
+    font-size: 11px;
+    color: #a3a3a3;
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  /* BUY CTA */
+  .rbuy {
+    background: #ffffff;
+    border: 2px solid #269b6c;
+    border-radius: 12px;
+    padding: 28px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .rbuy-info {
+    flex: 1;
+    min-width: 200px;
+  }
+  .rbuy-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #8a8a8a;
+    margin-bottom: 4px;
+  }
+  .rbuy-price {
+    font-family: 'Sora', sans-serif;
+    font-size: 30px;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
+  }
+  .rbuy-price-note {
+    font-size: 14px;
+    color: #8a8a8a;
+    font-weight: 400;
+  }
+  .rbuy-btn {
+    background: #269b6c;
+    color: white;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-block;
+  }
+  .rbuy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(38,155,108,0.3);
+  }
+
+  /* FINAL SCORE */
+  .review-final-score-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px 48px;
+  }
+  .review-final-score {
+    background: #1c1c1c;
+    color: white;
+    border-radius: 14px;
+    padding: 44px;
+    text-align: center;
+  }
+  .rfs-number {
+    font-family: 'Sora', sans-serif;
+    font-size: 68px;
+    font-weight: 700;
+    color: #44b687;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .rfs-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 4px;
+    letter-spacing: 2px;
+    font-weight: 600;
+  }
+  .rfs-label {
+    font-family: 'Sora', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 16px;
+    color: white;
+    letter-spacing: -0.02em;
+  }
+  .rfs-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    max-width: 500px;
+    margin: 12px auto 0;
+    line-height: 1.65;
+  }
+
+  /* REVIEW FOOTER */
+  .review-footer-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+  .review-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 0;
+    border-top: 1px solid #e0ddd8;
+  }
+  .review-author-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .review-author-name {
+    font-family: 'Sora', sans-serif;
+    font-weight: 500;
+    color: #1a1a1a;
+    font-size: 14px;
+  }
+  .review-author-loc {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #8a8a8a;
+  }
+  .review-disclosure {
+    background: #faf9f7;
+    border: 1px solid #e0ddd8;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #8a8a8a;
+    margin-top: 20px;
+    line-height: 1.7;
+  }
+  .review-disclosure strong {
+    color: #5a5a5a;
+  }
+
+  /* ANIMATIONS */
+  .animate {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .animate.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  .rd-1 { transition-delay: 0.05s; }
+  .rd-2 { transition-delay: 0.15s; }
+  .rd-3 { transition-delay: 0.25s; }
+  .rd-4 { transition-delay: 0.35s; }
+
+  /* COMPARISON TABLE */
+  .rcompare {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+  }
+  .rcompare tr {
+    border-bottom: 1px solid #e0ddd8;
+  }
+  .rcompare tr:last-child {
+    border-bottom: none;
+  }
+  .rcompare td {
+    padding: 14px 0;
+    vertical-align: top;
+  }
+  .rcompare td:first-child {
+    font-weight: 600;
+    color: #1a1a1a;
+    width: 35%;
+    font-size: 14px;
+  }
+  .rcompare td:last-child {
+    color: #5a5a5a;
+  }
+
+  /* TEST CONDITIONS */
+  .rtest-conditions {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #8a8a8a;
+    line-height: 1.8;
+    padding-top: 24px;
+    border-top: 1px solid #e0ddd8;
+    margin-top: 40px;
+  }
+  .rtest-conditions strong {
+    color: #5a5a5a;
+  }
+</style>
