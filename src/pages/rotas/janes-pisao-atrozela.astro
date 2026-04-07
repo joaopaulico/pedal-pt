@@ -1,0 +1,567 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Janes, Pisão, Atrozela"
+  description="Rota de 10.84 km em Sintra-Cascais com 240m de subida. Loop técnico com descidas desafiantes e vistas sobre os campos."
+  image="/images/rotas/janes/og.jpg"
+  type="article"
+>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- SECTION 1: HERO MAP -->
+  <section class="relative w-full bg-[#0a0a0a]" style="height: calc(100vh - 64px);">
+    <div id="map" class="w-full h-full"></div>
+    <div class="absolute bottom-0 left-0 z-10 p-8 bg-gradient-to-r from-black via-black to-transparent">
+      <h1 class="text-4xl md:text-5xl font-semibold text-white mb-2" style="font-family: 'Sora', sans-serif;">
+        Janes, Pisão, Atrozela
+      </h1>
+      <p class="text-neutral-300 text-lg" style="font-family: 'Inter', sans-serif;">
+        10.84 km · 240m ↑ · Loop · Sintra-Cascais
+      </p>
+    </div>
+  </section>
+
+  <!-- SECTION 2: STATS GRID -->
+  <section class="w-full bg-[#0a0a0a] px-6 py-12 md:py-16">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <!-- Distância -->
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Distância</p>
+          <p class="text-3xl md:text-4xl font-semibold" style="font-family: 'Sora', sans-serif; color: #269b6c;">
+            10.84 km
+          </p>
+        </div>
+
+        <!-- Subida -->
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Subida</p>
+          <p class="text-3xl md:text-4xl font-semibold" style="font-family: 'Sora', sans-serif; color: #269b6c;">
+            240m
+          </p>
+        </div>
+
+        <!-- Descida -->
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Descida</p>
+          <p class="text-3xl md:text-4xl font-semibold" style="font-family: 'Sora', sans-serif; color: #269b6c;">
+            238m
+          </p>
+        </div>
+
+        <!-- Elevação Min/Max -->
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Elevação</p>
+          <p class="text-lg font-semibold" style="font-family: 'Sora', sans-serif; color: #269b6c;">
+            68m / 174m
+          </p>
+          <p class="text-xs text-neutral-500 mt-1">Mín / Máx</p>
+        </div>
+
+        <!-- Gradiente -->
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Gradiente</p>
+          <p class="text-lg font-semibold" style="font-family: 'Sora', sans-serif; color: #269b6c;">
+            +12% / -11.8%
+          </p>
+          <p class="text-xs text-neutral-500 mt-1">Máx subida / descida</p>
+        </div>
+
+        <!-- Superfície -->
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Superfície</p>
+          <p class="text-lg font-semibold" style="font-family: 'Sora', sans-serif; color: #269b6c;">
+            Asfalto + Calçada
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: ELEVATION PROFILE -->
+  <section class="w-full bg-[#faf9f7] px-6 py-12 md:py-16">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-semibold mb-8" style="font-family: 'Sora', sans-serif; color: #0a0a0a;">
+        Perfil de Elevação
+      </h2>
+
+      <div class="relative bg-white rounded-lg border border-neutral-200 p-4 md:p-6">
+        <svg id="elevationProfile" class="w-full" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid meet"></svg>
+
+        <div id="tooltip" class="absolute hidden bg-neutral-900 text-white px-3 py-2 rounded text-sm pointer-events-none" style="font-family: 'Inter', sans-serif;">
+          <div id="tooltipContent"></div>
+        </div>
+      </div>
+
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-5 gap-3 text-sm" style="font-family: 'Inter', sans-serif;">
+        <div class="text-neutral-700">
+          <span class="font-semibold text-[#269b6c]">0 km</span>
+          <p class="text-xs text-neutral-500">Janes</p>
+        </div>
+        <div class="text-neutral-700">
+          <span class="font-semibold text-[#e67e22]">2.3 km</span>
+          <p class="text-xs text-neutral-500">Descida Pisão</p>
+        </div>
+        <div class="text-neutral-700">
+          <span class="font-semibold text-[#c8553d]">3.1 km</span>
+          <p class="text-xs text-neutral-500">Subida Atrozela</p>
+        </div>
+        <div class="text-neutral-700">
+          <span class="font-semibold text-[#d4a843]">8.1 km</span>
+          <p class="text-xs text-neutral-500">Ponto mais baixo</p>
+        </div>
+        <div class="text-neutral-700">
+          <span class="font-semibold text-[#269b6c]">10.8 km</span>
+          <p class="text-xs text-neutral-500">Regresso Janes</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: PHOTO GALLERY -->
+  <section class="w-full bg-[#0a0a0a] px-6 py-12 md:py-16">
+    <div class="max-w-4xl mx-auto">
+      <!-- Photo 1 -->
+      <div class="mb-12">
+        <img src="/images/rotas/janes/01.jpg" alt="Ruína senhorial na descida inicial" class="w-full rounded-lg mb-4" />
+        <p class="text-neutral-300" style="font-family: 'Inter', sans-serif;">
+          Ruína senhorial na descida inicial. A história de Sintra escondida entre curvas.
+        </p>
+      </div>
+
+      <!-- Photo 2 -->
+      <div class="mb-12">
+        <img src="/images/rotas/janes/02.jpg" alt="Estrada de pinheiros a caminho de Pisão" class="w-full rounded-lg mb-4" />
+        <p class="text-neutral-300" style="font-family: 'Inter', sans-serif;">
+          Estrada de pinheiros a caminho de Pisão. Asfalto limpo, sombra generosa.
+        </p>
+      </div>
+
+      <!-- Photo 3 -->
+      <div class="mb-12">
+        <img src="/images/rotas/janes/03.jpg" alt="Trilho de terra com vista para os campos" class="w-full rounded-lg mb-4" />
+        <p class="text-neutral-300" style="font-family: 'Inter', sans-serif;">
+          Trilho de terra com vista para os campos de flores. Alentejo? Não, Sintra.
+        </p>
+      </div>
+
+      <!-- Photo 4 -->
+      <div class="mb-12">
+        <img src="/images/rotas/janes/04.jpg" alt="Campos amarelos de Atrozela" class="w-full rounded-lg mb-4" />
+        <p class="text-neutral-300" style="font-family: 'Inter', sans-serif;">
+          Campos amarelos a perder de vista. Primavera na zona de Atrozela.
+        </p>
+      </div>
+
+      <!-- Photo 5 -->
+      <div class="mb-12">
+        <img src="/images/rotas/janes/05.jpg" alt="Arco-íris sobre os campos" class="w-full rounded-lg mb-4" />
+        <p class="text-neutral-300" style="font-family: 'Inter', sans-serif;">
+          Arco-íris sobre os campos. Vale cada metro de subida.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: KM-BY-KM BREAKDOWN -->
+  <section class="w-full bg-[#faf9f7] px-6 py-12 md:py-16">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-semibold mb-8" style="font-family: 'Sora', sans-serif; color: #0a0a0a;">
+        Km a km
+      </h2>
+
+      <div class="space-y-4">
+        <!-- Segment 1 -->
+        <div class="bg-white rounded-lg border-l-4 border-[#44b687] p-6">
+          <p class="text-sm font-semibold text-[#269b6c] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 0.0–0.9
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Descida suave de Janes
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            -2% a -6% • Asfalto bom • Aquecimento natural
+          </p>
+        </div>
+
+        <!-- Segment 2 -->
+        <div class="bg-white rounded-lg border-l-4 border-[#d4a843] p-6">
+          <p class="text-sm font-semibold text-[#d4a843] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 0.9–1.8
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Ondulação com subidas curtas
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            Variável • Terreno diversificado • Preparação mental
+          </p>
+        </div>
+
+        <!-- Segment 3 -->
+        <div class="bg-white rounded-lg border-l-4 border-[#c8553d] p-6">
+          <p class="text-sm font-semibold text-[#c8553d] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 1.8–2.5
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Descida forte de Pisão
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            -7% a -12% • Velocidade alta • Cuidado nas curvas fechadas
+          </p>
+        </div>
+
+        <!-- Segment 4 -->
+        <div class="bg-white rounded-lg border-l-4 border-[#c8553d] p-6">
+          <p class="text-sm font-semibold text-[#c8553d] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 2.5–3.4
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Subida intensa de Atrozela
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            +6% a +12% • O ponto duro da rota • Muro final mas curto
+          </p>
+        </div>
+
+        <!-- Segment 5 -->
+        <div class="bg-white rounded-lg border-l-4 border-[#d4a843] p-6">
+          <p class="text-sm font-semibold text-[#d4a843] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 3.4–5.0
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Descida progressiva na zona de Pisão
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            Variável • Ondulação • Recuperação ativa
+          </p>
+        </div>
+
+        <!-- Segment 6 -->
+        <div class="bg-white rounded-lg border-l-4 border-[#44b687] p-6">
+          <p class="text-sm font-semibold text-[#269b6c] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 5.0–8.0
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Descida longa até ao ponto mais baixo
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            Progressiva • Ritmo confortável • 68m de elevação mínima
+          </p>
+        </div>
+
+        <!-- Segment 7 -->
+        <div class="bg-white rounded-lg border-l-4 border-[#e67e22] p-6">
+          <p class="text-sm font-semibold text-[#e67e22] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 8.0–10.8
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Subida sustentada de regresso
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            +3% a +5% • Consistente e segura • Último esforço controlado
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: RECOMMENDATIONS -->
+  <section class="w-full bg-[#0a0a0a] px-6 py-12 md:py-16">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-semibold mb-8" style="font-family: 'Sora', sans-serif; color: white;">
+        Antes de ir
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Gearing -->
+        <div class="bg-neutral-900 rounded-lg border border-neutral-800 p-6">
+          <h3 class="text-lg font-semibold mb-3" style="font-family: 'Sora', sans-serif; color: #44b687;">
+            Gearing
+          </h3>
+          <p class="text-neutral-300 text-sm" style="font-family: 'Inter', sans-serif;">
+            Compact 50/34 com cassete 11-34 cobre tudo. Mudança baixa essencial para o muro de Atrozela. Se tens 11-28, vai ficar apertado.
+          </p>
+        </div>
+
+        <!-- Quando ir -->
+        <div class="bg-neutral-900 rounded-lg border border-neutral-800 p-6">
+          <h3 class="text-lg font-semibold mb-3" style="font-family: 'Sora', sans-serif; color: #44b687;">
+            Quando ir
+          </h3>
+          <p class="text-neutral-300 text-sm" style="font-family: 'Inter', sans-serif;">
+            Manhã cedo na primavera ou outono. Sol de verão à tarde torna as subidas implacáveis. Evita fim de semana se queres asfalto menos ocupado.
+          </p>
+        </div>
+
+        <!-- Água -->
+        <div class="bg-neutral-900 rounded-lg border border-neutral-800 p-6">
+          <h3 class="text-lg font-semibold mb-3" style="font-family: 'Sora', sans-serif; color: #44b687;">
+            Água
+          </h3>
+          <p class="text-neutral-300 text-sm" style="font-family: 'Inter', sans-serif;">
+            Sem fontanários no percurso. Levar pelo menos um bidão de 750ml. Duas garrafas é mais seguro em dias quentes.
+          </p>
+        </div>
+
+        <!-- Atenção -->
+        <div class="bg-neutral-900 rounded-lg border border-neutral-800 p-6">
+          <h3 class="text-lg font-semibold mb-3" style="font-family: 'Sora', sans-serif; color: #44b687;">
+            Atenção
+          </h3>
+          <p class="text-neutral-300 text-sm" style="font-family: 'Inter', sans-serif;">
+            Descida ao km 2.3 com curvas fechadas e muito traçado. Calçada molhada é traiçoeira. Freios em bom estado e pneus com borracha fresca são obrigatórios.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: DOWNLOAD -->
+  <section class="w-full bg-[#1c1c1c] px-6 py-12 md:py-16">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-semibold mb-8" style="font-family: 'Sora', sans-serif; color: white;">
+        Levar no telemóvel
+      </h2>
+
+      <div class="flex flex-col md:flex-row gap-4">
+        <a href="/gpx/janes-pisao-atrozela.gpx" download class="flex-1 bg-[#269b6c] hover:bg-[#1e7a52] text-white font-semibold py-4 px-6 rounded-lg text-center transition-colors" style="font-family: 'Sora', sans-serif;">
+          ↓ Download GPX
+        </a>
+        <a href="https://www.strava.com/routes/3476173183880132672" target="_blank" rel="noopener noreferrer" class="flex-1 bg-neutral-800 hover:bg-neutral-700 text-white font-semibold py-4 px-6 rounded-lg text-center transition-colors" style="font-family: 'Sora', sans-serif;">
+          → Ver no Strava
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER: Author Card -->
+  <section class="w-full bg-[#0a0a0a] px-6 py-8 border-t border-neutral-800">
+    <div class="max-w-4xl mx-auto flex items-center gap-4">
+      <div class="w-12 h-12 rounded-full bg-[#269b6c] flex items-center justify-center text-white font-bold text-lg" style="font-family: 'Sora', sans-serif;">
+        J
+      </div>
+      <div>
+        <p class="font-semibold text-white" style="font-family: 'Sora', sans-serif;">João</p>
+        <p class="text-neutral-400 text-sm" style="font-family: 'Inter', sans-serif;">
+          Sintra-Cascais, Portugal · Abril 2026
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leaflet Map Script -->
+  <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+      const ROUTE = [[38.74893,-9.43826],[38.74911,-9.43786],[38.7495,-9.4376],[38.74979,-9.43745],[38.75014,-9.43745],[38.75044,-9.4373],[38.75008,-9.43681],[38.74972,-9.43632],[38.74919,-9.43518],[38.74873,-9.43483],[38.74792,-9.43435],[38.74749,-9.43389],[38.74736,-9.43359],[38.74771,-9.43258],[38.74827,-9.43238],[38.74863,-9.43214],[38.74886,-9.43192],[38.74972,-9.43191],[38.75031,-9.43184],[38.7509,-9.43176],[38.75139,-9.43154],[38.75185,-9.43121],[38.7523,-9.43088],[38.75253,-9.43065],[38.75285,-9.4303],[38.75318,-9.43002],[38.75336,-9.4297],[38.75357,-9.42911],[38.75377,-9.42852],[38.754,-9.42828],[38.7545,-9.42795],[38.75485,-9.42764],[38.7554,-9.42712],[38.7562,-9.42637],[38.75711,-9.42567],[38.75737,-9.42538],[38.75743,-9.42497],[38.75738,-9.42463],[38.75742,-9.42425],[38.75779,-9.4237],[38.75789,-9.42337],[38.75784,-9.42262],[38.75789,-9.42225],[38.75812,-9.42154],[38.75845,-9.42075],[38.75878,-9.41995],[38.75884,-9.4196],[38.75881,-9.41916],[38.7586,-9.41901],[38.75848,-9.41891],[38.75817,-9.41824],[38.75789,-9.41741],[38.75768,-9.41716],[38.75743,-9.41652],[38.75717,-9.41624],[38.75642,-9.41666],[38.75575,-9.41661],[38.75543,-9.41647],[38.75511,-9.41626],[38.75456,-9.41568],[38.75408,-9.41549],[38.75358,-9.41547],[38.7528,-9.41526],[38.7524,-9.4152],[38.75182,-9.41446],[38.75134,-9.41408],[38.75087,-9.41365],[38.75021,-9.41355],[38.75005,-9.41272],[38.74961,-9.41188],[38.74956,-9.41141],[38.74937,-9.41098],[38.74885,-9.4108],[38.74852,-9.41089],[38.7482,-9.4111],[38.74794,-9.41182],[38.74757,-9.41182],[38.74696,-9.41192],[38.74663,-9.41192],[38.74627,-9.4122],[38.7459,-9.41234],[38.74549,-9.4123],[38.74463,-9.41206],[38.74426,-9.41187],[38.74367,-9.41164],[38.7434,-9.41154],[38.74298,-9.41131],[38.74256,-9.41119],[38.74245,-9.41061],[38.74213,-9.41056],[38.74173,-9.41018],[38.74163,-9.40956],[38.74151,-9.40916],[38.7415,-9.40873],[38.74159,-9.40825],[38.74162,-9.40783],[38.74186,-9.4074],[38.74197,-9.40708],[38.74224,-9.40657],[38.74199,-9.40637],[38.74176,-9.4061],[38.74136,-9.40568],[38.74113,-9.40583],[38.74085,-9.40643],[38.74058,-9.40679],[38.74029,-9.40704],[38.73973,-9.40774],[38.73937,-9.40798],[38.73909,-9.40807],[38.73835,-9.40761],[38.73809,-9.40751],[38.73724,-9.40803],[38.73689,-9.40821],[38.73651,-9.4082],[38.73619,-9.40901],[38.73601,-9.40948],[38.73577,-9.40981],[38.73542,-9.41041],[38.73515,-9.41089],[38.73481,-9.41161],[38.73476,-9.41243],[38.7349,-9.4129],[38.73477,-9.41393],[38.73497,-9.41468],[38.73495,-9.41512],[38.73472,-9.41568],[38.73448,-9.41624],[38.73462,-9.4167],[38.73494,-9.4166],[38.73522,-9.41601],[38.73578,-9.41553],[38.73637,-9.4152],[38.73668,-9.4152],[38.737,-9.41575],[38.73708,-9.41632],[38.73699,-9.41666],[38.7364,-9.41712],[38.73618,-9.41745],[38.73621,-9.41849],[38.73601,-9.41881],[38.73581,-9.41905],[38.73584,-9.41952],[38.73593,-9.41986],[38.73643,-9.42032],[38.73661,-9.42068],[38.73688,-9.42143],[38.73734,-9.42172],[38.73793,-9.42182],[38.73829,-9.42197],[38.73838,-9.42243],[38.73882,-9.42308],[38.73895,-9.42342],[38.7391,-9.42408],[38.73935,-9.4243],[38.73957,-9.42454],[38.7399,-9.42491],[38.74091,-9.42487],[38.74124,-9.42506],[38.7415,-9.42538],[38.74181,-9.42561],[38.742,-9.4259],[38.74195,-9.42669],[38.74169,-9.4274],[38.74143,-9.4281],[38.74159,-9.42852],[38.74232,-9.42834],[38.74262,-9.42843],[38.74303,-9.42887],[38.74344,-9.42931],[38.74428,-9.42961],[38.74499,-9.4298],[38.7457,-9.43],[38.74639,-9.43022],[38.74671,-9.43017],[38.74721,-9.42961],[38.7477,-9.42963],[38.74794,-9.42988],[38.74798,-9.43024],[38.74837,-9.43115],[38.74875,-9.43144],[38.74889,-9.43177],[38.74863,-9.43214],[38.74835,-9.43234],[38.74789,-9.43243],[38.74737,-9.4334],[38.74738,-9.43372],[38.74778,-9.43425],[38.74873,-9.43483],[38.74907,-9.43505],[38.74959,-9.43609],[38.75008,-9.43681],[38.75044,-9.4373],[38.75014,-9.43745],[38.74979,-9.43745],[38.74972,-9.43749]];
+      const CENTER = [38.74556,-9.42092];
+      const BOUNDS = [[38.73448,-9.43826],[38.75884,-9.40568]];
+
+      const map = L.map('map').setView(CENTER, 13);
+
+      L.tileLayer('https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap, &copy; CartoDB',
+        maxZoom: 19,
+      }).addTo(map);
+
+      const polyline = L.polyline(ROUTE, {
+        color: '#44b687',
+        weight: 4,
+        opacity: 0.9,
+        lineCap: 'round',
+        lineJoin: 'round',
+      }).addTo(map);
+
+      map.fitBounds(BOUNDS, { padding: [50, 50] });
+    });
+  </script>
+
+  <!-- Elevation Profile SVG Script -->
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+      const PROFILE = [{"k":0.0,"e":171.2},{"k":0.07,"e":173.9},{"k":0.12,"e":173.5},{"k":0.18,"e":171.3},{"k":0.26,"e":168.8},{"k":0.32,"e":167.8},{"k":0.43,"e":161.0},{"k":0.49,"e":157.1},{"k":0.59,"e":151.8},{"k":0.65,"e":150.0},{"k":0.78,"e":144.3},{"k":0.85,"e":141.8},{"k":0.92,"e":139.4},{"k":1.02,"e":143.7},{"k":1.09,"e":145.1},{"k":1.15,"e":147.3},{"k":1.21,"e":147.3},{"k":1.27,"e":147.9},{"k":1.33,"e":150.2},{"k":1.41,"e":153.1},{"k":1.46,"e":155.8},{"k":1.54,"e":157.3},{"k":1.6,"e":159.3},{"k":1.65,"e":163.2},{"k":1.74,"e":166.9},{"k":1.82,"e":173.3},{"k":1.93,"e":165.5},{"k":2.05,"e":155.4},{"k":2.11,"e":154.8},{"k":2.18,"e":152.6},{"k":2.25,"e":146.7},{"k":2.35,"e":134.9},{"k":2.45,"e":123.4},{"k":2.53,"e":117.7},{"k":2.61,"e":114.3},{"k":2.68,"e":115.8},{"k":2.75,"e":117.9},{"k":2.82,"e":120.5},{"k":2.89,"e":125.1},{"k":2.99,"e":129.3},{"k":3.04,"e":134.4},{"k":3.12,"e":142.8},{"k":3.19,"e":151.2},{"k":3.27,"e":158.6},{"k":3.35,"e":164.8},{"k":3.41,"e":160.2},{"k":3.46,"e":154.7},{"k":3.55,"e":146.9},{"k":3.62,"e":144.2},{"k":3.69,"e":143.4},{"k":3.75,"e":143.8},{"k":3.82,"e":140.4},{"k":3.89,"e":137.5},{"k":3.96,"e":137.2},{"k":4.05,"e":128.6},{"k":4.11,"e":123.9},{"k":4.2,"e":119.4},{"k":4.28,"e":119.6},{"k":4.35,"e":117.6},{"k":4.4,"e":116.2},{"k":4.46,"e":111.7},{"k":4.55,"e":102.9},{"k":4.61,"e":101.1},{"k":4.74,"e":97.5},{"k":4.85,"e":94.8},{"k":4.93,"e":92.0},{"k":5.01,"e":90.8},{"k":5.07,"e":91.0},{"k":5.12,"e":90.8},{"k":5.18,"e":91.0},{"k":5.23,"e":92.0},{"k":5.3,"e":93.3},{"k":5.38,"e":91.7},{"k":5.43,"e":91.5},{"k":5.5,"e":90.1},{"k":5.56,"e":94.7},{"k":5.62,"e":96.3},{"k":5.68,"e":100.6},{"k":5.77,"e":102.9},{"k":5.85,"e":106.9},{"k":5.93,"e":115.6},{"k":6.02,"e":120.6},{"k":6.07,"e":122.1},{"k":6.16,"e":126.4},{"k":6.24,"e":129.8},{"k":6.32,"e":128.5},{"k":6.37,"e":128.3},{"k":6.48,"e":124.3},{"k":6.53,"e":122.8},{"k":6.6,"e":121.6},{"k":6.67,"e":119.8},{"k":6.81,"e":113.4},{"k":6.88,"e":109.1},{"k":6.98,"e":105.4},{"k":7.03,"e":103.1},{"k":7.09,"e":101.3},{"k":7.18,"e":96.4},{"k":7.25,"e":94.3},{"k":7.32,"e":92.6},{"k":7.38,"e":90.8},{"k":7.45,"e":88.5},{"k":7.5,"e":85.4},{"k":7.58,"e":82.9},{"k":7.63,"e":79.0},{"k":7.71,"e":77.5},{"k":7.78,"e":76.4},{"k":7.85,"e":75.5},{"k":7.92,"e":73.6},{"k":8.03,"e":68.9},{"k":8.08,"e":68.2},{"k":8.15,"e":70.4},{"k":8.2,"e":73.6},{"k":8.26,"e":76.3},{"k":8.34,"e":79.0},{"k":8.4,"e":81.0},{"k":8.47,"e":84.6},{"k":8.53,"e":87.2},{"k":8.63,"e":91.7},{"k":8.7,"e":94.9},{"k":8.75,"e":98.1},{"k":8.81,"e":99.8},{"k":8.92,"e":106.0},{"k":8.99,"e":109.8},{"k":9.05,"e":111.6},{"k":9.12,"e":115.3},{"k":9.21,"e":119.1},{"k":9.27,"e":121.7},{"k":9.37,"e":125.8},{"k":9.45,"e":130.4},{"k":9.53,"e":133.7},{"k":9.61,"e":135.6},{"k":9.72,"e":136.8},{"k":9.78,"e":138.1},{"k":9.84,"e":138.4},{"k":9.93,"e":138.8},{"k":9.99,"e":138.8},{"k":10.04,"e":139.4},{"k":10.1,"e":140.9},{"k":10.15,"e":143.5},{"k":10.25,"e":147.4},{"k":10.35,"e":151.8},{"k":10.47,"e":157.1},{"k":10.52,"e":161.0},{"k":10.62,"e":166.2},{"k":10.7,"e":168.8},{"k":10.76,"e":168.3},{"k":10.82,"e":172.9},{"k":10.84,"e":173.6}];
+
+      const svg = document.getElementById('elevationProfile');
+      const width = 1200;
+      const height = 300;
+      const padding = { top: 20, right: 20, bottom: 40, left: 40 };
+
+      const minElev = 68;
+      const maxElev = 174;
+      const maxKm = 10.84;
+
+      const xScale = (width - padding.left - padding.right) / maxKm;
+      const yScale = (height - padding.top - padding.bottom) / (maxElev - minElev);
+
+      function getGradientColor(gradient) {
+        if (gradient <= 2) return '#44b687';
+        if (gradient <= 4) return '#d4a843';
+        if (gradient <= 8) return '#e67e22';
+        return '#c8553d';
+      }
+
+      let pathData = `M ${padding.left} ${height - padding.bottom}`;
+
+      for (let i = 0; i < PROFILE.length; i++) {
+        const point = PROFILE[i];
+        const x = padding.left + point.k * xScale;
+        const y = height - padding.bottom - (point.e - minElev) * yScale;
+        pathData += ` L ${x} ${y}`;
+      }
+
+      pathData += ` L ${width - padding.right} ${height - padding.bottom} Z`;
+
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+      gradient.setAttribute('id', 'elevationGradient');
+      gradient.setAttribute('x1', '0%');
+      gradient.setAttribute('y1', '0%');
+      gradient.setAttribute('x2', '0%');
+      gradient.setAttribute('y2', '100%');
+
+      const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop1.setAttribute('offset', '0%');
+      stop1.setAttribute('stop-color', '#44b687');
+      stop1.setAttribute('stop-opacity', '0.6');
+
+      const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop2.setAttribute('offset', '100%');
+      stop2.setAttribute('stop-color', '#269b6c');
+      stop2.setAttribute('stop-opacity', '0.2');
+
+      gradient.appendChild(stop1);
+      gradient.appendChild(stop2);
+      defs.appendChild(gradient);
+      svg.appendChild(defs);
+
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', pathData);
+      path.setAttribute('fill', 'url(#elevationGradient)');
+      path.setAttribute('stroke', 'none');
+      svg.appendChild(path);
+
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+      const linePoints = PROFILE.map(point => {
+        const x = padding.left + point.k * xScale;
+        const y = height - padding.bottom - (point.e - minElev) * yScale;
+        return `${x},${y}`;
+      }).join(' ');
+      line.setAttribute('points', linePoints);
+      line.setAttribute('fill', 'none');
+      line.setAttribute('stroke', '#269b6c');
+      line.setAttribute('stroke-width', '2');
+      svg.appendChild(line);
+
+      const xAxisGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      for (let km = 0; km <= maxKm; km += 2) {
+        const x = padding.left + km * xScale;
+        const tick = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        tick.setAttribute('x1', x);
+        tick.setAttribute('y1', height - padding.bottom);
+        tick.setAttribute('x2', x);
+        tick.setAttribute('y2', height - padding.bottom + 5);
+        tick.setAttribute('stroke', '#ccc');
+        tick.setAttribute('stroke-width', '1');
+        xAxisGroup.appendChild(tick);
+
+        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        label.setAttribute('x', x);
+        label.setAttribute('y', height - padding.bottom + 20);
+        label.setAttribute('text-anchor', 'middle');
+        label.setAttribute('font-size', '12');
+        label.setAttribute('fill', '#666');
+        label.setAttribute('font-family', 'Inter, sans-serif');
+        label.textContent = km + ' km';
+        xAxisGroup.appendChild(label);
+      }
+      svg.appendChild(xAxisGroup);
+
+      const yAxisGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      for (let elev = 80; elev <= 170; elev += 20) {
+        const y = height - padding.bottom - (elev - minElev) * yScale;
+        const tick = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        tick.setAttribute('x1', padding.left - 5);
+        tick.setAttribute('y1', y);
+        tick.setAttribute('x2', padding.left);
+        tick.setAttribute('y2', y);
+        tick.setAttribute('stroke', '#ccc');
+        tick.setAttribute('stroke-width', '1');
+        yAxisGroup.appendChild(tick);
+
+        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        label.setAttribute('x', padding.left - 10);
+        label.setAttribute('y', y + 4);
+        label.setAttribute('text-anchor', 'end');
+        label.setAttribute('font-size', '12');
+        label.setAttribute('fill', '#666');
+        label.setAttribute('font-family', 'Inter, sans-serif');
+        label.textContent = elev + ' m';
+        yAxisGroup.appendChild(label);
+      }
+      svg.appendChild(yAxisGroup);
+
+      const axes = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      const xAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      xAxis.setAttribute('x1', padding.left);
+      xAxis.setAttribute('y1', height - padding.bottom);
+      xAxis.setAttribute('x2', width - padding.right);
+      xAxis.setAttribute('y2', height - padding.bottom);
+      xAxis.setAttribute('stroke', '#999');
+      xAxis.setAttribute('stroke-width', '1');
+      axes.appendChild(xAxis);
+
+      const yAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      yAxis.setAttribute('x1', padding.left);
+      yAxis.setAttribute('y1', padding.top);
+      yAxis.setAttribute('x2', padding.left);
+      yAxis.setAttribute('y2', height - padding.bottom);
+      yAxis.setAttribute('stroke', '#999');
+      yAxis.setAttribute('stroke-width', '1');
+      axes.appendChild(yAxis);
+      svg.appendChild(axes);
+
+      const tooltip = document.getElementById('tooltip');
+      const tooltipContent = document.getElementById('tooltipContent');
+
+      svg.addEventListener('mousemove', function(event) {
+        const rect = svg.getBoundingClientRect();
+        const mouseX = event.clientX - rect.left;
+        const mouseY = event.clientY - rect.top;
+
+        if (mouseX < padding.left || mouseX > width - padding.right) {
+          tooltip.classList.add('hidden');
+          return;
+        }
+
+        const km = (mouseX - padding.left) / xScale;
+        const closest = PROFILE.reduce((prev, curr) =>
+          Math.abs(curr.k - km) < Math.abs(prev.k - km) ? curr : prev
+        );
+
+        let gradientPercent = 0;
+        if (PROFILE.indexOf(closest) < PROFILE.length - 1) {
+          const nextPoint = PROFILE[PROFILE.indexOf(closest) + 1];
+          const elevDiff = nextPoint.e - closest.e;
+          const kmDiff = nextPoint.k - closest.k;
+          gradientPercent = (elevDiff / kmDiff) * 100;
+        }
+
+        tooltipContent.innerHTML = `
+          <strong>${closest.k.toFixed(2)} km</strong><br>
+          ${closest.e.toFixed(0)} m<br>
+          <span style="font-size: 11px; opacity: 0.8;">${gradientPercent > 0 ? '+' : ''}${gradientPercent.toFixed(1)}%</span>
+        `;
+
+        tooltip.style.left = (mouseX + 10) + 'px';
+        tooltip.style.top = (mouseY - 10) + 'px';
+        tooltip.classList.remove('hidden');
+      });
+
+      svg.addEventListener('mouseleave', function() {
+        tooltip.classList.add('hidden');
+      });
+    });
+  </script>
+</BaseLayout>
