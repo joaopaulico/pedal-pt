@@ -106,28 +106,59 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- SECTION NARRATIVE: Sensações da volta -->
-  <section class="w-full bg-[#111111] px-6 py-12 md:py-16">
+  <!-- SECTION NARRATIVE: Notas de campo com fotos integradas -->
+  <section class="w-full bg-[#111111] px-6 py-12 md:py-20">
     <div class="max-w-3xl mx-auto">
-      <p class="font-mono text-[10px] tracking-widest uppercase mb-6" style="color: #44b687;">Notas de campo</p>
+      <p class="font-mono text-[10px] tracking-widest uppercase mb-8" style="color: #44b687; font-family: 'Inter', sans-serif;">Notas de campo</p>
 
-      <p class="text-white text-xl leading-relaxed mb-6" style="font-family: 'Sora', sans-serif; letter-spacing: -0.01em;">
-        Manhã de primavera, bom tempo, luz rasante a entrar pela berma. Este loop é curto mas não é simples. É o tipo de saída que preferes ao grande fundo nas dias em que tens hora e meia, não três.
+      <p class="text-white text-xl leading-relaxed mb-10" style="font-family: 'Sora', sans-serif; letter-spacing: -0.01em;">
+        Manhã de primavera, bom tempo, luz rasante a entrar pela berma. Este loop é curto mas não é simples. É o tipo de saída que preferes ao grande fundo nos dias em que tens hora e meia, não três.
       </p>
 
-      <p class="text-neutral-400 leading-relaxed mb-6" style="font-family: 'Inter', sans-serif; line-height: 1.8;">
-        A partida de Janes desce logo, o que é bom para as pernas mas traiçoeiro para a cabeça: sabes que tudo o que desces tens de subir. Nos primeiros quilómetros o asfalto está limpo e a estrada é larga. A descida para Pisão tem curvas fechadas e é rápida, o tipo em que convém ter os freios em bom estado e os pneus com grip decente.
-      </p>
+      <!-- Parágrafo 1 + foto 01 (direita) -->
+      <div style="overflow: hidden; margin-bottom: 2rem;">
+        <img src="/images/rotas/janes/01.jpg" alt="Quinta abandonada na calçada portuguesa" loading="lazy"
+          style="float: right; width: 32%; margin-left: 1.5rem; margin-bottom: 0.5rem; border-radius: 8px; display: block;" />
+        <p style="font-family: 'Inter', sans-serif; line-height: 1.8; color: #a3a3a3;">
+          A partida de Janes desce logo, o que é bom para as pernas mas traiçoeiro para a cabeça: sabes que tudo o que desces tens de subir. Nos primeiros quilómetros o asfalto está limpo e a estrada é larga. Logo no início aparece uma quinta abandonada na calçada, o tipo de coisa que Sintra guarda a poucos metros de qualquer estrada.
+        </p>
+      </div>
 
-      <p class="text-neutral-400 leading-relaxed mb-6" style="font-family: 'Inter', sans-serif; line-height: 1.8;">
-        O trecho de gravel aparece a meio, depois de Atrozela. Terreno solto mas compacto, perfeitamente transitável numa road com 28mm. Numa gravel é ainda mais confortável e dá para abrir mais. É aqui que as vistas sobre os campos abrem: flores amarelas, verde intenso, silêncio. Se tens câmara, para.
-      </p>
+      <!-- Parágrafo 2 + foto 02 (esquerda) -->
+      <div style="overflow: hidden; margin-bottom: 2rem;">
+        <img src="/images/rotas/janes/02.jpg" alt="Estrada de pinheiros em Sintra" loading="lazy"
+          style="float: left; width: 32%; margin-right: 1.5rem; margin-bottom: 0.5rem; border-radius: 8px; display: block;" />
+        <p style="font-family: 'Inter', sans-serif; line-height: 1.8; color: #a3a3a3;">
+          A descida para Pisão tem curvas fechadas e é rápida. O tipo em que convém ter os freios em bom estado e os pneus com grip decente. No meio do caminho, asfalto limpo entre pinheiros altos. O tipo de estrada onde se pisa fundo sem pensar duas vezes.
+        </p>
+      </div>
 
-      <p class="text-neutral-400 leading-relaxed mb-6" style="font-family: 'Inter', sans-serif; line-height: 1.8;">
-        A subida final é a mais gentil das que a rota tem. Sustentada mas previsível, 3 a 5%, o tipo que consegues manter um ritmo constante sem explodir. Chegares ao ponto de partida com as pernas cansadas mas sem a sensação de ter sido destruído. Bom sinal.
-      </p>
+      <!-- Parágrafo 3 + foto 03 (direita) -->
+      <div style="overflow: hidden; margin-bottom: 2rem;">
+        <img src="/images/rotas/janes/03.jpg" alt="Caminho de gravel com flores amarelas" loading="lazy"
+          style="float: right; width: 32%; margin-left: 1.5rem; margin-bottom: 0.5rem; border-radius: 8px; display: block;" />
+        <p style="font-family: 'Inter', sans-serif; line-height: 1.8; color: #a3a3a3;">
+          O trecho de gravel aparece depois de Atrozela. Terreno solto mas compacto, perfeitamente transitável numa road com 28mm. Numa gravel é ainda mais confortável. É aqui que as vistas sobre os campos abrem: flores amarelas, verde intenso, silêncio. Se tens câmara, para.
+        </p>
+      </div>
 
-      <div class="border-l-4 border-[#269b6c] pl-6 mt-8">
+      <!-- Parágrafo 4 + foto 04 (esquerda) -->
+      <div style="overflow: hidden; margin-bottom: 2rem;">
+        <img src="/images/rotas/janes/04.jpg" alt="Campos de flores com a Serra ao fundo" loading="lazy"
+          style="float: left; width: 32%; margin-right: 1.5rem; margin-bottom: 0.5rem; border-radius: 8px; display: block;" />
+        <p style="font-family: 'Inter', sans-serif; line-height: 1.8; color: #a3a3a3;">
+          A Serra de Sintra no horizonte, campos em flor na primavera. É aqui que percebes porque é que vale a pena ter gravel. A subida final é a mais gentil da rota: sustentada e previsível, 3 a 5%, o tipo que consegues manter sem explodir. Chegas ao ponto de partida com as pernas cansadas mas sem a sensação de ter sido destruído.
+        </p>
+      </div>
+
+      <!-- Foto 05 panorama full-width -->
+      <div style="margin-bottom: 2rem;">
+        <img src="/images/rotas/janes/05.jpg" alt="Arco-íris completo sobre os campos de Atrozela" loading="lazy"
+          style="width: 100%; border-radius: 8px; display: block; margin-bottom: 0.75rem;" />
+        <p style="font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #525252; text-align: right;">Atrozela, Abril 2026</p>
+      </div>
+
+      <div class="border-l-4 border-[#269b6c] pl-6 mt-10">
         <p class="text-neutral-300 italic" style="font-family: 'Inter', sans-serif; line-height: 1.8;">
           "Uma hora e meia de Sintra que vale qualquer saída longa. Terreno variado, pouco trânsito, e aquele trecho de gravel antes de Atrozela que ninguém esperaria encontrar aqui."
         </p>
@@ -176,50 +207,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <!-- SECTION 4: PHOTO GALLERY -->
-  <section class="w-full bg-[#0a0a0a] px-6 py-12 md:py-16">
-    <div class="max-w-4xl mx-auto">
-      <!-- Photo 1 -->
-      <div class="mb-12">
-        <img src="/images/rotas/janes/01.jpg" alt="Quinta abandonada na calçada portuguesa perto de Pisão" class="w-full rounded-lg mb-4" loading="lazy" />
-        <p class="text-neutral-400 text-sm" style="font-family: 'Inter', sans-serif; line-height: 1.7;">
-          Calçada portuguesa e uma quinta abandonada logo no início. Sintra guarda estas coisas a poucos metros de qualquer estrada.
-        </p>
-      </div>
-
-      <!-- Photo 2 -->
-      <div class="mb-12">
-        <img src="/images/rotas/janes/02.jpg" alt="Estrada de asfalto entre pinheiros em Sintra" class="w-full rounded-lg mb-4" loading="lazy" />
-        <p class="text-neutral-400 text-sm" style="font-family: 'Inter', sans-serif; line-height: 1.7;">
-          Asfalto limpo entre pinheiros. O tipo de estrada onde se pisa fundo sem pensar duas vezes.
-        </p>
-      </div>
-
-      <!-- Photo 3 -->
-      <div class="mb-12">
-        <img src="/images/rotas/janes/03.jpg" alt="Caminho de gravel com campos de flores amarelas e eucalipto" class="w-full rounded-lg mb-4" loading="lazy" />
-        <p class="text-neutral-400 text-sm" style="font-family: 'Inter', sans-serif; line-height: 1.7;">
-          O troço de gravel abre para isto. Flores amarelas até onde a vista chega, eucalipto a fazer sombra. Não parece Sintra.
-        </p>
-      </div>
-
-      <!-- Photo 4 -->
-      <div class="mb-12">
-        <img src="/images/rotas/janes/04.jpg" alt="Campos de flores amarelas com a Serra de Sintra ao fundo" class="w-full rounded-lg mb-4" loading="lazy" />
-        <p class="text-neutral-400 text-sm" style="font-family: 'Inter', sans-serif; line-height: 1.7;">
-          A Serra de Sintra no horizonte, campos em flor na primavera. É aqui que percebes porque é que vale a pena ter gravel.
-        </p>
-      </div>
-
-      <!-- Photo 5 -->
-      <div class="mb-12">
-        <img src="/images/rotas/janes/05.jpg" alt="Arco-íris completo sobre os campos de Atrozela" class="w-full rounded-lg mb-4" loading="lazy" />
-        <p class="text-neutral-400 text-sm" style="font-family: 'Inter', sans-serif; line-height: 1.7;">
-          Arco-íris completo. Há saídas em que tudo encaixa. Esta foi uma delas.
-        </p>
-      </div>
-    </div>
-  </section>
 
   <!-- SECTION 5: KM-BY-KM BREAKDOWN -->
   <section class="w-full bg-[#faf9f7] px-6 py-12 md:py-16">
