@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Lista manual de rotas (adiciona aqui cada nova rota)
+const routes = [
+  {
+    slug: 'janes-pisao-atrozela',
+    title: 'Janes, Pisão, Atrozela',
+    description: 'Loop técnico de 10.84 km a partir de Janes, passando por Pisão e Atrozela, com 240m de subida. Descidas exigentes, pouco trânsito, vistas sobre os campos de Sintra.',
+    region: 'Sintra-Cascais',
+    distance: '10.84 km',
+    elevation: '240m ↑',
+    type: 'Loop',
+    difficulty: 'Médio',
+    date: '2026-04-06',
+  },
+];
+---
+
+<BaseLayout title="Rotas — pedal.pt" description="Rotas de ciclismo em Portugal, com dados reais de GPS, perfis de elevação e notas de campo.">
+
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-neutral-100 via-white to-white" style="height: 300px;"></div>
+
+    <div class="relative max-w-5xl mx-auto px-6 lg:px-10 pt-32 pb-32">
+
+      <div class="fade-up mb-16">
+        <p class="font-mono text-[10px] tracking-widest uppercase text-accent-500 mb-4">Rotas</p>
+        <h1 class="font-display font-bold text-neutral-900 leading-none mb-4" style="font-size: clamp(2rem, 4vw, 2.75rem); letter-spacing: -0.035em;">
+          Estradas que valem a pena.
+        </h1>
+        <p class="text-neutral-400 max-w-xl" style="font-size: 1rem; line-height: 1.75;">
+          Rotas com dados reais de GPS, perfil de elevação e notas de quem lá foi. Sem marketing, sem rotas copiadas de outro site.
+        </p>
+      </div>
+
+      <div class="stagger flex flex-col gap-6">
+        {routes.map(route => (
+          <a
+            href={`/rotas/${route.slug}`}
+            class="group flex items-start gap-8 bg-white border border-neutral-150 rounded-2xl p-8 hover:border-accent-200 hover:shadow-sm transition-all duration-300"
+            style="border-color: #f0f0ed;"
+          >
+            <!-- Stats column -->
+            <div class="flex-shrink-0 hidden sm:flex flex-col gap-3 text-center min-w-[80px]">
+              <div>
+                <div class="font-display font-bold text-neutral-900 leading-none" style="font-size: 1.5rem; letter-spacing: -0.03em;">{route.distance}</div>
+                <div class="font-mono text-[10px] tracking-widest uppercase text-neutral-300 mt-0.5">distância</div>
+              </div>
+              <div>
+                <div class="font-display font-semibold text-accent-500 leading-none" style="font-size: 1rem;">{route.elevation}</div>
+                <div class="font-mono text-[10px] tracking-widest uppercase text-neutral-300 mt-0.5">subida</div>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="hidden sm:block w-px self-stretch bg-neutral-100"></div>
+
+            <!-- Info -->
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="font-mono text-[10px] tracking-widest uppercase text-accent-500">{route.region}</span>
+                <span class="text-neutral-200 text-xs">/</span>
+                <span class="font-mono text-[10px] tracking-widest uppercase text-neutral-300">{route.type}</span>
+                <span class="text-neutral-200 text-xs">/</span>
+                <span class="font-mono text-[10px] tracking-widest uppercase text-neutral-300">{route.difficulty}</span>
+              </div>
+              <h2 class="font-display font-semibold text-neutral-900 mb-2 group-hover:text-accent-600 transition-colors" style="font-size: 1.25rem; letter-spacing: -0.02em;">
+                {route.title}
+              </h2>
+              <p class="text-neutral-400 text-sm leading-relaxed line-clamp-2">{route.description}</p>
+            </div>
+
+            <!-- Arrow -->
+            <div class="flex-shrink-0 text-neutral-300 group-hover:text-accent-500 transition-colors">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 10h12M10 4l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </a>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+</BaseLayout>
