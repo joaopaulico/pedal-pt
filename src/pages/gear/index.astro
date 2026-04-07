@@ -11,6 +11,7 @@ const reviews = [
     score: 7.6,
     label: 'Melhor Entrada no Gravel',
     date: '2026-04-07',
+    thumb: '/images/gear/canyon-grizl-6/IMG_0767.jpg',
   },
   {
     slug: 'van-rysel-rcr-r5-bib-shorts',
@@ -20,6 +21,7 @@ const reviews = [
     score: 8.9,
     label: 'Melhor Relação Qualidade-Preço',
     date: '2026-04-05',
+    thumb: '/images/gear/van-rysel-rcr-r5/01-back.jpg',
   },
 ];
 ---
@@ -48,6 +50,17 @@ const reviews = [
             class="group flex items-center gap-8 bg-white border border-neutral-150 rounded-2xl p-8 hover:border-accent-200 hover:shadow-sm transition-all duration-300"
             style="border-color: #f0f0ed;"
           >
+            <!-- Thumb -->
+            <div class="flex-shrink-0 hidden sm:block">
+              <img
+                src={review.thumb}
+                alt={review.title}
+                class="rounded-xl object-cover"
+                style="width: 96px; height: 96px;"
+                loading="lazy"
+              />
+            </div>
+
             <!-- Score -->
             <div class="flex-shrink-0 text-center hidden sm:block">
               <div class="font-display font-bold text-neutral-900 leading-none" style="font-size: 3rem; letter-spacing: -0.04em;">{review.score.toFixed(1)}</div>
