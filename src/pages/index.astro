@@ -1,11 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PostCard from '../components/PostCard.astro';
-import { getCollection } from 'astro:content';
-
-const allPosts = await getCollection('blog', ({ data }) => !data.draft);
-const sorted = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const recent = sorted.slice(0, 6);
 ---
 
 <BaseLayout title="pedal.pt" description="Ciclismo em Portugal, visto de dentro.">
@@ -59,80 +53,52 @@ const recent = sorted.slice(0, 6);
     </div>
   </section>
 
-  <!-- ════════ ARTICLES GRID ════════ -->
-  {recent.length > 0 && (
-    <section class="bg-[#1c1c1c]">
-      <div class="max-w-6xl mx-auto px-6 lg:px-10 py-24">
-        <div class="flex items-end justify-between mb-14">
-          <div>
-            <p class="font-mono text-[10px] tracking-widest uppercase text-accent-500 mb-2">Artigos</p>
-            <h2 class="font-display font-semibold text-white" style="font-size: 1.75rem; letter-spacing: -0.03em;">Artigos recentes</h2>
-          </div>
-          <a href="/blog" class="hidden sm:inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-white transition-colors nav-link">
-            Ver todos
-          </a>
-        </div>
-        <div class="stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14 text-white">
-          {recent.map(post => (
-            <PostCard
-              title={post.data.title}
-              excerpt={post.data.description}
-              slug={post.slug}
-              date={post.data.date}
-              category={post.data.category}
-              image={post.data.image}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
-
   <!-- ════════ CATEGORIES ════════ -->
   <section class="bg-[#1c1c1c]">
-    <div class="max-w-6xl mx-auto px-6 lg:px-10 pb-32">
-      <!-- Divider -->
-      <div class="h-px bg-neutral-800 mb-24"></div>
-
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 py-32">
       <div class="fade-up mb-14">
         <p class="font-mono text-[10px] tracking-widest uppercase text-accent-500 mb-2">Categorias</p>
         <h2 class="font-display font-semibold text-white" style="font-size: 1.75rem; letter-spacing: -0.03em;">Explora por tema</h2>
       </div>
 
       <div class="stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <a href="/categoria/rotas" class="group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/50 p-8 flex flex-col justify-end min-h-[180px] hover-lift transition-all hover:border-accent-700 hover:bg-neutral-900">
+        <!-- Artigos -->
+        <a href="/blog" class="group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/50 p-8 flex flex-col justify-end min-h-[180px] hover-lift transition-all hover:border-blue-800 hover:bg-neutral-900">
+          <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10 transition-opacity group-hover:opacity-25" style="background: radial-gradient(circle, #60a5fa, transparent 70%);"></div>
+          <div class="relative">
+            <p class="font-mono text-[10px] tracking-widest uppercase text-blue-400 mb-2">01</p>
+            <h3 class="font-display font-semibold text-white text-lg tracking-tight">Artigos</h3>
+            <p class="text-neutral-500 text-sm mt-1">Corridas, ciclismo português, o que se passa.</p>
+          </div>
+        </a>
+
+        <!-- Rotas -->
+        <a href="/rotas" class="group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/50 p-8 flex flex-col justify-end min-h-[180px] hover-lift transition-all hover:border-accent-700 hover:bg-neutral-900">
           <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10 transition-opacity group-hover:opacity-25" style="background: radial-gradient(circle, #269b6c, transparent 70%);"></div>
           <div class="relative">
-            <p class="font-mono text-[10px] tracking-widest uppercase text-accent-500 mb-2">01</p>
+            <p class="font-mono text-[10px] tracking-widest uppercase text-accent-500 mb-2">02</p>
             <h3 class="font-display font-semibold text-white text-lg tracking-tight">Rotas</h3>
             <p class="text-neutral-500 text-sm mt-1">Percursos detalhados com GPS e fotos reais.</p>
           </div>
         </a>
 
+        <!-- Gear -->
         <a href="/gear" class="group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/50 p-8 flex flex-col justify-end min-h-[180px] hover-lift transition-all hover:border-yellow-800 hover:bg-neutral-900">
           <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10 transition-opacity group-hover:opacity-25" style="background: radial-gradient(circle, #e8c698, transparent 70%);"></div>
           <div class="relative">
-            <p class="font-mono text-[10px] tracking-widest uppercase text-yellow-600 mb-2">02</p>
+            <p class="font-mono text-[10px] tracking-widest uppercase text-yellow-600 mb-2">03</p>
             <h3 class="font-display font-semibold text-white text-lg tracking-tight">Gear</h3>
             <p class="text-neutral-500 text-sm mt-1">Reviews honestas de equipamento.</p>
           </div>
         </a>
 
-        <a href="/categoria/guias" class="group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/50 p-8 flex flex-col justify-end min-h-[180px] hover-lift transition-all hover:border-neutral-700 hover:bg-neutral-900">
-          <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10 transition-opacity group-hover:opacity-25" style="background: radial-gradient(circle, #a3a3a3, transparent 70%);"></div>
-          <div class="relative">
-            <p class="font-mono text-[10px] tracking-widest uppercase text-neutral-500 mb-2">03</p>
-            <h3 class="font-display font-semibold text-white text-lg tracking-tight">Guias</h3>
-            <p class="text-neutral-500 text-sm mt-1">Seguranca, clima, logistica, planeamento.</p>
-          </div>
-        </a>
-
+        <!-- Bikepacking -->
         <a href="/categoria/bikepacking" class="group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/50 p-8 flex flex-col justify-end min-h-[180px] hover-lift transition-all hover:border-accent-800 hover:bg-neutral-900">
           <div class="absolute top-0 right-0 w-24 h-24 rounded-full opacity-10 transition-opacity group-hover:opacity-25" style="background: radial-gradient(circle, #78d1ab, transparent 70%);"></div>
           <div class="relative">
             <p class="font-mono text-[10px] tracking-widest uppercase text-accent-400 mb-2">04</p>
             <h3 class="font-display font-semibold text-white text-lg tracking-tight">Bikepacking</h3>
-            <p class="text-neutral-500 text-sm mt-1">Aventuras de varios dias em Portugal.</p>
+            <p class="text-neutral-500 text-sm mt-1">Aventuras de vários dias em Portugal.</p>
           </div>
         </a>
       </div>
