@@ -10,21 +10,29 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 >
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
-  <!-- SECTION 1: HERO MAP -->
-  <section class="relative w-full bg-[#0a0a0a]" style="height: calc(100vh - 64px);">
-    <div id="map" class="w-full h-full"></div>
-    <div class="absolute bottom-0 left-0 z-10 p-8 bg-gradient-to-r from-black via-black to-transparent">
-      <h1 class="text-4xl md:text-5xl font-semibold text-white mb-2" style="font-family: 'Sora', sans-serif;">
-        Janes, Pisão, Atrozela
+  <!-- SECTION 1: HERO TITLE -->
+  <section class="w-full bg-[#0a0a0a] px-6 pt-32 pb-10">
+    <div class="max-w-4xl mx-auto">
+      <p class="font-mono text-[10px] tracking-widest uppercase mb-4" style="color: #44b687; font-family: 'Inter', sans-serif;">Rotas · Sintra-Cascais</p>
+      <h1 class="text-4xl md:text-6xl font-semibold text-white mb-4 leading-none" style="font-family: 'Sora', sans-serif; letter-spacing: -0.03em;">
+        Janes, Pisão,<br>Atrozela
       </h1>
-      <p class="text-neutral-300 text-lg" style="font-family: 'Inter', sans-serif;">
-        10.84 km · 240m ↑ · Loop · Sintra-Cascais
+      <p class="text-neutral-400 text-lg" style="font-family: 'Inter', sans-serif;">
+        10.84 km · 240m ↑ · Loop · Gravel + Estrada · Abril 2026
       </p>
     </div>
   </section>
 
+  <!-- SECTION MAP -->
+  <section class="w-full bg-[#0a0a0a] px-6 pb-0">
+    <div class="max-w-4xl mx-auto">
+      <div id="map" style="height: 480px; border-radius: 12px; overflow: hidden;"></div>
+      <p class="text-neutral-600 text-xs mt-2 text-right" style="font-family: 'Inter', sans-serif;">Clica e arrasta para explorar · scroll para zoom</p>
+    </div>
+  </section>
+
   <!-- SECTION 2: STATS GRID -->
-  <section class="w-full bg-[#0a0a0a] px-6 py-12 md:py-16">
+  <section class="w-full bg-[#0a0a0a] px-6 pt-10 pb-16 md:pb-20">
     <div class="max-w-6xl mx-auto">
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
         <!-- Distância -->
@@ -173,41 +181,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="max-w-4xl mx-auto">
       <!-- Photo 1 -->
       <div class="mb-12">
-        <img src="/images/rotas/janes/01.jpg" alt="Ruína senhorial na descida inicial" class="w-full rounded-lg mb-4" />
-        <p class="text-neutral-300" style="font-family: 'Inter', sans-serif;">
-          Ruína senhorial na descida inicial. A história de Sintra escondida entre curvas.
+        <img src="/images/rotas/janes/01.jpg" alt="Quinta abandonada na calçada portuguesa perto de Pisão" class="w-full rounded-lg mb-4" loading="lazy" />
+        <p class="text-neutral-400 text-sm" style="font-family: 'Inter', sans-serif; line-height: 1.7;">
+          Calçada portuguesa e uma quinta abandonada logo no início. Sintra guarda estas coisas a poucos metros de qualquer estrada.
         </p>
       </div>
 
       <!-- Photo 2 -->
       <div class="mb-12">
-        <img src="/images/rotas/janes/02.jpg" alt="Estrada de pinheiros a caminho de Pisão" class="w-full rounded-lg mb-4" />
-        <p class="text-neutral-300" style="font-family: 'Inter', sans-serif;">
-          Estrada de pinheiros a caminho de Pisão. Asfalto limpo, sombra generosa.
+        <img src="/images/rotas/janes/02.jpg" alt="Estrada de asfalto entre pinheiros em Sintra" class="w-full rounded-lg mb-4" loading="lazy" />
+        <p class="text-neutral-400 text-sm" style="font-family: 'Inter', sans-serif; line-height: 1.7;">
+          Asfalto limpo entre pinheiros. O tipo de estrada onde se pisa fundo sem pensar duas vezes.
         </p>
       </div>
 
       <!-- Photo 3 -->
       <div class="mb-12">
-        <img src="/images/rotas/janes/03.jpg" alt="Trilho de terra com vista para os campos" class="w-full rounded-lg mb-4" />
-        <p class="text-neutral-300" style="font-family: 'Inter', sans-serif;">
-          Trilho de terra com vista para os campos de flores. Alentejo? Não, Sintra.
+        <img src="/images/rotas/janes/03.jpg" alt="Caminho de gravel com campos de flores amarelas e eucalipto" class="w-full rounded-lg mb-4" loading="lazy" />
+        <p class="text-neutral-400 text-sm" style="font-family: 'Inter', sans-serif; line-height: 1.7;">
+          O troço de gravel abre para isto. Flores amarelas até onde a vista chega, eucalipto a fazer sombra. Não parece Sintra.
         </p>
       </div>
 
       <!-- Photo 4 -->
       <div class="mb-12">
-        <img src="/images/rotas/janes/04.jpg" alt="Campos amarelos de Atrozela" class="w-full rounded-lg mb-4" />
-        <p class="text-neutral-300" style="font-family: 'Inter', sans-serif;">
-          Campos amarelos a perder de vista. Primavera na zona de Atrozela.
+        <img src="/images/rotas/janes/04.jpg" alt="Campos de flores amarelas com a Serra de Sintra ao fundo" class="w-full rounded-lg mb-4" loading="lazy" />
+        <p class="text-neutral-400 text-sm" style="font-family: 'Inter', sans-serif; line-height: 1.7;">
+          A Serra de Sintra no horizonte, campos em flor na primavera. É aqui que percebes porque é que vale a pena ter gravel.
         </p>
       </div>
 
       <!-- Photo 5 -->
       <div class="mb-12">
-        <img src="/images/rotas/janes/05.jpg" alt="Arco-íris sobre os campos" class="w-full rounded-lg mb-4" />
-        <p class="text-neutral-300" style="font-family: 'Inter', sans-serif;">
-          Arco-íris sobre os campos. Vale cada metro de subida.
+        <img src="/images/rotas/janes/05.jpg" alt="Arco-íris completo sobre os campos de Atrozela" class="w-full rounded-lg mb-4" loading="lazy" />
+        <p class="text-neutral-400 text-sm" style="font-family: 'Inter', sans-serif; line-height: 1.7;">
+          Arco-íris completo. Há saídas em que tudo encaixa. Esta foi uma delas.
         </p>
       </div>
     </div>
@@ -407,7 +415,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       const CENTER = [38.74556,-9.42092];
       const BOUNDS = [[38.73448,-9.43826],[38.75884,-9.40568]];
 
-      const map = L.map('map').setView(CENTER, 13);
+      const map = L.map('map', { scrollWheelZoom: false }).setView(CENTER, 13);
 
       L.tileLayer('https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap, &copy; CartoDB',
