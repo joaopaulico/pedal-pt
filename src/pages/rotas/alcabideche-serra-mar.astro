@@ -1,0 +1,586 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Alcabideche, Serra e Mar"
+  description="Rota de 36.7 km entre Alcabideche e o litoral com 780m de subida. Serra de Sintra, caminhos de floresta, e vista para o Atlântico a meio caminho."
+  image="/images/rotas/alcabideche-serra-mar/og.jpg"
+  type="article"
+>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- SECTION 1: HERO TITLE -->
+  <section class="w-full bg-[#0a0a0a] px-6 pt-32 pb-10">
+    <div class="max-w-4xl mx-auto">
+      <p class="font-mono text-[10px] tracking-widest uppercase mb-4" style="color: #44b687; font-family: 'Inter', sans-serif;">Rotas · Sintra-Cascais</p>
+      <h1 class="text-4xl md:text-6xl font-semibold text-white mb-4 leading-none" style="font-family: 'Sora', sans-serif; letter-spacing: -0.03em;">
+        Alcabideche,<br>Serra e Mar
+      </h1>
+      <p class="text-neutral-400 text-lg" style="font-family: 'Inter', sans-serif;">
+        36.7 km · 780m ↑ · Ponto a ponto · Gravel + Estrada · Abril 2026
+      </p>
+    </div>
+  </section>
+
+  <!-- SECTION MAP -->
+  <section class="w-full bg-[#0a0a0a] px-6 pb-0">
+    <div class="max-w-4xl mx-auto">
+      <div id="map" style="height: 480px; border-radius: 12px; overflow: hidden;"></div>
+      <p class="text-neutral-600 text-xs mt-2 text-right" style="font-family: 'Inter', sans-serif;">Clica e arrasta para explorar · scroll para zoom</p>
+    </div>
+  </section>
+
+  <!-- SECTION 2: STATS GRID -->
+  <section class="w-full bg-[#0a0a0a] px-6 pt-10 pb-16 md:pb-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Distância</p>
+          <p class="text-3xl md:text-4xl font-semibold" style="font-family: 'Sora', sans-serif; color: #269b6c;">
+            36.7 km
+          </p>
+        </div>
+
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Subida</p>
+          <p class="text-3xl md:text-4xl font-semibold" style="font-family: 'Sora', sans-serif; color: #269b6c;">
+            780m
+          </p>
+        </div>
+
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Descida</p>
+          <p class="text-3xl md:text-4xl font-semibold" style="font-family: 'Sora', sans-serif; color: #269b6c;">
+            825m
+          </p>
+        </div>
+
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Elevação</p>
+          <p class="text-lg font-semibold" style="font-family: 'Sora', sans-serif; color: #269b6c;">
+            7m / 450m
+          </p>
+          <p class="text-xs text-neutral-500 mt-1">Mín / Máx</p>
+        </div>
+
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Tempo estimado</p>
+          <p class="text-lg font-semibold" style="font-family: 'Sora', sans-serif; color: #269b6c;">
+            1h30 – 2h30
+          </p>
+          <p class="text-xs text-neutral-500 mt-1">Conforme ritmo e objectivos</p>
+        </div>
+
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Superfície</p>
+          <p class="text-lg font-semibold" style="font-family: 'Sora', sans-serif; color: #269b6c;">
+            Asfalto + Gravel + Trilho
+          </p>
+        </div>
+
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Tipo</p>
+          <p class="text-lg font-semibold" style="font-family: 'Sora', sans-serif; color: #269b6c;">
+            Ponto a ponto
+          </p>
+          <p class="text-xs text-neutral-500 mt-1">Alcabideche → Litoral → Serra → Costa</p>
+        </div>
+
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Bicicleta ideal</p>
+          <p class="text-lg font-semibold" style="font-family: 'Sora', sans-serif; color: #269b6c;">
+            Gravel
+          </p>
+          <p class="text-xs text-neutral-500 mt-1">Pneu mínimo 38mm para os trilhos de serra</p>
+        </div>
+
+        <div class="bg-neutral-900 rounded-xl border border-neutral-800 p-6">
+          <p class="text-neutral-400 text-sm mb-2" style="font-family: 'Inter', sans-serif;">Dificuldade</p>
+          <p class="text-lg font-semibold" style="font-family: 'Sora', sans-serif; color: #e67e22;">
+            Exigente
+          </p>
+          <p class="text-xs text-neutral-500 mt-1">780m de desnível, trilhos técnicos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION NARRATIVE -->
+  <section class="w-full bg-[#111111] px-6 py-12 md:py-20">
+    <div class="max-w-3xl mx-auto">
+      <p class="font-mono text-[10px] tracking-widest uppercase mb-8" style="color: #44b687; font-family: 'Inter', sans-serif;">Notas de campo</p>
+
+      <p class="text-white text-xl leading-relaxed mb-10" style="font-family: 'Sora', sans-serif; letter-spacing: -0.01em;">
+        Esta rota não é para dias moles. Sai de Alcabideche, entra na serra pela porta dos fundos, desce até ao mar, e volta a subir por caminhos que testam tudo: pernas, técnica, e cabeça. É das melhores coisas que se podem fazer de bicicleta na zona de Sintra.
+      </p>
+
+      <!-- Parágrafo 1 + foto 01 (direita): floresta -->
+      <div style="overflow: hidden; margin-bottom: 2rem;">
+        <img src="/images/rotas/alcabideche-serra-mar/01.jpg" alt="Caminho de terra na floresta da Serra de Sintra" loading="lazy"
+          style="float: right; width: 32%; margin-left: 1.5rem; margin-bottom: 0.5rem; border-radius: 8px; display: block;" />
+        <p style="font-family: 'Inter', sans-serif; line-height: 1.8; color: #a3a3a3;">
+          Os primeiros quilómetros sobem de forma progressiva por estradas secundárias de Alcabideche. Nada dramático, mas constante. É aquecimento disfarçado de subida. A partir do km 4 a serra começa a sério: o asfalto dá lugar a caminhos de terra compacta debaixo de copas cerradas, a luz entra em diagonal entre os troncos, e o barulho desaparece. Estes trilhos de floresta são o tipo de coisa que faz esquecer que estás a 20 minutos de Lisboa. Lindos, mas duros. O terreno é solto em alguns sítios e as raízes de pinheiro exigem atenção.
+        </p>
+      </div>
+
+      <!-- Parágrafo 2 + foto 02 (esquerda): costa -->
+      <div style="overflow: hidden; margin-bottom: 2rem;">
+        <img src="/images/rotas/alcabideche-serra-mar/02.jpg" alt="Vista para a praia e o Atlântico" loading="lazy"
+          style="float: left; width: 32%; margin-right: 1.5rem; margin-bottom: 0.5rem; border-radius: 8px; display: block;" />
+        <p style="font-family: 'Inter', sans-serif; line-height: 1.8; color: #a3a3a3;">
+          A descida para o mar é o prémio. De quase 270m de altitude até à cota zero, o terreno muda de floresta densa para mato baixo, depois para falésias e, finalmente, praia. A vista abre-se de repente e o Atlântico aparece inteiro à frente. É o ponto onde toda a gente para, mesmo quem diz que não para para fotos. O trecho junto à costa é curto mas marca: poucos metros acima do nível do mar, brisa atlântica, o contraste total com a serra de onde acabaste de vir.
+        </p>
+      </div>
+
+      <!-- Parágrafo 3 + foto 03 (direita): estrada de serra -->
+      <div style="overflow: hidden; margin-bottom: 2rem;">
+        <img src="/images/rotas/alcabideche-serra-mar/03.jpg" alt="Estrada pavimentada entre pinheiros na Serra de Sintra" loading="lazy"
+          style="float: right; width: 32%; margin-left: 1.5rem; margin-bottom: 0.5rem; border-radius: 8px; display: block;" />
+        <p style="font-family: 'Inter', sans-serif; line-height: 1.8; color: #a3a3a3;">
+          A segunda metade é a mais dura. De volta ao nível do mar, a rota volta a subir pela serra, desta vez até aos 450m. A subida é longa, sustentada, e em alguns trechos ultrapassa os 10%. As pernas que já tinham feito 20 km sentem cada metro. Mas os caminhos pavimentados entre pinheiros compensam: estrada estreita, perfeita, sem trânsito, a serpentear pela encosta com o verde todo à volta. É o tipo de estrada que aparece nos catálogos de bicicletas, só que esta é real e está aqui. A descida final é rápida e recompensadora.
+        </p>
+      </div>
+
+      <div class="border-l-4 border-[#269b6c] pl-6 mt-10">
+        <p class="text-neutral-300 italic" style="font-family: 'Inter', sans-serif; line-height: 1.8;">
+          "Serra, mar, e serra outra vez. 37 km que resumem tudo o que há de bom no ciclismo em Sintra. Os caminhos de floresta são lindos e duros ao mesmo tempo. A vista para o Atlântico a meio da rota é daquelas que justificam qualquer sofrimento nas subidas."
+        </p>
+        <p class="text-neutral-500 text-sm mt-3" style="font-family: 'Inter', sans-serif;">João · Abril 2026 · Bom tempo, 19°C</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: ELEVATION PROFILE -->
+  <section class="w-full bg-[#faf9f7] px-6 py-12 md:py-16">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-semibold mb-8" style="font-family: 'Sora', sans-serif; color: #0a0a0a;">
+        Perfil de Elevação
+      </h2>
+
+      <div class="relative bg-white rounded-lg border border-neutral-200 p-4 md:p-6">
+        <svg id="elevationProfile" class="w-full" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid meet"></svg>
+
+        <div id="tooltip" class="absolute hidden bg-neutral-900 text-white px-3 py-2 rounded text-sm pointer-events-none" style="font-family: 'Inter', sans-serif;">
+          <div id="tooltipContent"></div>
+        </div>
+      </div>
+
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-5 gap-3 text-sm" style="font-family: 'Inter', sans-serif;">
+        <div class="text-neutral-700">
+          <span class="font-semibold text-[#269b6c]">0 km</span>
+          <p class="text-xs text-neutral-500">Alcabideche</p>
+        </div>
+        <div class="text-neutral-700">
+          <span class="font-semibold text-[#e67e22]">8.5 km</span>
+          <p class="text-xs text-neutral-500">Planalto da serra</p>
+        </div>
+        <div class="text-neutral-700">
+          <span class="font-semibold text-[#44b687]">16.5 km</span>
+          <p class="text-xs text-neutral-500">Costa / Ponto mais baixo</p>
+        </div>
+        <div class="text-neutral-700">
+          <span class="font-semibold text-[#c8553d]">26.7 km</span>
+          <p class="text-xs text-neutral-500">Pico da serra (450m)</p>
+        </div>
+        <div class="text-neutral-700">
+          <span class="font-semibold text-[#269b6c]">36.7 km</span>
+          <p class="text-xs text-neutral-500">Fim</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: KM-BY-KM BREAKDOWN -->
+  <section class="w-full bg-[#faf9f7] px-6 py-12 md:py-16">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-semibold mb-8" style="font-family: 'Sora', sans-serif; color: #0a0a0a;">
+        Km a km
+      </h2>
+
+      <div class="space-y-4">
+        <div class="bg-white rounded-lg border-l-4 border-[#d4a843] p-6">
+          <p class="text-sm font-semibold text-[#d4a843] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 0–4
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Subida progressiva de Alcabideche
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            +3% a +5% • Asfalto e estrada secundária • Aquecimento que não engana
+          </p>
+        </div>
+
+        <div class="bg-white rounded-lg border-l-4 border-[#c8553d] p-6">
+          <p class="text-sm font-semibold text-[#c8553d] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 4–8.5
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Serra de Sintra: caminhos de floresta
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            +5% a +10% • Gravel e trilho • Terreno técnico, raízes, terra solta
+          </p>
+        </div>
+
+        <div class="bg-white rounded-lg border-l-4 border-[#e67e22] p-6">
+          <p class="text-sm font-semibold text-[#e67e22] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 8.5–11.5
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Planalto da serra
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            Plano • ~238m altitude • Momento de recuperar antes da descida
+          </p>
+        </div>
+
+        <div class="bg-white rounded-lg border-l-4 border-[#44b687] p-6">
+          <p class="text-sm font-semibold text-[#269b6c] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 11.5–16.5
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Descida até ao mar
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            -5% a -10% • 5 km de descida contínua • De 238m até à cota zero
+          </p>
+        </div>
+
+        <div class="bg-white rounded-lg border-l-4 border-[#44b687] p-6">
+          <p class="text-sm font-semibold text-[#269b6c] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 16.5–18
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Litoral atlântico
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            Plano • Vista para o oceano • Brisa e sal
+          </p>
+        </div>
+
+        <div class="bg-white rounded-lg border-l-4 border-[#c8553d] p-6">
+          <p class="text-sm font-semibold text-[#c8553d] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 18–27
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Regresso pela serra: subida longa até aos 450m
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            +5% a +12% • 9 km de subida • O trecho mais duro da rota
+          </p>
+        </div>
+
+        <div class="bg-white rounded-lg border-l-4 border-[#e67e22] p-6">
+          <p class="text-sm font-semibold text-[#e67e22] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 27–33
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Descida final da serra
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            Rápida e recompensadora • Estrada entre pinheiros • Atenção às curvas
+          </p>
+        </div>
+
+        <div class="bg-white rounded-lg border-l-4 border-[#44b687] p-6">
+          <p class="text-sm font-semibold text-[#269b6c] mb-1" style="font-family: 'Sora', sans-serif;">
+            km 33–36.7
+          </p>
+          <p class="text-neutral-900 font-medium mb-2" style="font-family: 'Sora', sans-serif;">
+            Trecho final junto à costa
+          </p>
+          <p class="text-neutral-600 text-sm" style="font-family: 'Inter', sans-serif;">
+            Ondulado • Terreno misto • Últimos quilómetros de descompressão
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: RECOMMENDATIONS -->
+  <section class="w-full bg-[#0a0a0a] px-6 py-12 md:py-16">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-semibold mb-8" style="font-family: 'Sora', sans-serif; color: white;">
+        Antes de ir
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-neutral-900 rounded-lg border border-neutral-800 p-6">
+          <h3 class="text-lg font-semibold mb-3" style="font-family: 'Sora', sans-serif; color: #44b687;">
+            Gearing
+          </h3>
+          <p class="text-neutral-300 text-sm" style="font-family: 'Inter', sans-serif;">
+            Cassete de 11-34 no mínimo. A subida dos km 18-27 é longa e sustentada, com rampas acima de 10%. Se tens 1x com 40-42T atrás, é confortável. Compact 50/34 com 11-34 também serve.
+          </p>
+        </div>
+
+        <div class="bg-neutral-900 rounded-lg border border-neutral-800 p-6">
+          <h3 class="text-lg font-semibold mb-3" style="font-family: 'Sora', sans-serif; color: #44b687;">
+            Quando ir
+          </h3>
+          <p class="text-neutral-300 text-sm" style="font-family: 'Inter', sans-serif;">
+            Primavera e outono são ideais. No verão o calor na subida dos 450m é implacável. Manhã cedo para evitar vento forte na costa. Após chuva, os trilhos de serra ficam lamacentos.
+          </p>
+        </div>
+
+        <div class="bg-neutral-900 rounded-lg border border-neutral-800 p-6">
+          <h3 class="text-lg font-semibold mb-3" style="font-family: 'Sora', sans-serif; color: #44b687;">
+            Água e alimentação
+          </h3>
+          <p class="text-neutral-300 text-sm" style="font-family: 'Inter', sans-serif;">
+            Duas garrafas obrigatórias. 37 km com 780m de desnível gastam. Há cafés na zona costeira (km ~17) para reabastecer a meio. Levar pelo menos um gel ou barra para a segunda subida.
+          </p>
+        </div>
+
+        <div class="bg-neutral-900 rounded-lg border border-neutral-800 p-6">
+          <h3 class="text-lg font-semibold mb-3" style="font-family: 'Sora', sans-serif; color: #44b687;">
+            Atenção
+          </h3>
+          <p class="text-neutral-300 text-sm" style="font-family: 'Inter', sans-serif;">
+            Os trilhos de floresta entre o km 4 e 8.5 têm raízes expostas e terreno solto. Pneus 38mm+ com bom grip. A descida para o mar é rápida, controlar a velocidade. Rota exigente, não recomendada como primeiro contacto com gravel.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: DOWNLOAD -->
+  <section class="w-full bg-[#1c1c1c] px-6 py-12 md:py-16">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-semibold mb-8" style="font-family: 'Sora', sans-serif; color: white;">
+        Levar no telemóvel
+      </h2>
+
+      <div class="flex flex-col md:flex-row gap-4">
+        <a href="/gpx/alcabideche-serra-mar.gpx" download class="flex-1 bg-[#269b6c] hover:bg-[#1e7a52] text-white font-semibold py-4 px-6 rounded-lg text-center transition-colors" style="font-family: 'Sora', sans-serif;">
+          ↓ Download GPX
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER: Author Card -->
+  <section class="w-full bg-[#0a0a0a] px-6 py-8 border-t border-neutral-800">
+    <div class="max-w-4xl mx-auto flex items-center gap-4">
+      <div class="w-12 h-12 rounded-full bg-[#269b6c] flex items-center justify-center text-white font-bold text-lg" style="font-family: 'Sora', sans-serif;">
+        J
+      </div>
+      <div>
+        <p class="font-semibold text-white" style="font-family: 'Sora', sans-serif;">João</p>
+        <p class="text-neutral-400 text-sm" style="font-family: 'Inter', sans-serif;">
+          Sintra-Cascais, Portugal · Abril 2026
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leaflet Map Script -->
+  <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+      const ROUTE = [[38.73986,-9.42487],[38.74007,-9.42497],[38.74124,-9.42506],[38.74181,-9.42561],[38.74204,-9.42618],[38.74143,-9.4281],[38.7416,-9.42853],[38.74245,-9.42834],[38.74344,-9.42931],[38.74499,-9.429803],[38.74651,-9.43022],[38.74737,-9.42955],[38.74789,-9.42979],[38.74803,-9.43047],[38.74875,-9.43144],[38.74889,-9.43177],[38.74863,-9.43214],[38.74789,-9.43243],[38.74737,-9.4334],[38.74749,-9.43389],[38.74873,-9.43483],[38.74959,-9.43609],[38.7504,-9.43723],[38.75126,-9.43857],[38.751277,-9.44042],[38.75144,-9.44162],[38.75199,-9.4417],[38.75225,-9.44171],[38.75148,-9.44167],[38.75128,-9.44128],[38.7513,-9.44442],[38.75164,-9.446287],[38.75202,-9.44772],[38.75292,-9.44811],[38.75304,-9.44866],[38.75315,-9.44968],[38.7527,-9.45081],[38.75227,-9.45193],[38.753,-9.45282],[38.75314,-9.45339],[38.75221,-9.45499],[38.75209,-9.45574],[38.75245,-9.45682],[38.7526,-9.45743],[38.75297,-9.45753],[38.75468,-9.4566],[38.75501,-9.45669],[38.75559,-9.45789],[38.75617,-9.45791],[38.75701,-9.45857],[38.75771,-9.45931],[38.75853,-9.45917],[38.75882,-9.45959],[38.7587,-9.45992],[38.757825,-9.46045],[38.75728,-9.461],[38.75769,-9.46203],[38.75846,-9.46302],[38.75881,-9.46453],[38.75951,-9.46513],[38.76002,-9.46521],[38.76114,-9.46513],[38.76147,-9.4654],[38.76151,-9.4663],[38.76122,-9.46738],[38.7615,-9.46785],[38.76203,-9.46819],[38.76244,-9.4695],[38.76403,-9.47077],[38.76503,-9.47158],[38.76576,-9.47277],[38.76674,-9.47345],[38.76772,-9.47339],[38.76916,-9.47376],[38.77023,-9.47377],[38.7708,-9.47339],[38.77139,-9.47226],[38.77221,-9.47104],[38.77259,-9.47016],[38.77283,-9.47016],[38.77338,-9.47142],[38.77391,-9.47202],[38.77385,-9.47259],[38.77328,-9.47344],[38.77285,-9.4747],[38.77284,-9.47578],[38.77312,-9.47598],[38.77411,-9.47573],[38.77583,-9.47507],[38.77722,-9.4757],[38.77839,-9.4761],[38.77926,-9.47597],[38.78043,-9.47465],[38.78121,-9.47353],[38.7823,-9.47358],[38.78308,-9.47366],[38.78353,-9.4731],[38.78326,-9.47198],[38.7823,-9.47085],[38.78226,-9.4703],[38.78295,-9.46996],[38.78362,-9.46935],[38.78442,-9.46821],[38.78486,-9.46729],[38.7854,-9.46614],[38.78639,-9.46527],[38.78642,-9.46485],[38.78611,-9.46409],[38.7864,-9.46278],[38.78634,-9.46237],[38.7861,-9.46198],[38.78633,-9.46147],[38.78741,-9.46133],[38.78847,-9.46117],[38.78905,-9.46086],[38.79023,-9.46026],[38.79078,-9.46],[38.79083,-9.46033],[38.79041,-9.46082],[38.79054,-9.46161],[38.79123,-9.46259],[38.7914,-9.46296],[38.7914,-9.46385],[38.79188,-9.46406],[38.7926,-9.46462],[38.79347,-9.4648],[38.79455,-9.46542],[38.7952,-9.46644],[38.7957,-9.46686],[38.79694,-9.46706],[38.79764,-9.46657],[38.79799,-9.46578],[38.79827,-9.46565],[38.79907,-9.46579],[38.79963,-9.46688],[38.79992,-9.46786],[38.80066,-9.46873],[38.80248,-9.47028],[38.80398,-9.47166],[38.80491,-9.47184],[38.805895,-9.472365],[38.80712,-9.47274],[38.80814,-9.47231],[38.80913,-9.47198],[38.81103,-9.4724],[38.81236,-9.4722],[38.81386,-9.47199],[38.81439,-9.47273],[38.81505,-9.47277],[38.81613,-9.47221],[38.818027,-9.47207],[38.819255,-9.47117],[38.818983,-9.468663],[38.81837,-9.46704],[38.81866,-9.46668],[38.81963,-9.46635],[38.82006,-9.46668],[38.82036,-9.46677],[38.82143,-9.46699],[38.82229,-9.46821],[38.82288,-9.46865],[38.82313,-9.46883],[38.82328,-9.46939],[38.82313,-9.46883],[38.82288,-9.46865],[38.82229,-9.46821],[38.82143,-9.46699],[38.82098,-9.46715],[38.82087,-9.46813],[38.82124,-9.4686],[38.82118,-9.46874],[38.82073,-9.46884],[38.81914,-9.46949],[38.81934,-9.47209],[38.81877,-9.47202],[38.81654,-9.47217],[38.81541,-9.4726],[38.81466,-9.47282],[38.81404,-9.4722],[38.81325,-9.47207],[38.81138,-9.4724],[38.80976,-9.47207],[38.80863,-9.47197],[38.80733,-9.47271],[38.80648,-9.47272],[38.80509,-9.47191],[38.80411,-9.47175],[38.80301,-9.47075],[38.80142,-9.46934],[38.80009,-9.46817],[38.79975,-9.46723],[38.7992,-9.46616],[38.79874,-9.46551],[38.79809,-9.46578],[38.79793,-9.46625],[38.79734,-9.4669],[38.79668,-9.46703],[38.79548,-9.46677],[38.79488,-9.46589],[38.79439,-9.46527],[38.79326,-9.46474],[38.7925,-9.46457],[38.79153,-9.46404],[38.79135,-9.46366],[38.79138,-9.46283],[38.79095,-9.46232],[38.79039,-9.4611],[38.79048,-9.46072],[38.79086,-9.4602],[38.79074,-9.45997],[38.79023,-9.46026],[38.78905,-9.46086],[38.78847,-9.46117],[38.78741,-9.46133],[38.78633,-9.46147],[38.7861,-9.46198],[38.78634,-9.46237],[38.7864,-9.46278],[38.78611,-9.46409],[38.78642,-9.46485],[38.78639,-9.46527],[38.78574,-9.46604],[38.78594,-9.46555],[38.78604,-9.46484],[38.78582,-9.46415],[38.78555,-9.46381],[38.78561,-9.46424],[38.78516,-9.46488],[38.78465,-9.46395],[38.78373,-9.46344],[38.78324,-9.4631],[38.78294,-9.46371],[38.78242,-9.46316],[38.78235,-9.46349],[38.7818,-9.46518],[38.78121,-9.46639],[38.78081,-9.46643],[38.77972,-9.46616],[38.77853,-9.46635],[38.77704,-9.46569],[38.77628,-9.4647],[38.77564,-9.46255],[38.77532,-9.46062],[38.77535,-9.45903],[38.7749,-9.45771],[38.77496,-9.45706],[38.77474,-9.45677],[38.77352,-9.45668],[38.77281,-9.45696],[38.77211,-9.45809],[38.771085,-9.458255],[38.77046,-9.45814],[38.77029,-9.45716],[38.77072,-9.4559],[38.77144,-9.45502],[38.77154,-9.45415],[38.77115,-9.45256],[38.77104,-9.45039],[38.77167,-9.44893],[38.7717,-9.44809],[38.7716,-9.44724],[38.77018,-9.44622],[38.76975,-9.44555],[38.76956,-9.44353],[38.76972,-9.44233],[38.77103,-9.44095],[38.77126,-9.43975],[38.77055,-9.43864],[38.76973,-9.4376],[38.77024,-9.43679],[38.77131,-9.436],[38.77267,-9.43605],[38.77446,-9.43669],[38.77487,-9.43689],[38.77567,-9.43697],[38.77747,-9.43754],[38.7784,-9.43735],[38.77857,-9.43711],[38.77815,-9.43642],[38.77924,-9.43463],[38.77983,-9.43449],[38.78021,-9.43444],[38.78129,-9.43519],[38.78136,-9.43584],[38.781,-9.43646],[38.7811,-9.43702],[38.78157,-9.43736],[38.78188,-9.43782],[38.78174,-9.43932],[38.78191,-9.43979],[38.78171,-9.44073],[38.7816,-9.4419],[38.78119,-9.44258],[38.78154,-9.4426],[38.78157,-9.44331],[38.7823,-9.44364],[38.78269,-9.44401],[38.7834,-9.44382],[38.78368,-9.44359],[38.7845,-9.44379],[38.78487,-9.44387],[38.7853,-9.44471],[38.78555,-9.44476],[38.7858,-9.44486],[38.78681,-9.44543],[38.7877,-9.44509],[38.78821,-9.4455],[38.78896,-9.44575],[38.78981,-9.44613],[38.79031,-9.44636],[38.79155,-9.44697],[38.79259,-9.44725],[38.79325,-9.44767],[38.79462,-9.44781],[38.7949,-9.44772],[38.79598,-9.448],[38.79658,-9.44828],[38.79728,-9.448],[38.79772,-9.44851],[38.79777,-9.44895],[38.79812,-9.44913],[38.79837,-9.44893],[38.79873,-9.44845],[38.79848,-9.44833],[38.79856,-9.44744],[38.79909,-9.44701],[38.79971,-9.44659],[38.8001,-9.44687],[38.80082,-9.44748],[38.80177,-9.44806],[38.80224,-9.44805],[38.80308,-9.44937],[38.80326,-9.44967],[38.8038,-9.44937],[38.8043,-9.44945],[38.80572,-9.45],[38.80736,-9.45165],[38.808647,-9.45311],[38.810427,-9.45512],[38.811983,-9.45715],[38.81311,-9.45883],[38.8135,-9.46076],[38.8141,-9.46178],[38.81545,-9.46362],[38.81703,-9.46575],[38.81748,-9.46606],[38.81881,-9.46567],[38.81879,-9.46718],[38.81921,-9.47033],[38.81976,-9.47221]];
+      const CENTER = [38.78402,-9.45755];
+      const BOUNDS = [[38.73986,-9.4761],[38.82328,-9.42487]];
+
+      const map = L.map('map', { scrollWheelZoom: false }).setView(CENTER, 12);
+
+      L.tileLayer('https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap, &copy; CartoDB',
+        maxZoom: 19,
+      }).addTo(map);
+
+      L.polyline(ROUTE, {
+        color: '#44b687',
+        weight: 4,
+        opacity: 0.9,
+        lineCap: 'round',
+        lineJoin: 'round',
+      }).addTo(map);
+
+      map.fitBounds(BOUNDS, { padding: [50, 50] });
+    });
+  </script>
+
+  <!-- Elevation Profile SVG Script -->
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+      const PROFILE = [{"k":0.0,"e":86.5},{"k":0.14,"e":91.7},{"k":0.27,"e":99.8},{"k":0.48,"e":109.8},{"k":0.61,"e":115.3},{"k":0.78,"e":123.0},{"k":1.11,"e":135.6},{"k":1.27,"e":138.1},{"k":1.42,"e":138.8},{"k":1.51,"e":139.2},{"k":1.6,"e":141.8},{"k":1.76,"e":148.8},{"k":1.95,"e":157.1},{"k":2.18,"e":168.8},{"k":2.4,"e":162.0},{"k":2.67,"e":149.7},{"k":2.77,"e":156.1},{"k":2.88,"e":149.7},{"k":3.19,"e":146.9},{"k":3.47,"e":151.2},{"k":3.61,"e":142.1},{"k":3.74,"e":142.3},{"k":3.96,"e":151.1},{"k":4.1,"e":157.1},{"k":4.3,"e":165.5},{"k":4.47,"e":172.5},{"k":4.55,"e":176.3},{"k":4.78,"e":184.6},{"k":4.93,"e":191.6},{"k":5.03,"e":195.6},{"k":5.23,"e":202.7},{"k":5.36,"e":209.7},{"k":5.43,"e":211.3},{"k":5.6,"e":209.3},{"k":5.81,"e":209.9},{"k":5.97,"e":213.1},{"k":6.11,"e":216.7},{"k":6.27,"e":222.7},{"k":6.43,"e":225.7},{"k":6.52,"e":226.2},{"k":6.64,"e":228.7},{"k":7.01,"e":243.4},{"k":7.19,"e":249.5},{"k":7.41,"e":252.7},{"k":7.65,"e":252.1},{"k":7.78,"e":252.0},{"k":8.01,"e":251.9},{"k":8.14,"e":252.2},{"k":8.28,"e":254.5},{"k":8.4,"e":259.3},{"k":8.53,"e":264.2},{"k":8.73,"e":262.2},{"k":8.84,"e":262.5},{"k":9.1,"e":259.8},{"k":9.38,"e":250.7},{"k":9.58,"e":250.8},{"k":9.81,"e":251.4},{"k":10.0,"e":246.6},{"k":10.1,"e":241.7},{"k":10.33,"e":238.3},{"k":10.45,"e":237.8},{"k":10.63,"e":238.0},{"k":10.87,"e":238.0},{"k":11.03,"e":238.0},{"k":11.12,"e":237.8},{"k":11.28,"e":237.7},{"k":11.35,"e":237.4},{"k":11.49,"e":237.6},{"k":11.67,"e":233.1},{"k":11.86,"e":217.2},{"k":11.95,"e":211.2},{"k":12.04,"e":206.5},{"k":12.21,"e":193.2},{"k":12.31,"e":187.0},{"k":12.41,"e":179.8},{"k":12.58,"e":169.2},{"k":12.77,"e":155.7},{"k":12.95,"e":138.3},{"k":13.13,"e":126.3},{"k":13.24,"e":123.2},{"k":13.38,"e":125.2},{"k":13.55,"e":124.2},{"k":13.84,"e":120.1},{"k":14.13,"e":114.5},{"k":14.34,"e":117.2},{"k":14.55,"e":111.5},{"k":14.79,"e":88.1},{"k":15.09,"e":65.8},{"k":15.33,"e":57.5},{"k":15.46,"e":55.0},{"k":15.76,"e":48.6},{"k":16.12,"e":31.1},{"k":16.36,"e":9.2},{"k":16.51,"e":7.5},{"k":16.59,"e":7.6},{"k":16.77,"e":10.4},{"k":16.95,"e":10.2},{"k":17.01,"e":11.0},{"k":17.1,"e":10.2},{"k":17.2,"e":11.0},{"k":17.42,"e":10.5},{"k":17.54,"e":23.0},{"k":17.6,"e":27.6},{"k":17.74,"e":29.6},{"k":18.06,"e":44.5},{"k":18.38,"e":54.7},{"k":18.58,"e":56.3},{"k":18.72,"e":62.9},{"k":18.99,"e":72.9},{"k":19.29,"e":102.7},{"k":19.49,"e":116.2},{"k":19.73,"e":115.9},{"k":19.92,"e":115.5},{"k":20.31,"e":122.7},{"k":20.48,"e":125.2},{"k":20.64,"e":124.8},{"k":20.76,"e":122.9},{"k":20.88,"e":130.7},{"k":21.07,"e":146.6},{"k":21.22,"e":157.1},{"k":21.4,"e":171.3},{"k":21.57,"e":182.8},{"k":21.66,"e":189.4},{"k":21.79,"e":196.2},{"k":21.94,"e":208.4},{"k":22.02,"e":214.5},{"k":22.1,"e":220.2},{"k":22.3,"e":233.5},{"k":22.47,"e":237.5},{"k":22.61,"e":237.3},{"k":22.68,"e":237.8},{"k":22.84,"e":237.8},{"k":22.93,"e":238.0},{"k":23.05,"e":239.1},{"k":23.16,"e":250.0},{"k":23.26,"e":253.1},{"k":23.34,"e":260.3},{"k":23.5,"e":276.3},{"k":23.66,"e":290.3},{"k":23.79,"e":305.6},{"k":23.91,"e":319.3},{"k":24.12,"e":338.8},{"k":24.25,"e":349.8},{"k":24.51,"e":378.0},{"k":24.73,"e":376.3},{"k":25.06,"e":378.2},{"k":25.31,"e":392.3},{"k":25.44,"e":403.3},{"k":25.56,"e":408.2},{"k":25.74,"e":422.6},{"k":25.95,"e":436.6},{"k":26.1,"e":444.8},{"k":26.29,"e":438.3},{"k":26.42,"e":446.9},{"k":26.73,"e":449.7},{"k":26.93,"e":426.5},{"k":27.06,"e":411.8},{"k":27.29,"e":393.8},{"k":27.54,"e":386.9},{"k":27.79,"e":382.6},{"k":27.96,"e":379.1},{"k":28.16,"e":375.3},{"k":28.38,"e":372.3},{"k":28.67,"e":363.3},{"k":28.83,"e":360.0},{"k":29.09,"e":352.3},{"k":29.23,"e":351.1},{"k":29.32,"e":347.9},{"k":29.57,"e":346.0},{"k":29.74,"e":348.1},{"k":29.84,"e":353.0},{"k":29.94,"e":355.1},{"k":30.05,"e":356.5},{"k":30.21,"e":354.1},{"k":30.33,"e":353.3},{"k":30.49,"e":351.9},{"k":30.58,"e":340.8},{"k":30.72,"e":307.7},{"k":30.85,"e":283.9},{"k":30.96,"e":252.4},{"k":31.04,"e":234.3},{"k":31.15,"e":211.2},{"k":31.29,"e":206.6},{"k":31.44,"e":183.5},{"k":31.56,"e":166.8},{"k":31.72,"e":157.5},{"k":31.91,"e":131.9},{"k":32.1,"e":121.3},{"k":32.29,"e":110.1},{"k":32.43,"e":91.2},{"k":32.56,"e":76.8},{"k":32.66,"e":64.2},{"k":32.73,"e":70.0},{"k":32.82,"e":63.1},{"k":32.87,"e":54.0},{"k":33.01,"e":42.1},{"k":33.16,"e":25.0},{"k":33.3,"e":21.0},{"k":33.44,"e":18.9},{"k":33.62,"e":19.0},{"k":33.71,"e":18.2},{"k":33.92,"e":18.1},{"k":34.25,"e":25.6},{"k":34.69,"e":17.1},{"k":35.04,"e":17.5},{"k":35.26,"e":16.7},{"k":35.63,"e":16.1},{"k":35.86,"e":11.3},{"k":36.06,"e":11.3},{"k":36.5,"e":43.3}];
+
+      const svg = document.getElementById('elevationProfile');
+      const width = 1200;
+      const height = 300;
+      const padding = { top: 20, right: 20, bottom: 40, left: 50 };
+
+      const minElev = 0;
+      const maxElev = 460;
+      const maxKm = 36.7;
+
+      const xScale = (width - padding.left - padding.right) / maxKm;
+      const yScale = (height - padding.top - padding.bottom) / (maxElev - minElev);
+
+      let pathData = `M ${padding.left} ${height - padding.bottom}`;
+
+      for (let i = 0; i < PROFILE.length; i++) {
+        const point = PROFILE[i];
+        const x = padding.left + point.k * xScale;
+        const y = height - padding.bottom - (point.e - minElev) * yScale;
+        pathData += ` L ${x} ${y}`;
+      }
+
+      pathData += ` L ${width - padding.right} ${height - padding.bottom} Z`;
+
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+      gradient.setAttribute('id', 'elevationGradient');
+      gradient.setAttribute('x1', '0%');
+      gradient.setAttribute('y1', '0%');
+      gradient.setAttribute('x2', '0%');
+      gradient.setAttribute('y2', '100%');
+
+      const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop1.setAttribute('offset', '0%');
+      stop1.setAttribute('stop-color', '#44b687');
+      stop1.setAttribute('stop-opacity', '0.6');
+
+      const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop2.setAttribute('offset', '100%');
+      stop2.setAttribute('stop-color', '#269b6c');
+      stop2.setAttribute('stop-opacity', '0.2');
+
+      gradient.appendChild(stop1);
+      gradient.appendChild(stop2);
+      defs.appendChild(gradient);
+      svg.appendChild(defs);
+
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', pathData);
+      path.setAttribute('fill', 'url(#elevationGradient)');
+      path.setAttribute('stroke', 'none');
+      svg.appendChild(path);
+
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+      const linePoints = PROFILE.map(point => {
+        const x = padding.left + point.k * xScale;
+        const y = height - padding.bottom - (point.e - minElev) * yScale;
+        return `${x},${y}`;
+      }).join(' ');
+      line.setAttribute('points', linePoints);
+      line.setAttribute('fill', 'none');
+      line.setAttribute('stroke', '#269b6c');
+      line.setAttribute('stroke-width', '2');
+      svg.appendChild(line);
+
+      const xAxisGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      for (let km = 0; km <= maxKm; km += 5) {
+        const x = padding.left + km * xScale;
+        const tick = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        tick.setAttribute('x1', x);
+        tick.setAttribute('y1', height - padding.bottom);
+        tick.setAttribute('x2', x);
+        tick.setAttribute('y2', height - padding.bottom + 5);
+        tick.setAttribute('stroke', '#ccc');
+        tick.setAttribute('stroke-width', '1');
+        xAxisGroup.appendChild(tick);
+
+        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        label.setAttribute('x', x);
+        label.setAttribute('y', height - padding.bottom + 20);
+        label.setAttribute('text-anchor', 'middle');
+        label.setAttribute('font-size', '12');
+        label.setAttribute('fill', '#666');
+        label.setAttribute('font-family', 'Inter, sans-serif');
+        label.textContent = km + ' km';
+        xAxisGroup.appendChild(label);
+      }
+      svg.appendChild(xAxisGroup);
+
+      const yAxisGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      for (let elev = 0; elev <= 450; elev += 100) {
+        const y = height - padding.bottom - (elev - minElev) * yScale;
+        const tick = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        tick.setAttribute('x1', padding.left - 5);
+        tick.setAttribute('y1', y);
+        tick.setAttribute('x2', padding.left);
+        tick.setAttribute('y2', y);
+        tick.setAttribute('stroke', '#ccc');
+        tick.setAttribute('stroke-width', '1');
+        yAxisGroup.appendChild(tick);
+
+        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        label.setAttribute('x', padding.left - 10);
+        label.setAttribute('y', y + 4);
+        label.setAttribute('text-anchor', 'end');
+        label.setAttribute('font-size', '12');
+        label.setAttribute('fill', '#666');
+        label.setAttribute('font-family', 'Inter, sans-serif');
+        label.textContent = elev + ' m';
+        yAxisGroup.appendChild(label);
+      }
+      svg.appendChild(yAxisGroup);
+
+      const axes = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      const xAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      xAxis.setAttribute('x1', padding.left);
+      xAxis.setAttribute('y1', height - padding.bottom);
+      xAxis.setAttribute('x2', width - padding.right);
+      xAxis.setAttribute('y2', height - padding.bottom);
+      xAxis.setAttribute('stroke', '#999');
+      xAxis.setAttribute('stroke-width', '1');
+      axes.appendChild(xAxis);
+
+      const yAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      yAxis.setAttribute('x1', padding.left);
+      yAxis.setAttribute('y1', padding.top);
+      yAxis.setAttribute('x2', padding.left);
+      yAxis.setAttribute('y2', height - padding.bottom);
+      yAxis.setAttribute('stroke', '#999');
+      yAxis.setAttribute('stroke-width', '1');
+      axes.appendChild(yAxis);
+      svg.appendChild(axes);
+
+      const tooltip = document.getElementById('tooltip');
+      const tooltipContent = document.getElementById('tooltipContent');
+
+      svg.addEventListener('mousemove', function(event) {
+        const rect = svg.getBoundingClientRect();
+        const mouseX = event.clientX - rect.left;
+        const scaleX = width / rect.width;
+        const scaledX = mouseX * scaleX;
+
+        if (scaledX < padding.left || scaledX > width - padding.right) {
+          tooltip.classList.add('hidden');
+          return;
+        }
+
+        const km = (scaledX - padding.left) / xScale;
+        const closest = PROFILE.reduce((prev, curr) =>
+          Math.abs(curr.k - km) < Math.abs(prev.k - km) ? curr : prev
+        );
+
+        let gradientPercent = 0;
+        const idx = PROFILE.indexOf(closest);
+        if (idx < PROFILE.length - 1) {
+          const nextPoint = PROFILE[idx + 1];
+          const elevDiff = nextPoint.e - closest.e;
+          const kmDiff = nextPoint.k - closest.k;
+          if (kmDiff > 0) gradientPercent = (elevDiff / (kmDiff * 1000)) * 100;
+        }
+
+        tooltipContent.innerHTML = `
+          <strong>${closest.k.toFixed(1)} km</strong><br>
+          ${closest.e.toFixed(0)} m<br>
+          <span style="font-size: 11px; opacity: 0.8;">${gradientPercent > 0 ? '+' : ''}${gradientPercent.toFixed(1)}%</span>
+        `;
+
+        tooltip.style.left = (mouseX + 10) + 'px';
+        tooltip.style.top = '10px';
+        tooltip.classList.remove('hidden');
+      });
+
+      svg.addEventListener('mouseleave', function() {
+        tooltip.classList.add('hidden');
+      });
+    });
+  </script>
+</BaseLayout>
