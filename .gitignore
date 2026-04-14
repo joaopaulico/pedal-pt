@@ -6,3 +6,6 @@ dist/
 .DS_Store
 hero-video.mp4
 cyclist.svg
+
+# Local Netlify folder
+.netlify
