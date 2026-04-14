@@ -18,7 +18,7 @@ function isActive(href: string) {
   <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between" style="height: 80px;">
 
     <a href="/" class="flex items-center gap-2.5 transition-opacity hover:opacity-60">
-      <img src="/logo.svg" alt="pedal.pt" class="h-8 w-8" />
+      <img id="header-logo" src="/pedal-logo.png" alt="pedal.pt" class="h-8 w-8" />
       <span class="font-display font-semibold text-lg tracking-tight text-neutral-900">pedal.pt</span>
     </a>
 
@@ -78,6 +78,7 @@ function isActive(href: string) {
   });
 
   const header = document.getElementById('site-header');
+  const logo = document.getElementById('header-logo') as HTMLImageElement | null;
   const isHomepage = window.location.pathname === '/';
 
   function updateHeader() {
@@ -85,14 +86,23 @@ function isActive(href: string) {
       header?.classList.add('glass');
       header?.classList.remove('header-dark');
       header!.style.borderBottomColor = 'rgba(0,0,0,0.05)';
+      if (logo) logo.style.filter = '';
     } else {
       header?.classList.remove('glass');
-      if (isHomepage) header?.classList.add('header-dark');
+      if (isHomepage) {
+        header?.classList.add('header-dark');
+        if (logo) logo.style.filter = 'invert(1) brightness(2)';
+      } else {
+        if (logo) logo.style.filter = '';
+      }
       header!.style.borderBottomColor = 'transparent';
     }
   }
 
-  if (isHomepage) header?.classList.add('header-dark');
+  if (isHomepage) {
+    header?.classList.add('header-dark');
+    if (logo) logo.style.filter = 'invert(1) brightness(2)';
+  }
   window.addEventListener('scroll', updateHeader, { passive: true });
 
   // Intersection observer for fade animations
