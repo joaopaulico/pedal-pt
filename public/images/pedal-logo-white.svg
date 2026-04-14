@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill="none">
+  <!-- Pedal.pt Pb monogram — white version for dark backgrounds -->
+  <g stroke="white" stroke-width="52" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- Vertical stem -->
+    <path d="M340,120 L340,900" />
+    <!-- P bowl (top curve) -->
+    <path d="M340,120 C340,120 520,110 620,180 C720,250 720,350 620,420 C520,490 340,480 340,480" />
+    <!-- b bowl (bottom curve) -->
+    <path d="M340,480 C340,480 480,460 580,520 C700,590 720,700 640,790 C560,870 440,880 380,870" />
+  </g>
+</svg>
