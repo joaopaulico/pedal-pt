@@ -1,0 +1,435 @@
+/* pedal.pt — enhancements stylesheet
+ * Drop-in companion to pedal-enhance.js.
+ * Keeps the existing palette intact and adds navy #1d4e6f as a 4th tone.
+ */
+
+:root {
+  --pedal-bg: #1c1c1c;
+  --pedal-bg-darker: #111111;
+  --pedal-bg-deepest: #0a0a0a;
+  --pedal-accent: #269b6c;
+  --pedal-accent-light: #44b687;
+  --pedal-accent-dark: #1e7a52;
+  --pedal-warm-red: #c8553d;
+  --pedal-warm-amber: #d4a843;
+  --pedal-warm-orange: #e67e22;
+  --pedal-navy: #1d4e6f;
+  --pedal-navy-soft: #2c5f7c;
+  --pedal-neutral-200: #e5e5e5;
+  --pedal-neutral-400: #a3a3a3;
+  --pedal-neutral-600: #525252;
+  --pedal-neutral-800: #262626;
+}
+
+/* ======================================================================
+   ROUTE MAP ENHANCEMENTS
+   ====================================================================== */
+
+/* Map toolbar — sits over the map top-right */
+.pedal-map-toolbar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.pedal-map-toolbar button,
+.pedal-map-toolbar select {
+  background: rgba(10, 10, 10, 0.85);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 130px;
+}
+
+.pedal-map-toolbar button:hover,
+.pedal-map-toolbar select:hover {
+  background: var(--pedal-navy);
+  border-color: var(--pedal-navy-soft);
+}
+
+.pedal-map-toolbar select {
+  appearance: none;
+  padding-right: 28px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23fff' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+}
+
+.pedal-map-toolbar button.pedal-primary {
+  background: var(--pedal-accent);
+  border-color: var(--pedal-accent-light);
+}
+.pedal-map-toolbar button.pedal-primary:hover {
+  background: var(--pedal-accent-dark);
+}
+
+/* Fullscreen state */
+.pedal-map-fullscreen {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 9999 !important;
+  border-radius: 0 !important;
+  max-width: none !important;
+}
+
+/* Moving dot on the route when hovering elevation profile */
+.pedal-route-cursor {
+  width: 14px;
+  height: 14px;
+  background: var(--pedal-warm-amber);
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.35),
+              0 2px 8px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  animation: pedal-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pedal-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.35), 0 2px 8px rgba(0, 0, 0, 0.5); }
+  50%      { box-shadow: 0 0 0 8px rgba(212, 168, 67, 0.15), 0 2px 12px rgba(0, 0, 0, 0.6); }
+}
+
+/* Start / End markers */
+.pedal-marker {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: #fff;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.pedal-marker-start { background: var(--pedal-accent); }
+.pedal-marker-end   { background: var(--pedal-warm-red); }
+
+/* Hover crosshair on elevation SVG */
+.pedal-elev-cursor {
+  stroke: var(--pedal-warm-amber);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.pedal-elev-cursor.visible { opacity: 1; }
+
+.pedal-elev-dot {
+  fill: var(--pedal-warm-amber);
+  stroke: #fff;
+  stroke-width: 2;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.pedal-elev-dot.visible { opacity: 1; }
+
+/* Polyline draw-on animation */
+@keyframes pedal-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Leaflet tiny overrides to match the dark aesthetic */
+.leaflet-container a.leaflet-popup-close-button { color: #fff !important; }
+.leaflet-popup-content-wrapper {
+  background: var(--pedal-bg-deepest) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+}
+.leaflet-popup-tip { background: var(--pedal-bg-deepest) !important; }
+.leaflet-control-scale-line {
+  background: rgba(10, 10, 10, 0.75) !important;
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  backdrop-filter: blur(4px);
+}
+
+/* ======================================================================
+   HOMEPAGE LIVE STRIP
+   ====================================================================== */
+
+.pedal-live-strip {
+  background: var(--pedal-bg);
+  border-top: 1px solid var(--pedal-neutral-800);
+  border-bottom: 1px solid var(--pedal-neutral-800);
+  padding: 48px 24px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.pedal-live-strip.pedal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pedal-live-inner {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.pedal-live-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--pedal-navy-soft);
+}
+
+.pedal-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pedal-accent-light);
+  box-shadow: 0 0 0 0 rgba(68, 182, 135, 0.7);
+  animation: pedal-live-pulse 2s cubic-bezier(0.66, 0, 0.33, 1) infinite;
+}
+
+@keyframes pedal-live-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(68, 182, 135, 0.7); }
+  70%  { box-shadow: 0 0 0 10px rgba(68, 182, 135, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(68, 182, 135, 0); }
+}
+
+.pedal-live-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .pedal-live-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.pedal-live-card {
+  position: relative;
+  overflow: hidden;
+  background: rgba(17, 17, 17, 0.6);
+  border: 1px solid var(--pedal-neutral-800);
+  border-radius: 12px;
+  padding: 20px 20px 22px;
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.pedal-live-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--pedal-card-accent, var(--pedal-accent));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.pedal-live-card:hover {
+  border-color: var(--pedal-card-accent, var(--pedal-accent));
+  background: rgba(23, 23, 23, 0.9);
+  transform: translateY(-2px);
+}
+
+.pedal-live-card:hover::before { transform: scaleX(1); }
+
+.pedal-live-kicker {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--pedal-card-accent, var(--pedal-accent-light));
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pedal-live-kicker svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+
+.pedal-live-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: #fff;
+}
+
+.pedal-live-meta {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--pedal-neutral-400);
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pedal-live-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ======================================================================
+   READING UX — progress bar + TOC
+   ====================================================================== */
+
+/* Top progress bar */
+.pedal-reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: transparent;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.pedal-reading-progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--pedal-accent) 0%, var(--pedal-accent-light) 50%, var(--pedal-navy-soft) 100%);
+  transition: width 0.08s linear;
+  box-shadow: 0 0 10px rgba(68, 182, 135, 0.6);
+}
+
+/* Floating TOC — desktop only */
+.pedal-toc {
+  position: fixed;
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%);
+  z-index: 30;
+  font-family: 'Inter', sans-serif;
+  max-width: 200px;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.pedal-toc.pedal-visible { opacity: 1; }
+
+@media (min-width: 1280px) {
+  .pedal-toc { display: block; }
+}
+
+.pedal-toc-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--pedal-neutral-600);
+  margin-bottom: 12px;
+}
+
+.pedal-toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-left: 1px solid var(--pedal-neutral-200);
+}
+
+.pedal-toc-list li { margin: 0; }
+
+.pedal-toc-list a {
+  display: block;
+  padding: 6px 0 6px 16px;
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+  font-size: 12px;
+  color: var(--pedal-neutral-600);
+  text-decoration: none;
+  line-height: 1.4;
+  transition: all 0.2s ease;
+}
+
+.pedal-toc-list a:hover { color: var(--pedal-accent); }
+
+.pedal-toc-list a.pedal-active {
+  color: var(--pedal-navy);
+  border-left-color: var(--pedal-navy);
+  font-weight: 500;
+}
+
+/* Save-for-later pill */
+.pedal-save {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--pedal-bg-deepest);
+  color: #fff;
+  border: 1px solid var(--pedal-neutral-800);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.pedal-save.pedal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pedal-save:hover {
+  border-color: var(--pedal-accent);
+  background: var(--pedal-accent);
+}
+
+.pedal-save svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+.pedal-save.pedal-saved svg { fill: currentColor; }
+.pedal-save.pedal-saved { border-color: var(--pedal-accent); color: var(--pedal-accent); }
+.pedal-save.pedal-saved:hover { color: #fff; }
+
+/* Light-mode article page — TOC needs lighter palette */
+.pedal-toc[data-theme="dark"] .pedal-toc-label { color: var(--pedal-neutral-400); }
+.pedal-toc[data-theme="dark"] .pedal-toc-list { border-left-color: var(--pedal-neutral-800); }
+.pedal-toc[data-theme="dark"] .pedal-toc-list a { color: var(--pedal-neutral-400); }
+.pedal-toc[data-theme="dark"] .pedal-toc-list a:hover { color: var(--pedal-accent-light); }
+.pedal-toc[data-theme="dark"] .pedal-toc-list a.pedal-active { color: #fff; border-left-color: var(--pedal-navy-soft); }
